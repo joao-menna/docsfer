@@ -1,0 +1,92 @@
+name: docsfer_app
+
+services:
+  proxy:
+    container_name: docsfer_proxy
+    restart: on-failure
+    image: nginx:latest
+    volumes:
+      - ./docker/proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 80:80
+    networks:
+      - docsfer_network
+
+
+
+  azurite:
+    container_name: docsfer_azurite
+    image: mcr.microsoft.com/azure-storage/azurite
+    command: ["azurite", "--disableTelemetry"]
+    restart: on-failure
+    volumes:
+      - docsfer_azurite_data:/data
+    ports:
+      - 10000:10000
+    networks:
+      - docsfer_network
+
+
+
+  postgres:
+    container_name: docsfer_postgres
+    image: postgres:17
+    restart: on-failure
+    environment:
+      - POSTGRES_DB=docsfer
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "docsfer"]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - docsfer_postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - docsfer_network
+
+
+
+  migrator:
+    container_name: docsfer_migrator
+    build:
+      context: ./packages/migrator
+      dockerfile: Dockerfile
+    networks:
+      - docsfer_network
+    environment:
+      - DB_HOST=postgres
+      - DB_NAME=docsfer
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+
+
+
+  backend:
+    container_name: docsfer_backend
+    restart: on-failure:3
+    build:
+      context: .
+      dockerfile: ./src/Docsfer.Api/Dockerfile
+    environment:
+      - ConnectionStrings__Default=Host=postgres; Database=docsfer; Username=postgres; Password=postgres;
+    networks:
+      - docsfer_network
+    depends_on:
+      migrator:
+        condition: service_completed_successfully
+
+
+
+volumes:
+  docsfer_postgres_data:
+  docsfer_azurite_data:
+
+
+
+networks:
+  docsfer_network:

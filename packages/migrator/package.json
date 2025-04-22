@@ -1,0 +1,14 @@
+{
+  "name": "migrator",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "knex": "knex"
+  },
+  "dependencies": {
+    "knex": "^3.1.0",
+    "oracledb": "^6.8.0",
+    "pg": "^8.14.1",
+    "tedious": "^18.6.1"
+  }
+}
