@@ -1,57 +1,8 @@
+import { generateFileData } from "@/hooks/useMockData";
 import { FileTemplate } from "@components/base/Arquivos/FileTemplate";
 
 const AllfilesPage = () => {
-  const products = [
-    {
-      Arquivo: "File1.xlsx",
-      sharedWith: "Jaozin Jaozao",
-      sharedAt: "31/12/2012",
-      groups: "RH",
-      Size: "12mb",
-    },
-    {
-      Arquivo: "File2.docx",
-      sharedWith: "Carlitos",
-      sharedAt: "15/04/2025",
-      groups: "RH",
-      Size: "12mb",
-    },
-    {
-      Arquivo: "Presentation.pptx",
-      sharedWith: "Maria Silva",
-      sharedAt: "10/01/2023",
-      groups: "Financeiro",
-      Size: "8mb",
-    },
-    {
-      Arquivo: "Report.pdf",
-      sharedWith: "Lucas Lima",
-      sharedAt: "22/07/2024",
-      groups: "TI",
-      Size: "5mb",
-    },
-    {
-      Arquivo: "Image.png",
-      sharedWith: "Ana Paula",
-      sharedAt: "03/03/2025",
-      groups: "Marketing",
-      Size: "3mb",
-    },
-    {
-      Arquivo: "Notes.txt",
-      sharedWith: "Pedro Santos",
-      sharedAt: "18/08/2025",
-      groups: "RH",
-      Size: "1mb",
-    },
-    {
-      Arquivo: "Contract.docx",
-      sharedWith: "Juliana Costa",
-      sharedAt: "29/05/2025",
-      groups: "Jurídico",
-      Size: "2mb",
-    },
-  ];
+  const products = generateFileData(15);
 
   return (
     <div className=" ml-16">
