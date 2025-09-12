@@ -19,13 +19,11 @@ export const PageHeader = () => {
           <div className="inline-flex justify-center items-center">
             {/* logo */}
             <div className="flex justify-center items-center size-7">
-              <picture>
-                <source media="(min-width:650px)" srcSet="/images/alout.png" />
-                <img
-                  src="https://imgs.search.brave.com/0Ep1l2eG7ZhkoVryj81G9tp7hlLeNkUgG8Wf8H9vJpw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly8xMDAw/bG9nb3MubmV0L3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDIzLzAx/L01pY3Jvc29mdC1B/enVyZS1sb2dvLTUw/MHgyODEucG5n"
-                  alt="logo"
-                />
-              </picture>
+              <img
+                src="/images/logo_docspider.png"
+                alt="logo"
+                className="scale-75"
+              />
             </div>
             {/* separator */}
             <div className="inline-flex text-lg justify-center items-center size-8 text-gray-500 dark:text-zinc-700 [&_svg]:h-4">

@@ -17,7 +17,7 @@ const DashboardPage = () => {
             <h3 className="inline-flex w-fit  font-gabarito dark:text-sky-500 tracking-wider px-3 py-2 rounded-sm dark:bg-sky-500/20">
               Atividade Recente
             </h3>
-            <div className="flex gap-4 overflow-x-scroll py-4 snap-always snap-mandatory">
+            <div className="flex gap-4 overflow-x-scroll snap-always snap-mandatory">
               {recentActivities.map((activity, index) => (
                 <CardTemplate
                   key={index}

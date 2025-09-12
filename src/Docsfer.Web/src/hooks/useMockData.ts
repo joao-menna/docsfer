@@ -32,6 +32,7 @@ const generateActivity = () => {
     item: `${faker.system.commonFileName()}.${faker.helpers.arrayElement(
       fileExtensions
     )}`,
+    fileSize: faker.number.int({ min: 1024, max: 10485760 }),
     receiver: hasReceiver
       ? faker.helpers.arrayElement(receivers.filter((r) => r !== null))
       : undefined,
@@ -55,7 +56,7 @@ export const generateFiles = (count = 20) => {
     name: `${faker.system.commonFileName()}.${faker.helpers.arrayElement(
       fileExtensions
     )}`,
-    size: faker.datatype.number({ min: 1024, max: 10485760 }), // 1KB to 10MB in bytes
+    size: faker.number.int({ min: 1024, max: 10485760 }),
     uploadedBy: faker.person.fullName(),
     uploadedAt: faker.date.recent({ days: 90 }),
     department: faker.helpers.arrayElement([
@@ -65,7 +66,7 @@ export const generateFiles = (count = 20) => {
       "Financeiro",
       "Marketing",
     ]),
-    downloads: faker.datatype.number({ min: 0, max: 50 }),
+    downloads: faker.number.int({ min: 0, max: 50 }),
   }));
 };
 
