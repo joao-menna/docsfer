@@ -46,7 +46,7 @@ export const CardTemplate = ({
   const fileColor = useFileColor(item);
 
   return (
-    <div className="flex flex-col w-fit justify-between gap-3 p-3 mb-5 rounded-lg border-2 border-dashed dark:border-sky-800 dark:bg-zinc-800">
+    <div className="flex flex-col w-fit justify-between gap-3 p-3 m-5 transition-all duration-300 ease-out rounded-lg border-2 border-dashed dark:border-sky-800 dark:bg-zinc-800 hover:scale-105">
       <div className="flex flex-col w-full">
         <div className="flex justify-between font-quicksand min-w-64 gap-3">
           <span className="text-zinc-200 text-lg font-semibold text-nowrap truncate">

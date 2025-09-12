@@ -29,7 +29,7 @@ export const PageHeader = () => {
             <div className="inline-flex text-lg justify-center items-center size-8 text-gray-500 dark:text-zinc-700 [&_svg]:h-4">
               /
             </div>
-            <h2 className="text-medium font-semibold text-zinc-400">
+            <h2 className="text-lg pt-0.5 font-semibold text-zinc-400">
               {pageName}
             </h2>
           </div>
