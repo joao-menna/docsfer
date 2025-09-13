@@ -5,7 +5,7 @@ const AllfilesPage = () => {
   const products = generateFileData(15);
 
   return (
-    <div className=" ml-16">
+    <div className="">
       <div className="flex flex-col gap-2 px-6 py-4">
         <h2 className="font-josefin text-xl dark:text-zinc-400">
           Todos os seus arquivos
