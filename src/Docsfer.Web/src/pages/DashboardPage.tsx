@@ -6,7 +6,7 @@ const DashboardPage = () => {
   const recentActivities = useMemo(() => generateActivities(7), []);
 
   return (
-    <div className="relative z-10 ml-16 ">
+    <div className="relative z-10 ">
       <div className="flex flex-col gap-2 px-6 py-4">
         <h2 className="font-josefin text-xl dark:text-zinc-400">
           Bem-vindo de volta, Jaozin!
