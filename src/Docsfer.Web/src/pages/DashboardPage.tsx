@@ -1,6 +1,7 @@
 import { CardTemplate } from "../components/base/dashboard/CardTemplate";
 import { generateActivities } from "@/hooks/useMockData";
 import { useMemo } from "react";
+import { NewCardTemplate } from "@/components/base/dashboard/NewCardTemplate";
 
 const DashboardPage = () => {
   const recentActivities = useMemo(() => generateActivities(7), []);
@@ -34,7 +35,7 @@ const DashboardPage = () => {
             </h3>
             {/* TODO: CREATE A TABLE*/}
             {/* TODO: ADD TITLE ON HOVER TO THE COLUMNS */}
-            Tabela legal aqui
+            <NewCardTemplate />
           </div>
           {/* ↓ Seção 3: Todos os Arquivos ↓ */}
           <div className="flex flex-col"></div>
