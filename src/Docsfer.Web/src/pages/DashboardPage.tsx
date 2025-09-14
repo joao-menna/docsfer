@@ -1,4 +1,3 @@
-import { CardTemplate } from "../components/base/dashboard/CardTemplate";
 import { generateActivities } from "@/hooks/useMockData";
 import { useMemo } from "react";
 import { NewCardTemplate } from "@/components/base/dashboard/NewCardTemplate";
@@ -18,12 +17,13 @@ const DashboardPage = () => {
             <h3 className="inline-flex w-fit relative font-gabarito dark:text-sky-500 tracking-wider px-3 py-2 rounded-sm dark:bg-sky-500/20">
               Atividade Recente
             </h3>
-            <div className="flex  overflow-x-scroll snap-always snap-mandatory">
+            <div className="flex gap-12 w-fit ">
               {recentActivities.map((activity, index) => (
-                <CardTemplate
+                <NewCardTemplate
                   key={index}
                   {...activity}
                   receiver={activity.receiver ?? ""}
+                  email={activity.mail ?? ""}
                 />
               ))}
             </div>
@@ -35,7 +35,6 @@ const DashboardPage = () => {
             </h3>
             {/* TODO: CREATE A TABLE*/}
             {/* TODO: ADD TITLE ON HOVER TO THE COLUMNS */}
-            <NewCardTemplate />
           </div>
           {/* ↓ Seção 3: Todos os Arquivos ↓ */}
           <div className="flex flex-col"></div>

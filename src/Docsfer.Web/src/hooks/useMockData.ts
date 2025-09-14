@@ -39,6 +39,7 @@ const generateActivity = () => {
     action,
     item: `${faker.system.commonFileName()}`,
     fileSize: faker.number.int({ min: 1024, max: 10485760 }),
+    mail: faker.internet.email(),
     receiver: hasReceiver
       ? faker.helpers.arrayElement(receivers.filter((r) => r !== null))
       : undefined,
