@@ -6,6 +6,7 @@ import React, {
   type ChangeEvent,
 } from "react";
 import clsx from "clsx";
+import { ImagePlus } from "lucide-react";
 
 export type DropzoneProps = {
   showAdminContent?: boolean;
@@ -78,7 +79,10 @@ const Dropzone: React.FC<DropzoneProps> = ({
 
   return (
     <div
-      className={clsx("flex-center flex-col w-full h-40 md:h-56", className)}
+      className={clsx(
+        "flex-center flex-col w-full h-40 md:h-56 font-gabarito",
+        className
+      )}
     >
       <div
         id="dropzone"
@@ -88,12 +92,11 @@ const Dropzone: React.FC<DropzoneProps> = ({
         aria-label="Upload images"
         aria-busy={isDragging}
         className={clsx(
-          "flex-center relative w-[80dvw] md:w-auto gap-1.5 px-16 md:px-32 rounded-4xl h-full",
-          "text-slate-600 dark:text-slate-400",
-          "border-2 border-dashed border-slate-600 dark:border-slate-400",
+          "flex-center relative w-[80dvw] md:w-auto gap-1.5 px-16 md:px-32 rounded-xl h-full",
+          "text-slate-600 dark:text-sky-500",
+          "border-2 border-dashed border-slate-600 dark:border-sky-500",
           {
-            // dragging state (Vue conditional moved to clsx)
-            "border-indigo-800 bg-zinc-600 border-solid dark:border-indigo-400 dark:bg-indigo-50":
+            "border-indigo-800 bg-zinc-600 border-solid dark:border-sky-500 dark:bg-sky-300":
               isDragging,
           }
         )}
@@ -116,13 +119,10 @@ const Dropzone: React.FC<DropzoneProps> = ({
           onChange={handleFileSelect}
         />
 
-        {/* <Icon
-          icon="ri:image-add-fill"
-          width="72"
-          height="72"
-          className="absolute bottom-1/2 cursor-pointer"
+        <ImagePlus
+          className="absolute bottom-1/2 cursor-pointer size-16 text-sky-500"
           onClick={openFileDialog}
-        /> */}
+        />
 
         <span className="mt-16 md:mt-10 cursor-alias text-nowrap text-xs md:text-xl">
           Drop your images here or

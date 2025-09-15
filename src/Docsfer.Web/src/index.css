@@ -35,6 +35,10 @@
   .header-button__style {
     @apply inline-flex justify-center items-center relative cursor-pointer space-x-2 text-center ease-out duration-300 transition-all outline-none hover:bg-zinc-300 dark:hover:bg-zinc-800 w-9 h-7;
   }
+
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
 }
 
 @layer base {
