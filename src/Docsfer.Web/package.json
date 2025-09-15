@@ -12,6 +12,7 @@
   "dependencies": {
     "@azure/msal-browser": "^4.21.0",
     "@azure/msal-react": "^3.0.19",
+    "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-switch": "^1.2.6",
     "@radix-ui/react-toast": "^1.2.15",
     "@radix-ui/react-tooltip": "^1.2.8",

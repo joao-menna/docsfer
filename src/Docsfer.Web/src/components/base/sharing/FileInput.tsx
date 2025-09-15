@@ -11,8 +11,9 @@ const FileInput = ({ label, placeholder = "" }: FileInputProps) => {
       </label>
       <input
         id="abcde"
-        className="dark:placeholder:text-zinc-600 px-3 py-1 border border-zinc-400 rounded-lg "
+        className="dark:placeholder:text-zinc-600 px-3 py-1 border border-zinc-400 rounded-lg dark:text-zinc-200"
         placeholder={placeholder}
+        autoComplete="banana"
       />
     </>
   );

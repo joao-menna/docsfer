@@ -1,12 +1,20 @@
 import Dropzone from "@/components/base/sharing/Dropzone";
 import SwitchFileButton from "@/components/base/sharing/SwitchFileButton";
 import FileInput from "@/components/base/sharing/FileInput";
+import { useState } from "react";
+import { usePermissions } from "@/hooks/useMockData";
+import { SelectButton } from "@/components/common/SelectButton";
 
 export default function SharingPage() {
+  const [selectedPermission, setSelectedPermission] = useState("");
   const handleFiles = () => {
     console.warn("implementar depois");
   };
+
+  const { getPermissionsForSelect } = usePermissions();
+
   return (
+    // TODO: create a modal that appears after you click on "Enviar" or "Cancelar"
     <div className="flex flex-col gap-2 px-6 py-4">
       <h2 className="font-josefin text-xl dark:text-zinc-400">
         Detalhes do novo arquivo
@@ -27,9 +35,12 @@ export default function SharingPage() {
                 </div>
                 <div className="flex flex-col w-full">
                   {/* TODO: Mudar para um select do radixui */}
-                  <FileInput
-                    placeholder="Read/Download/Edit"
-                    label="Permissões"
+                  <label className="text-zinc-400">Permissões</label>
+                  <SelectButton
+                    placeholder="Selecionar Permissão"
+                    value={selectedPermission}
+                    onValueChange={setSelectedPermission}
+                    options={getPermissionsForSelect()}
                   />
                 </div>
               </fieldset>

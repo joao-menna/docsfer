@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { fakerPT_BR as faker } from "@faker-js/faker";
 
 const actions = ["Shared", "uploaded", "downloaded", "deleted", "renamed"];
@@ -13,6 +14,13 @@ const receivers = ["RH", "Comercial", "TI", "Financeiro", "Marketing", null];
   "gif",
   "zip",
 ]; */
+
+export interface MockPermission {
+  value: string;
+  label: string;
+  description: string;
+  level: number;
+}
 
 export const formatDateToBR = (date: Date, includeTime = false) => {
   const day = date.getDate().toString().padStart(2, "0");
@@ -102,4 +110,76 @@ export const generateFileData = (count = 20) => {
       Size: formatFileSize(sizeInBytes),
     };
   });
+};
+
+export const generateMockUsers = (count: number = 15) => {
+  return Array.from({ length: count }, (_, index) => ({
+    value: `user_${index + 1}`,
+    label: faker.person.fullName(),
+    email: faker.internet.email(),
+    department: faker.helpers.arrayElement([
+      "RH",
+      "Comercial",
+      "TI",
+      "Financeiro",
+      "Marketing",
+    ]),
+  }));
+};
+
+export const usePermissions = () => {
+  const permissions = useMemo<MockPermission[]>(() => {
+    const permissionData = [
+      {
+        name: "Visualizar",
+        level: 1,
+        desc: "Apenas visualização de arquivos",
+      },
+      {
+        name: "Download",
+        level: 2,
+        desc: "Baixar arquivos para o dispositivo",
+      },
+      {
+        name: "Comentar",
+        level: 3,
+        desc: "Adicionar comentários aos arquivos",
+      },
+      {
+        name: "Editar",
+        level: 4,
+        desc: "Modificar conteúdo dos arquivos",
+      },
+      {
+        name: "Compartilhar",
+        level: 5,
+        desc: "Compartilhar arquivos com outros usuários",
+      },
+      {
+        name: "Administrar",
+        level: 6,
+        desc: "Acesso total e gerenciamento",
+      },
+    ];
+
+    return permissionData.map((perm) => ({
+      value: perm.name.toLowerCase().replace(/\s+/g, "_"),
+      label: perm.name,
+      description: perm.desc,
+      level: perm.level,
+    }));
+  }, []);
+
+  const getPermissionsForSelect = () => {
+    return permissions.map((perm) => ({
+      value: perm.value,
+      label: ` ${perm.label}`,
+      description: perm.description,
+    }));
+  };
+
+  return {
+    permissions,
+    getPermissionsForSelect,
+  };
 };
