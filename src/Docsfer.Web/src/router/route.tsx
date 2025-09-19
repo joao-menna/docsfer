@@ -8,8 +8,9 @@ import { filesLoader } from "../hooks/useFileLoader";
 import { requireAuth } from "../hooks/useRequireAuth";
 
 import { RouteError } from "../components/base/RouteError";
-
 import { Loader } from "../components/base/Loader";
+import FileNotFoundError from "@/components/base/FileNotFound";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 const Groups = lazy(() => import("../pages/GroupPage"));
 const Files = lazy(() => import("../pages/Arquivos/AllfilesPage"));
@@ -35,7 +36,7 @@ export const router = createBrowserRouter([
       { path: "dashboard", element: <Dashboard /> },
       { path: "groups", element: <Groups /> },
       {
-        path: "Files",
+        path: "files",
         loader: filesLoader,
         element: (
           <Suspense fallback={<Loader />}>
@@ -44,8 +45,9 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "Details",
+        path: "files/:id",
         loader: filesLoader,
+        errorElement: <FileNotFoundError />,
         element: (
           <Suspense fallback={<Loader />}>
             <Details />
@@ -57,5 +59,10 @@ export const router = createBrowserRouter([
         element: <Sharing />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
+    errorElement: <RouteError />,
   },
 ]);

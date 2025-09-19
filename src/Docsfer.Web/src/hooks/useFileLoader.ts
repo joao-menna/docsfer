@@ -1,6 +1,14 @@
 import { requireAuth } from "./useRequireAuth";
 
-export async function filesLoader() {
+export const filesLoader = async () => {
   await requireAuth();
-  return { files: [] };
-}
+  /* throw new Error("Error message!"); */
+  return {
+    files: [
+      {
+        id: "123",
+        name: "brabo",
+      },
+    ],
+  };
+};

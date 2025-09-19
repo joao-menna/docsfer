@@ -1,38 +1,58 @@
 // contexts/ToastContext.jsx
-import { createContext, useContext, useState } from "react";
+import { useState, useRef, useEffect, type ReactNode } from "react";
 import * as Toast from "@radix-ui/react-toast";
 import { CheckCircle, XCircle, AlertCircle, Info } from "lucide-react";
+import { type AddToastArgs, type ToastSeverity } from "@/types/toast";
+import { ToastContext } from "@/services/utils/useToastContext";
 
-const ToastContext = createContext();
-
-export const useToast = () => {
-  const context = useContext(ToastContext);
-  if (!context) {
-    throw new Error("useToast must be used within a ToastProvider");
-  }
-  return context;
+// Toast types
+type ToastObj = {
+  id: string;
+  severity: ToastSeverity;
+  summary: string;
+  detail?: string;
+  life: number;
 };
 
-export const ToastProvider = ({ children }) => {
-  const [toasts, setToasts] = useState([]);
+export const ToastProvider = ({ children }: { children: ReactNode }) => {
+  const [toasts, setToasts] = useState<ToastObj[]>([]);
+  const timeouts = useRef<{ [id: string]: NodeJS.Timeout }>({});
 
-  const addToast = ({ severity = "info", summary, detail, life = 4000 }) => {
-    const id = Date.now() + Math.random();
-    const newToast = { id, severity, summary, detail, life };
+  const addToast = ({
+    severity = "info",
+    summary,
+    detail,
+    life = 4000,
+  }: AddToastArgs) => {
+    const id =
+      typeof crypto !== "undefined" && crypto.randomUUID
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random()}`;
+    const newToast: ToastObj = { id, severity, summary, detail, life };
 
     setToasts((prev) => [...prev, newToast]);
 
-    // Auto remove toast after specified time
-    setTimeout(() => {
+    timeouts.current[id] = setTimeout(() => {
       removeToast(id);
     }, life);
   };
 
-  const removeToast = (id) => {
+  const removeToast = (id: string) => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
+    if (timeouts.current[id]) {
+      clearTimeout(timeouts.current[id]);
+      delete timeouts.current[id];
+    }
   };
 
-  const getToastIcon = (severity) => {
+  useEffect(() => {
+    return () => {
+      Object.values(timeouts.current).forEach(clearTimeout);
+      timeouts.current = {};
+    };
+  }, []);
+
+  const getToastIcon = (severity: ToastSeverity) => {
     switch (severity) {
       case "success":
         return <CheckCircle className="w-5 h-5 text-green-600" />;
@@ -46,7 +66,7 @@ export const ToastProvider = ({ children }) => {
     }
   };
 
-  const getToastStyles = (severity) => {
+  const getToastStyles = (severity: ToastSeverity) => {
     switch (severity) {
       case "success":
         return "bg-green-50 border-green-200 text-green-900";
@@ -60,7 +80,7 @@ export const ToastProvider = ({ children }) => {
     }
   };
 
-  const getCloseButtonStyles = (severity) => {
+  const getCloseButtonStyles = (severity: ToastSeverity) => {
     switch (severity) {
       case "success":
         return "text-green-700 hover:bg-green-100";
@@ -75,10 +95,9 @@ export const ToastProvider = ({ children }) => {
   };
 
   return (
-    <ToastContext.Provider value={{ addToast }}>
+    <ToastContext.Provider value={{ addToast, removeToast }}>
       <Toast.Provider swipeDirection="right">
         {children}
-
         {/* Render all toasts */}
         {toasts.map((toast) => (
           <Toast.Root
@@ -112,12 +131,12 @@ export const ToastProvider = ({ children }) => {
                 toast.severity
               )}`}
               aria-label="Close"
+              onClick={() => removeToast(toast.id)}
             >
               <XCircle className="w-4 h-4" />
             </Toast.Close>
           </Toast.Root>
         ))}
-
         <Toast.Viewport className="fixed bottom-0 right-0 flex flex-col p-6 gap-2 w-96 max-w-[100vw] m-0 list-none z-50 outline-none" />
       </Toast.Provider>
     </ToastContext.Provider>
