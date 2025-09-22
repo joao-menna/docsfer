@@ -1,5 +1,5 @@
 import { generateActivities } from "@/hooks/useMockData";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { NewCardTemplate } from "@/components/base/dashboard/NewCardTemplate";
 import Table from "@/components/base/dashboard/Table";
 import EditFileModal from "@/components/base/dashboard/EditFileModal";
@@ -25,14 +25,6 @@ const DashboardPage = () => {
     "Tamanho",
     "Ações",
   ];
-
-  useEffect(() => {
-    document.body.classList.add("overflow-hidden");
-
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-    };
-  });
 
   // TODO: remove esse mock HORRIVEL
 
