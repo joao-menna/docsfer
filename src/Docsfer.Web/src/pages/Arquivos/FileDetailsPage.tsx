@@ -4,6 +4,7 @@ import UserAccessRow from "@/components/common/FileDetailsUser";
 import Table from "@/components/base/dashboard/Table";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import clsx from "clsx";
 
 type Group = {
   name: string;
@@ -232,29 +233,39 @@ export default function FileDetails() {
                 <h4 className="font-josefin text-lg">{file.name}</h4>
                 <X onClick={() => setFileVersion(null)} />
               </header>
-              <section className="p-4 flex justify-center">
-                <div>
-                  Não sei o que escrever aqui, mas tem que ter alguma coisa
-                </div>
+              <section className="p-4 flex-center gap-4 flex-col">
+                <span>
+                  Versão:{" "}
+                  <span
+                    className={clsx(
+                      `text-zinc-500`,
+                      editingFile?.version?.includes("atual") && "text-sky-500"
+                    )}
+                  >
+                    {editingFile.version}
+                  </span>
+                </span>
+                <span>Criada em: {editingFile.modified}</span>
               </section>
               <footer className="p-4 flex justify-between  border-t border-zinc-800 transition-all duration-300">
                 <button
                   type="button"
-                  className="px-3 py-2 rounded-md text-red-500 border-2 border-red-500 hover:bg-red-500/50 transition-all duration-150 ease-out hover:text-white"
+                  className="px-3 py-2 rounded-md text-red-500 border-2 border-red-500 hover:bg-red-500/50 transition-all duration-150 ease-out hover:text-white cursor-pointer"
                 >
                   Apagar
                 </button>
                 <div className="flex gap-2">
                   <button
                     type="button"
-                    className="px-3 py-2 rounded-md bg-zinc-800 hover:bg-zinc-700 duration-150 ease-out"
+                    className="px-3 py-2 rounded-md bg-zinc-800 hover:bg-zinc-700 duration-150 ease-out cursor-pointer"
                   >
                     Baixar
                   </button>
                   <button
                     title="Retorna para a versão selecionada."
                     type="button"
-                    className="flex items-center gap-2 px-3 py-2 rounded-md bg-sky-600 hover:bg-sky-500 duration-150 ease-out"
+                    disabled={editingFile?.version?.includes("atual")}
+                    className="flex items-center gap-2 px-3 py-2 rounded-md bg-sky-600 hover:bg-sky-500 duration-150 ease-out disabled:opacity-50 disabled:hover:bg-sky-600 disabled:cursor-not-allowed"
                   >
                     rollback
                     <RotateCcw />
