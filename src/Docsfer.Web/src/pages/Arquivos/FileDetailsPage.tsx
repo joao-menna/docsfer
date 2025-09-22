@@ -2,7 +2,8 @@ import { RotateCcw, X } from "lucide-react";
 import { useLoaderData, useParams } from "react-router";
 import UserAccessRow from "@/components/common/FileDetailsUser";
 import Table from "@/components/base/dashboard/Table";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 
 type Group = {
   name: string;
@@ -61,13 +62,19 @@ export default function FileDetails() {
 
   const file = files.find((f) => String(f.id) === String(fileId)) ?? files[0];
   // pra mockar a tela de erro só tirar o ?? files[0];
-
   const [fileVersion, setFileVersion] = useState<string | null>(null);
 
   const editingFile = useMemo(
     () => versions.find((v) => v.version === fileVersion) ?? null,
     [versions, fileVersion]
   );
+
+  const isModalOpen = !!editingFile;
+  useEffect(() => {
+    if (isModalOpen) document.body.classList.add("overflow-hidden");
+    else document.body.classList.remove("overflow-hidden");
+    return () => document.body.classList.remove("overflow-hidden");
+  }, [isModalOpen]);
 
   if (!file) {
     return (
@@ -76,7 +83,6 @@ export default function FileDetails() {
       </div>
     );
   }
-
   return (
     <>
       <div className="flex justify-between px-6 py-4">
@@ -204,51 +210,61 @@ export default function FileDetails() {
           </div>
         </div>
       </div>
-      {editingFile && (
-        <div
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm font-gabarito flex items-center justify-center p-6"
-          onClick={() => setFileVersion(null)}
-        >
-          <div
-            className="w-full max-w-xl rounded-2xl bg-zinc-900 text-zinc-200 shadow-xl"
-            onClick={(e) => e.stopPropagation()}
+      <AnimatePresence>
+        {editingFile && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm font-gabarito flex items-center justify-center p-6"
+            onClick={() => setFileVersion(null)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <header className="flex items-start justify-between p-4 border-b border-zinc-800">
-              <h4 className="font-josefin text-lg">{file.name}</h4>
-              <X onClick={() => setFileVersion(null)} />
-            </header>
-            <section className="p-4 flex justify-center">
-              <div>
-                Não sei o que escrever aqui, mas tem que ter alguma coisa
-              </div>
-            </section>
-            <footer className="p-4 flex justify-between  border-t border-zinc-800 transition-all duration-300">
-              <button
-                type="button"
-                className="px-3 py-2 rounded-md text-red-500 border-2 border-red-500 hover:bg-red-500/50 transition-all duration-150 ease-out hover:text-white"
-              >
-                Apagar
-              </button>
-              <div className="flex gap-2">
+            <motion.div
+              className="w-full max-w-xl rounded-2xl bg-zinc-900 text-zinc-200 shadow-xl"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ y: -32, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -16, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+              <header className="flex items-start justify-between p-4 border-b border-zinc-800">
+                <h4 className="font-josefin text-lg">{file.name}</h4>
+                <X onClick={() => setFileVersion(null)} />
+              </header>
+              <section className="p-4 flex justify-center">
+                <div>
+                  Não sei o que escrever aqui, mas tem que ter alguma coisa
+                </div>
+              </section>
+              <footer className="p-4 flex justify-between  border-t border-zinc-800 transition-all duration-300">
                 <button
                   type="button"
-                  className="px-3 py-2 rounded-md bg-zinc-800 hover:bg-zinc-700 duration-150 ease-out"
+                  className="px-3 py-2 rounded-md text-red-500 border-2 border-red-500 hover:bg-red-500/50 transition-all duration-150 ease-out hover:text-white"
                 >
-                  Baixar
+                  Apagar
                 </button>
-                <button
-                  title="Retorna para a versão selecionada."
-                  type="button"
-                  className="flex items-center gap-2 px-3 py-2 rounded-md bg-sky-600 hover:bg-sky-500 duration-150 ease-out"
-                >
-                  rollback
-                  <RotateCcw />
-                </button>
-              </div>
-            </footer>
-          </div>
-        </div>
-      )}
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    className="px-3 py-2 rounded-md bg-zinc-800 hover:bg-zinc-700 duration-150 ease-out"
+                  >
+                    Baixar
+                  </button>
+                  <button
+                    title="Retorna para a versão selecionada."
+                    type="button"
+                    className="flex items-center gap-2 px-3 py-2 rounded-md bg-sky-600 hover:bg-sky-500 duration-150 ease-out"
+                  >
+                    rollback
+                    <RotateCcw />
+                  </button>
+                </div>
+              </footer>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
