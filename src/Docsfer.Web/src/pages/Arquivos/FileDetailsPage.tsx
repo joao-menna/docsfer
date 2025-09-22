@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import { useLoaderData, useParams } from "react-router";
+import UserAccessRow from "@/components/common/FileDetailsUser";
 
 type Group = {
   name: string;
@@ -28,7 +29,7 @@ export default function FileDetails() {
   const { files } = useLoaderData<LoaderData>();
   const { fileId } = useParams();
 
-  const file = files.find((f) => f.id === fileId) ?? files[0];
+  const file = files.find((f) => String(f.id) === String(fileId)) ?? files[0];
   // pra mockar a tela de erro só tirar o ?? files[0];
 
   if (!file) {
@@ -53,12 +54,16 @@ export default function FileDetails() {
 
           <div className="flex flex-col gap-2">
             {file.groups?.map((group) => (
-              <div className="flex justify-between text-zinc-500 py-2 px-4 border-2 border-zinc-500 rounded-lg">
-                <span className="font-gabarito ">{group.name}</span>
-                <X />
+              <div
+                key={fileId}
+                className="flex justify-between text-zinc-500 items-center px-3 py-1 border-2 border-zinc-500 rounded-lg"
+              >
+                <span className="font-gabarito pl-2">{group.name}</span>
+                <div className="transition-all duration-200 ease-out cursor-pointer hover:bg-zinc-950 rounded-full p-1 hover:text-red-700">
+                  <X />
+                </div>
               </div>
             ))}
-            <div>Administrativo</div>
           </div>
         </div>
         {/* USUÁRIOS */}
@@ -67,8 +72,23 @@ export default function FileDetails() {
             Usuários com acesso
           </h1>
           <div className="flex flex-col gap-2">
-            <div></div>
+            {file.users?.map((user) => (
+              <div key={fileId} className="flex gap-8 w-full items-center">
+                <UserAccessRow
+                  key={`${file.id}-${user.name}`}
+                  name={user.name}
+                />
+              </div>
+            ))}
           </div>
+        </div>
+        <div className="flex justify-between w-full">
+          <button className="py-2 px-4 hover:bg-sky-600 transition-colors duration-300 bg-sky-500 text-zinc-900 font-gabarito rounded-lg">
+            enviar
+          </button>
+          <button className="py-2 px-4 border border-red-500 rounded-lg text-red-500 font-gabarito">
+            cancelar
+          </button>
         </div>
       </div>
     </div>

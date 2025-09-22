@@ -1,4 +1,5 @@
 import { useFileColor } from "@hooks/useFileColor";
+import { useAvatar } from "@/hooks/useUserPfp";
 import { formatFileSize, formatDateToBR } from "@/hooks/useMockData";
 import clsx from "clsx";
 
@@ -36,6 +37,11 @@ export const NewCardTemplate = ({
 }: CardInfoProps) => {
   const formattedDate = formatDate(date);
   const fileColor = useFileColor(item);
+
+  const { src: avatarSrc } = useAvatar({
+    seed: email ?? username,
+  });
+
   return (
     <div className="flex flex-col gap-8 w-96 px-1.5 pt-1.5 pb-3 mb-4 rounded-2xl border border-zinc-500">
       {/*Top content */}
@@ -45,8 +51,8 @@ export const NewCardTemplate = ({
           {/*container */}
           <div className=" flex bg-sky-500/20 gap-3.5 h-fit px-3.5 py-2 rounded-[10px]">
             <img
-              src="https://images.generated.photos/41gBeK4xEbwmwAxnyuGx4ODquk5jRJ_EOZPrD2Tp1Fo/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NzQ0NzMwLmpwZw.jpg"
-              alt="logo"
+              src={avatarSrc}
+              alt={`${username}'s avatar`}
               className="object-cover size-10 rounded-full"
             />
             {/*TextTop */}

@@ -11,7 +11,7 @@ export const filesLoader = async () => {
         creationDate: "15 Abr 2025 16:00",
         modifyDate: "16 Abr 2025 17:00",
         uploeader: "Ricardo",
-        Groups: [
+        groups: [
           {
             name: "RH",
             permission: "write",
@@ -21,7 +21,7 @@ export const filesLoader = async () => {
             permission: "admin",
           },
         ],
-        Users: [
+        users: [
           {
             name: "Joao",
           },
