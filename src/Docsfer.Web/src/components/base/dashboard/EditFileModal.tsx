@@ -4,6 +4,7 @@ import {
   type PreviewResult,
 } from "@/services/utils/getFilePreview";
 import { X } from "lucide-react";
+import { motion } from "motion/react";
 
 type Person = { name: string };
 type Group = { name: string };
@@ -48,8 +49,20 @@ export default function EditFileModal({ file, onClose }: Props) {
   }, [file.name]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-6">
-      <div className="w-full max-w-3xl rounded-2xl bg-zinc-900 text-zinc-200 shadow-xl">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-6"
+    >
+      <motion.div
+        initial={{ y: -32, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: -16, opacity: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+        className="w-full max-w-3xl rounded-2xl bg-zinc-900 text-zinc-200 shadow-xl"
+      >
         <header className="flex items-start justify-between p-4 border-b border-zinc-800">
           <div className="space-y-1">
             <h4 className="font-semibold">{file.name}</h4>
@@ -132,7 +145,7 @@ export default function EditFileModal({ file, onClose }: Props) {
             </button>
           </div>
         </footer>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

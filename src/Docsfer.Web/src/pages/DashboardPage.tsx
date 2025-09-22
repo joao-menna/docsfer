@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { NewCardTemplate } from "@/components/base/dashboard/NewCardTemplate";
 import Table from "@/components/base/dashboard/Table";
 import EditFileModal from "@/components/base/dashboard/EditFileModal";
+import { AnimatePresence } from "motion/react";
 
 type Person = { name: string };
 type Group = { name: string };
@@ -278,9 +279,14 @@ const DashboardPage = () => {
           </div>
         </div>
       </div>
-      {editingFile && (
-        <EditFileModal file={editingFile} onClose={() => setEditingId(null)} />
-      )}
+      <AnimatePresence>
+        {editingFile && (
+          <EditFileModal
+            file={editingFile}
+            onClose={() => setEditingId(null)}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 };

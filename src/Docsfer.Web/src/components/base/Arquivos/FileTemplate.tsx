@@ -1,6 +1,7 @@
 import { Folder, Ellipsis } from "lucide-react";
 import { useFileColor } from "@hooks/useFileColor";
 import clsx from "clsx";
+import { useNavigate } from "react-router";
 
 interface FileDetailProps {
   fileName: string;
@@ -20,6 +21,11 @@ export const FileTemplate = ({
   sharedBy,
 }: FileDetailProps) => {
   const fileColor = useFileColor(fileName);
+  const navigate = useNavigate();
+
+  const handleDetails = () => {
+    navigate("/files/123");
+  };
 
   function formatDate(dateStr: string) {
     const [day, month, year] = dateStr.split("/").map(Number);
@@ -62,6 +68,7 @@ export const FileTemplate = ({
         <button
           type="button"
           className="hover:cursor-pointer px-2.5 py-1.5 bg-sky-500 rounded-sm text-zinc-950 font-gabarito tracking-wider"
+          onClick={handleDetails}
         >
           Detalhes
         </button>
