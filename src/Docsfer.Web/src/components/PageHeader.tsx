@@ -24,7 +24,7 @@ export const PageHeader = () => {
 
   return (
     <Tooltip.Provider>
-      <header className="flex items-center w-full h-12 font-josefin border-b border-gray-400 dark:border-zinc-700">
+      <header className="flex items-center w-full h-12 font-josefin border-b border-gray-400 dark:border-gray-700">
         {/* header content */}
         <nav className="flex w-full px-4 justify-between items-center">
           <div className="inline-flex justify-center items-center">
@@ -37,19 +37,19 @@ export const PageHeader = () => {
               />
             </div>
             {/* separator */}
-            <div className="inline-flex text-lg justify-center items-center size-8 text-gray-500 dark:text-zinc-700 [&_svg]:h-4">
+            <div className="inline-flex text-lg justify-center items-center size-8 text-gray-500 dark:text-gray-700 [&_svg]:h-4">
               /
             </div>
-            <h2 className="text-lg pt-0.5 font-semibold text-zinc-400">
+            <h2 className="text-lg pt-0.5 font-semibold text-gray-400">
               {pageName}
             </h2>
           </div>
-          <div className="flex gap-4 items-center text-gray-800 dark:text-zinc-400">
+          <div className="flex gap-4 items-center text-gray-800 dark:text-gray-400">
             <CommandPalette
               files={normalized}
               onOpenFile={(id) => navigate(`/files/${id}`)}
             />
-            <div className="overflow-hidden flex  items-center rounded-full border border-zinc-400 dark:border-zinc-700">
+            <div className="overflow-hidden flex  items-center rounded-full border border-gray-400 dark:border-gray-700">
               <Tooltip.Root>
                 <Tooltip.Trigger asChild>
                   <button
@@ -65,7 +65,7 @@ export const PageHeader = () => {
                 </Tooltip.Trigger>
                 <Tooltip.Portal>
                   <Tooltip.Content
-                    className="bg-zinc-950 font-gabarito font-semibold text-zinc-400 border border-zinc-700 px-2 py-1 rounded text-sm shadow-lg"
+                    className="bg-gray-950 font-gabarito font-semibold text-gray-400 border border-gray-700 px-2 py-1 rounded text-sm shadow-lg"
                     sideOffset={5}
                   >
                     Upload new file
@@ -88,7 +88,7 @@ export const PageHeader = () => {
                 </Tooltip.Trigger>
                 <Tooltip.Portal>
                   <Tooltip.Content
-                    className="bg-zinc-950 font-gabarito font-semibold text-zinc-400 border border-zinc-700 px-2 py-1 rounded text-sm shadow-lg"
+                    className="bg-gray-950 font-gabarito font-semibold text-gray-400 border border-gray-700 px-2 py-1 rounded text-sm shadow-lg"
                     sideOffset={5}
                   >
                     Notifications

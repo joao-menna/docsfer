@@ -4,14 +4,14 @@ type TableProps = { children: ReactNode };
 
 const Table = ({ children }: TableProps) => (
   <div className="relative overflow-x-auto sm:rounded-lg">
-    <table className="w-full text-sm text-left font-gabarito text-zinc-300">
+    <table className="w-full text-sm text-left font-gabarito text-gray-300">
       {children}
     </table>
   </div>
 );
 
 const Head = ({ children }: TableProps) => (
-  <thead className="text-xs text-zinc-400 uppercase bg-zinc-700">
+  <thead className="text-xs text-gray-400 uppercase bg-gray-700">
     {children}
   </thead>
 );
@@ -21,7 +21,7 @@ const Body = ({ children }: TableProps) => <tbody>{children}</tbody>;
 const Row = ({ children }: TableProps) => <tr>{children}</tr>;
 
 const BodyRow = ({ children }: TableProps) => (
-  <tr className="odd:bg-zinc-950 even:bg-zinc-900 border-b border-zinc-700">
+  <tr className="odd:bg-gray-950 even:bg-gray-800 tracking-wide border-b border-gray-700">
     {children}
   </tr>
 );
@@ -35,7 +35,7 @@ const HeaderCell = ({ children }: TableProps) => (
 const BodyHeaderCell = ({ children }: TableProps) => (
   <th
     scope="row"
-    className="px-6 py-4 font-medium whitespace-nowrap text-zinc-200"
+    className="px-6 py-4 font-medium whitespace-nowrap text-gray-200"
   >
     {children}
   </th>

@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 
 export const RootLayout = () => {
   return (
-    <div className="min-h-dvh w-dvw bg-zinc-100 dark:bg-zinc-900 overflow-hidden scrollbar-thin scrollbar-track-zinc-900">
+    <div className="min-h-dvh w-dvw bg-zinc-100 dark:bg-gray-900 overflow-hidden scrollbar-thin scrollbar-track-gray-900">
       <PageHeader />
       <main className="flex-1 overflow-auto relative h-[calc(100dvh-48px)] w-full">
         <PageAside />

@@ -61,25 +61,25 @@ export default function EditFileModal({ file, onClose }: Props) {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: -16, opacity: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="w-full max-w-3xl rounded-2xl bg-zinc-900 text-zinc-200 shadow-xl"
+        className="w-full max-w-3xl rounded-2xl bg-gray-900 text-gray-200 shadow-xl"
       >
-        <header className="flex items-start justify-between p-4 border-b border-zinc-800">
+        <header className="flex items-start justify-between p-4 border-b border-gray-800">
           <div className="space-y-1">
             <h4 className="font-semibold">{file.name}</h4>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-gray-400">
               {file.size} • Enviado em {file.uploadedAt}
             </p>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-gray-400">
               Grupos: {file.groups.map((g) => g.name).join(", ") || "—"}
             </p>
-            <p className="text-xs text-zinc-400 text-wrap">
+            <p className="text-xs text-gray-400 text-wrap">
               Compartilhado com:{" "}
               {file.sharedWith.map((p) => p.name).join(", ") || "—"}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="px-2 text-zinc-400 hover:text-zinc-100"
+            className="px-2 text-gray-400 hover:text-gray-100"
           >
             <X />
           </button>
@@ -88,7 +88,7 @@ export default function EditFileModal({ file, onClose }: Props) {
         {/* PREVIEW */}
         <section className="p-4 flex justify-center">
           {loading && (
-            <div className="animate-pulse h-48 bg-zinc-800/60 rounded-md" />
+            <div className="animate-pulse h-48 bg-gray-800/60 rounded-md" />
           )}
           {err && <p className="text-red-400 text-sm">{err}</p>}
 
@@ -117,13 +117,13 @@ export default function EditFileModal({ file, onClose }: Props) {
           )}
 
           {!loading && !err && preview?.kind === "text" && (
-            <pre className="whitespace-pre-wrap text-sm leading-6 bg-zinc-800/60 p-3 rounded-md">
+            <pre className="whitespace-pre-wrap text-sm leading-6 bg-gray-800/60 p-3 rounded-md">
               {preview.text}
             </pre>
           )}
         </section>
 
-        <footer className="p-4 flex justify-between  border-t border-zinc-800 transition-all duration-300">
+        <footer className="p-4 flex justify-between  border-t border-gray-800 transition-all duration-300">
           <button
             type="button"
             className="px-3 py-2 rounded-md text-red-500 border-2 border-red-500 hover:bg-red-500/50 transition-all duration-150 ease-out hover:text-white"
@@ -133,7 +133,7 @@ export default function EditFileModal({ file, onClose }: Props) {
           <div className="flex gap-2">
             <button
               type="button"
-              className="px-3 py-2 rounded-md bg-zinc-800 hover:bg-zinc-700 duration-150 ease-out"
+              className="px-3 py-2 rounded-md bg-gray-800 hover:bg-gray-700 duration-150 ease-out"
             >
               Baixar
             </button>

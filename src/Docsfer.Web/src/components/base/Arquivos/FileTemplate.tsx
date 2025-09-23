@@ -41,7 +41,7 @@ export const FileTemplate = ({
     return s.replace(/\b\p{L}/gu, (m) => m.toUpperCase());
   }
   return (
-    <div className="flex flex-col justify-between  gap-16 rounded-lg bg-zinc-200 dark:bg-zinc-950 w-82">
+    <div className="flex flex-col justify-between  gap-16 rounded-lg bg-zinc-200 dark:bg-gray-950 w-82">
       {/* top part from figma */}
       <div className="flex flex-col justify-between w-full">
         {/* icon + more (ellipsis) */}

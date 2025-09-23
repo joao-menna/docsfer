@@ -36,10 +36,10 @@ export const PageAside = () => {
 
   // TODO: IMPLEMENT LIGHT MODE FOR THE LOVE OF GOD
   return (
-    <div className="fixed flex h-[calc(100dvh-48px)] z-40 bg-zinc-200 dark:bg-zinc-900">
+    <div className="fixed flex h-[calc(100dvh-48px)] z-40 bg-gray-200 dark:bg-gray-900">
       <aside
         className={clsx(
-          "transition-all duration-200 ease-in-out flex flex-col relative border-r border-zinc-700",
+          "transition-all duration-200 ease-in-out flex flex-col relative border-r border-gray-700",
           sidebarWidth
         )}
         onMouseEnter={handleMouseEnter}
@@ -54,9 +54,9 @@ export const PageAside = () => {
                   end={!!exact}
                   className={({ isActive }) =>
                     clsx(
-                      "flex items-center w-full py-3 px-3.5 gap-3 font-gabarito rounded-lg dark:hover:bg-zinc-800 dark:text-zinc-400 ",
+                      "flex items-center w-full py-3 px-3.5 gap-3 font-gabarito rounded-lg dark:hover:bg-gray-800 dark:text-gray-400 ",
                       {
-                        "dark:bg-zinc-800 dark:!text-zinc-200": isActive,
+                        "dark:bg-gray-800 dark:!text-gray-200": isActive,
                       }
                     )
                   }
@@ -78,11 +78,11 @@ export const PageAside = () => {
             ))}
           </ul>
         </nav>
-        <div className="flex items-center justify-center w-16 h-12 dark:text-zinc-400">
+        <div className="flex items-center justify-center w-16 h-12 dark:text-gray-400">
           {/* TODO: IMPLEMENT A WAY TO TOGGLE IF HOVER CHANGES THE WIDTH OR NOT WITH A TOOLTIP MENU */}
           <button
-            className={clsx("p-3 dark:hover:bg-zinc-800 rounded-lg mb-4", {
-              "dark:text-zinc-200 dark:bg-zinc-800": isPinned,
+            className={clsx("p-3 dark:hover:bg-gray-800 rounded-lg mb-4", {
+              "dark:text-gray-200 dark:bg-gray-800": isPinned,
             })}
             onClick={togglePin}
           >

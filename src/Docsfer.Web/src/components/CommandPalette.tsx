@@ -94,15 +94,15 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
       {/* Trigger button */}
       <button
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-2 rounded-lg border border-zinc-700 px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-800"
+        className="inline-flex items-center gap-2 rounded-lg border border-gray-700 px-3 py-2 text-sm text-gray-300 hover:bg-gray-800"
       >
         <Search className="h-4 w-4" />
         <span className="text-end">Search…</span>
-        <kbd className="hidden ml-2 [.os-macos_&]:block rounded bg-zinc-800 px-1.5 py-0.5 text-xs text-zinc-400">
+        <kbd className="hidden ml-2 [.os-macos_&]:block rounded bg-gray-800 px-1.5 py-0.5 text-xs text-gray-400">
           ⌘ + K
         </kbd>
         {/* thanks tailwind docs, didn't know there was an os detector in css xD */}
-        <kbd className="hidden not-[.os-macos_&]:block ml-2 rounded bg-zinc-800 px-1.5 py-0.5 text-xs text-zinc-400">
+        <kbd className="hidden not-[.os-macos_&]:block ml-2 rounded bg-gray-800 px-1.5 py-0.5 text-xs text-gray-400">
           Ctrl + K
         </kbd>
       </button>
@@ -125,25 +125,25 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
 
         <div
           className={clsx(
-            "absolute left-1/2 top-24 w-[min(800px,92vw)] -translate-x-1/2 rounded-2xl border border-zinc-800 bg-zinc-900 shadow-2xl transition-transform",
+            "absolute left-1/2 top-24 w-[min(800px,92vw)] -translate-x-1/2 rounded-2xl border border-gray-800 bg-gray-900 shadow-2xl transition-transform",
             open ? "scale-100 opacity-100" : "scale-95 opacity-0"
           )}
           role="dialog"
           aria-modal="true"
         >
           <Command label="Search" shouldFilter={false}>
-            <div className="flex items-center gap-2 border-b border-zinc-800 px-3 py-2">
-              <Search className="h-4 w-4 text-zinc-500" />
+            <div className="flex items-center gap-2 border-b border-gray-800 px-3 py-2">
+              <Search className="h-4 w-4 text-gray-500" />
               <Command.Input
                 value={q}
                 onValueChange={setQ}
                 placeholder="Search files, users, groups…"
-                className="flex-1 bg-transparent py-2 text-sm text-zinc-200 placeholder:text-zinc-500 outline-none"
+                className="flex-1 bg-transparent py-2 text-sm text-gray-200 placeholder:text-gray-500 outline-none"
                 autoFocus
               />
               <button
                 onClick={close}
-                className="rounded p-1 text-zinc-500 hover:bg-zinc-800"
+                className="rounded p-1 text-gray-500 hover:bg-gray-800"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -152,12 +152,12 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
 
             <Command.List className="max-h-[60vh] overflow-y-auto p-2">
               {!q && (
-                <Command.Empty className="px-3 py-6 text-sm text-zinc-500">
+                <Command.Empty className="px-3 py-6 text-sm text-gray-500">
                   Dica: digite um nome de usuário ou arquivo
                 </Command.Empty>
               )}
               {q && results.length === 0 && (
-                <Command.Empty className="px-3 py-6 text-sm text-zinc-500">
+                <Command.Empty className="px-3 py-6 text-sm text-gray-500">
                   Nenhum resultado encontrado para: “{q}”.
                 </Command.Empty>
               )}
@@ -165,7 +165,7 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
               {/* Group: Files */}
               <Command.Group
                 heading="Arquivos"
-                className="mb-1 px-2 pt-2 text-xs font-semibold uppercase tracking-wide text-zinc-500"
+                className="mb-1 px-2 pt-2 text-xs font-semibold uppercase tracking-wide text-gray-500"
               />
               {results
                 .filter((r) => r.item.kind === "file")
@@ -179,14 +179,14 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
                         onOpenFile?.(f.id);
                         close();
                       }}
-                      className="group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-sm text-zinc-200 aria-selected:bg-zinc-800"
+                      className="group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-200 aria-selected:bg-gray-800"
                     >
-                      <FileText className="h-4 w-4 text-zinc-500" />
+                      <FileText className="h-4 w-4 text-gray-500" />
                       <div className="min-w-0 flex-1">
                         <div className="truncate">
                           {highlight(f.name, r.matches)}
                         </div>
-                        <div className="mt-0.5 text-xs text-zinc-500">
+                        <div className="mt-0.5 text-xs text-gray-500">
                           {f.modifyDate} • by {f.uploader}
                         </div>
                       </div>
@@ -197,7 +197,7 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
               {/* Group: Users */}
               <Command.Group
                 heading="Usuários"
-                className="mt-2 border-t border-zinc-600 mb-1 px-2 pt-2 text-xs font-semibold uppercase tracking-wide text-zinc-500"
+                className="mt-2 border-t border-gray-600 mb-1 px-2 pt-2 text-xs font-semibold uppercase tracking-wide text-gray-500"
               />
               {results
                 .filter((r) => r.item.kind === "user")
@@ -207,9 +207,9 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
                     <Command.Item
                       key={`u-${u.name}-${idx}`}
                       value={`user:${u.name}`}
-                      className="group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-sm text-zinc-200 aria-selected:bg-zinc-800"
+                      className="group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-200 aria-selected:bg-gray-800"
                     >
-                      <Users className="h-4 w-4 text-zinc-500" />
+                      <Users className="h-4 w-4 text-gray-500" />
                       <div className="truncate">
                         {highlight(u.name, r.matches)}
                       </div>
@@ -220,7 +220,7 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
               {/* Group: Groups */}
               <Command.Group
                 heading="Grupos"
-                className="mt-2 mb-1 border-t border-zinc-600 px-2 pt-2 text-xs font-semibold uppercase tracking-wide text-zinc-500"
+                className="mt-2 mb-1 border-t border-gray-600 px-2 pt-2 text-xs font-semibold uppercase tracking-wide text-gray-500"
               />
               {results
                 .filter((r) => r.item.kind === "group")
@@ -230,9 +230,9 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
                     <Command.Item
                       key={`g-${g.name}-${idx}`}
                       value={`group:${g.name}`}
-                      className="group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-sm text-zinc-200 aria-selected:bg-zinc-800"
+                      className="group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-200 aria-selected:bg-gray-800"
                     >
-                      <Users className="h-4 w-4 text-zinc-500" />
+                      <Users className="h-4 w-4 text-gray-500" />
                       <div className="truncate">
                         {highlight(g.name, r.matches)}
                       </div>

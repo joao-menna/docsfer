@@ -33,7 +33,7 @@
   }
 
   .header-button__style {
-    @apply inline-flex justify-center items-center relative cursor-pointer space-x-2 text-center ease-out duration-300 transition-all outline-none hover:bg-zinc-300 dark:hover:bg-zinc-800 w-9 h-7;
+    @apply inline-flex justify-center items-center relative cursor-pointer space-x-2 text-center ease-out duration-300 transition-all outline-none hover:bg-gray-300 dark:hover:bg-gray-800 w-9 h-7;
   }
 
   .flex-center {
@@ -43,6 +43,6 @@
 
 @layer base {
   * {
-    @apply scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-zinc-700 scrollbar-hover:scrollbar-thumb-zinc-600;
+    @apply scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-gray-700 scrollbar-hover:scrollbar-thumb-gray-600;
   }
 }
