@@ -5,25 +5,7 @@ import Table from "@/components/base/dashboard/Table";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import clsx from "clsx";
-
-type Group = {
-  name: string;
-  permission: "read" | "write" | "admin";
-};
-
-type User = {
-  name: string;
-};
-
-type File = {
-  id: string;
-  name: string;
-  creationDate: string;
-  modifyDate: string;
-  uploader: string;
-  groups?: Group[];
-  users?: User[];
-};
+import type { File } from "@/types/search";
 
 type LoaderData = {
   files: File[];

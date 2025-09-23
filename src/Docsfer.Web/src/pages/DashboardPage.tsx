@@ -4,6 +4,7 @@ import { NewCardTemplate } from "@/components/base/dashboard/NewCardTemplate";
 import Table from "@/components/base/dashboard/Table";
 import EditFileModal from "@/components/base/dashboard/EditFileModal";
 import { AnimatePresence } from "motion/react";
+import { Plus } from "lucide-react";
 
 type Person = { name: string };
 type Group = { name: string };
@@ -212,9 +213,14 @@ const DashboardPage = () => {
             </section>
             {/* ↓ Seção 2: Arquivos Enviados ↓ */}
             <section className="flex flex-col gap-2">
-              <h3 className="inline-flex w-fit font-gabarito dark:text-sky-500 tracking-wider px-3 py-2 rounded-sm dark:bg-sky-500/20">
-                Meus Arquivos
-              </h3>
+              <div className="flex gap-2">
+                <h3 className="inline-flex w-fit font-gabarito dark:text-sky-500 tracking-wider px-3 py-2 rounded-sm dark:bg-sky-500/20">
+                  Meus Arquivos
+                </h3>
+                <span className="flex-center rounded-full py-auto px-2  text-sky-500 bg-sky-500/20 hover:bg-sky-500/25">
+                  <Plus />
+                </span>
+              </div>
               <div className="h-[25dvh] overflow-auto pr-2">
                 <Table>
                   <Table.Head>
@@ -275,7 +281,12 @@ const DashboardPage = () => {
               </div>
             </section>
             {/* ↓ Seção 3: Todos os Arquivos ↓ */}
-            <section className="flex flex-col h-dvh"></section>
+            <section className="flex flex-col gap-2">
+              <h3 className="inline-flex w-fit font-gabarito text-sky-500 tracking-wider px-3 py-2 rounded-sm bg-sky-500/20">
+                Compartilhados comigo
+              </h3>
+              <div className="h-[50dvh] overflow-auto pr-2"></div>
+            </section>
           </div>
         </div>
       </div>

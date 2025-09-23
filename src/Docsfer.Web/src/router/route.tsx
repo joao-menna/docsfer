@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
   {
     element: <RootLayout />,
     errorElement: <RouteError />,
-    loader: requireAuth,
+    loader: filesLoader,
     children: [
       { path: "dashboard", element: <Dashboard /> },
       { path: "groups", element: <Groups /> },

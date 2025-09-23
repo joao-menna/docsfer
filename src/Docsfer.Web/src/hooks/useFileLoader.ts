@@ -10,7 +10,7 @@ export const filesLoader = async () => {
         name: "Documento1.pdf",
         creationDate: "15 Abr 2025 16:00",
         modifyDate: "16 Abr 2025 17:00",
-        uploeader: "Ricardo",
+        uploader: "Ricardo",
         groups: [
           {
             name: "RH",

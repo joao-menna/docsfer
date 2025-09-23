@@ -1,11 +1,22 @@
 import { CloudUpload, Bell } from "lucide-react";
 import usePageName from "../hooks/usePageName";
-import { useNavigate } from "react-router";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { useLoaderData, useNavigate } from "react-router";
+import CommandPalette from "./CommandPalette";
+import type { File } from "@/types/search";
+
+type LoaderData = { files: File[] };
 
 export const PageHeader = () => {
   const pageName: string = usePageName();
   const navigate = useNavigate();
+
+  const { files } = useLoaderData<LoaderData>();
+
+  const normalized = files.map((f: { uploader: string }) => ({
+    ...f,
+    uploader: f.uploader ?? "Desconhecido",
+  })) as File[];
 
   const goToNewFile = () => {
     navigate("/newFile");
@@ -34,6 +45,10 @@ export const PageHeader = () => {
             </h2>
           </div>
           <div className="flex gap-4 items-center text-gray-800 dark:text-zinc-400">
+            <CommandPalette
+              files={normalized}
+              onOpenFile={(id) => navigate(`/files/${id}`)}
+            />
             <div className="overflow-hidden flex  items-center rounded-full border border-zinc-400 dark:border-zinc-700">
               <Tooltip.Root>
                 <Tooltip.Trigger asChild>
