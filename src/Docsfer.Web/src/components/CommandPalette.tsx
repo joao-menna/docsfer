@@ -91,15 +91,19 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
 
   return (
     <div>
-      {/* Trigger button (optional) */}
+      {/* Trigger button */}
       <button
         onClick={() => setOpen(true)}
         className="inline-flex items-center gap-2 rounded-lg border border-zinc-700 px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-800"
       >
         <Search className="h-4 w-4" />
-        <span>Search…</span>
-        <kbd className="ml-2 rounded bg-zinc-800 px-1.5 py-0.5 text-xs text-zinc-400">
-          Ctrl/Cmd + K
+        <span className="text-end">Search…</span>
+        <kbd className="hidden ml-2 [.os-macos_&]:block rounded bg-zinc-800 px-1.5 py-0.5 text-xs text-zinc-400">
+          ⌘ + K
+        </kbd>
+        {/* thanks tailwind docs, didn't know there was an os detector in css xD */}
+        <kbd className="hidden not-[.os-macos_&]:block ml-2 rounded bg-zinc-800 px-1.5 py-0.5 text-xs text-zinc-400">
+          Ctrl + K
         </kbd>
       </button>
 

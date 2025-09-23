@@ -5,7 +5,6 @@ import Login from "../pages/LoginPage";
 import Dashboard from "../pages/DashboardPage";
 import { RootLayout } from "../layout/RootLayout";
 import { filesLoader } from "../hooks/useFileLoader";
-import { requireAuth } from "../hooks/useRequireAuth";
 
 import { RouteError } from "../components/base/RouteError";
 import { Loader } from "../components/base/Loader";
