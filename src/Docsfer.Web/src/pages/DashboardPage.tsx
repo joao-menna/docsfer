@@ -5,6 +5,7 @@ import Table from "@/components/base/dashboard/Table";
 import EditFileModal from "@/components/base/dashboard/EditFileModal";
 import { AnimatePresence } from "motion/react";
 import { Plus } from "lucide-react";
+import { useNavigate } from "react-router";
 
 type Person = { name: string };
 type Group = { name: string };
@@ -27,6 +28,8 @@ const DashboardPage = () => {
     "Tamanho",
     "Ações",
   ];
+
+  const navigate = useNavigate();
 
   // TODO: remove esse mock HORRIVEL
 
@@ -187,6 +190,10 @@ const DashboardPage = () => {
     [files, editingId]
   );
 
+  const handleNewFile = () => {
+    navigate("/newFile");
+  };
+
   return (
     <>
       <div className="relative z-10 min-h-[calc(100dvh-3rem)]">
@@ -217,9 +224,12 @@ const DashboardPage = () => {
                 <h3 className="inline-flex w-fit font-gabarito dark:text-sky-500 tracking-wider px-3 py-2 rounded-sm dark:bg-sky-500/20">
                   Meus Arquivos
                 </h3>
-                <span className="flex-center rounded-full py-auto px-2  text-sky-500 bg-sky-500/20 hover:bg-sky-500/25">
+                <button
+                  className="flex-center rounded-full py-auto px-2 transition-all duration-200 ease-out text-sky-500 bg-sky-500/20 hover:bg-sky-500/30 hover:shadow-[0px_0px_32px_2px] shadow-sky-500/25 hover:text-sky-200"
+                  onClick={handleNewFile}
+                >
                   <Plus />
-                </span>
+                </button>
               </div>
               <div className="h-[25dvh] overflow-auto pr-2">
                 <Table>

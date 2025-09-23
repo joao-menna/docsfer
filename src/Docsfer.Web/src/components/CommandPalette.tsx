@@ -79,7 +79,7 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
     for (const [start, end] of m.indices) {
       if (start > last) out.push(label.slice(last, start));
       out.push(
-        <mark key={start} className="bg-transparent underline">
+        <mark key={start} className="bg-transparent underline text-sky-500">
           {label.slice(start, end + 1)}
         </mark>
       );
@@ -153,18 +153,18 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
             <Command.List className="max-h-[60vh] overflow-y-auto p-2">
               {!q && (
                 <Command.Empty className="px-3 py-6 text-sm text-zinc-500">
-                  Tip: try a file name or a user.
+                  Dica: digite um nome de usuário ou arquivo
                 </Command.Empty>
               )}
               {q && results.length === 0 && (
                 <Command.Empty className="px-3 py-6 text-sm text-zinc-500">
-                  No results for “{q}”.
+                  Nenhum resultado encontrado para: “{q}”.
                 </Command.Empty>
               )}
 
               {/* Group: Files */}
               <Command.Group
-                heading="Files"
+                heading="Arquivos"
                 className="mb-1 px-2 pt-2 text-xs font-semibold uppercase tracking-wide text-zinc-500"
               />
               {results
@@ -196,8 +196,8 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
 
               {/* Group: Users */}
               <Command.Group
-                heading="Users"
-                className="mt-2 mb-1 px-2 pt-2 text-xs font-semibold uppercase tracking-wide text-zinc-500"
+                heading="Usuários"
+                className="mt-2 border-t border-zinc-600 mb-1 px-2 pt-2 text-xs font-semibold uppercase tracking-wide text-zinc-500"
               />
               {results
                 .filter((r) => r.item.kind === "user")
@@ -219,8 +219,8 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
 
               {/* Group: Groups */}
               <Command.Group
-                heading="Groups"
-                className="mt-2 mb-1 px-2 pt-2 text-xs font-semibold uppercase tracking-wide text-zinc-500"
+                heading="Grupos"
+                className="mt-2 mb-1 border-t border-zinc-600 px-2 pt-2 text-xs font-semibold uppercase tracking-wide text-zinc-500"
               />
               {results
                 .filter((r) => r.item.kind === "group")

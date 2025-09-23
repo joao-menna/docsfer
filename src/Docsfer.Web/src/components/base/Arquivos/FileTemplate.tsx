@@ -41,9 +41,9 @@ export const FileTemplate = ({
     return s.replace(/\b\p{L}/gu, (m) => m.toUpperCase());
   }
   return (
-    <div className="flex flex-col gap-16 rounded-lg bg-zinc-200 dark:bg-zinc-950 w-82">
+    <div className="flex flex-col justify-between  gap-16 rounded-lg bg-zinc-200 dark:bg-zinc-950 w-82">
       {/* top part from figma */}
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col justify-between w-full">
         {/* icon + more (ellipsis) */}
         <div className="flex justify-between p-3">
           <Folder
@@ -51,8 +51,13 @@ export const FileTemplate = ({
           />
           <Ellipsis className="text-zinc-200 hover:cursor-pointer" />
         </div>
-        <div className="flex flex-col gap-2 justify-start items-start px-3">
-          <h3 className="font-gabarito text-xl text-zinc-200">{fileName}</h3>
+        <div
+          className="flex flex-col gap-2 justify-start items-start px-3"
+          title={fileName}
+        >
+          <h3 className="font-gabarito text-xl text-zinc-200 line-clamp-2 break-words w-full">
+            {fileName}
+          </h3>
           <div className="flex flex-col text-zinc-400 font-gabarito text-sm">
             <p>
               {formatDate(fileDate)} - {fileSize}
@@ -67,7 +72,7 @@ export const FileTemplate = ({
       <div className="flex justify-between p-3 items-center">
         <button
           type="button"
-          className="hover:cursor-pointer px-2.5 py-1.5 bg-sky-500 rounded-sm text-zinc-950 font-gabarito tracking-wider"
+          className="hover:cursor-pointer px-2.5 py-1.5 bg-sky-500 hover:bg-sky-400 shadow-[0px_0px_8px_4px] shadow-sky-500/25 hover:shadow-sm rounded-sm text-zinc-950 font-gabarito tracking-wider transition-all duration-200 ease-out"
           onClick={handleDetails}
         >
           Detalhes
