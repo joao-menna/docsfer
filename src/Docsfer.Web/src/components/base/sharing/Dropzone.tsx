@@ -1,4 +1,4 @@
-import React, {
+import {
   useCallback,
   useRef,
   useState,
@@ -17,14 +17,13 @@ export type DropzoneProps = {
   "data-testid"?: string;
 };
 
-const Dropzone: React.FC<DropzoneProps> = ({
+const Dropzone = ({
   showAdminContent = true,
   onFiles,
-  accept = "image/*",
   multiple = true,
   className,
   "data-testid": dataTestId = "dropzone",
-}) => {
+}: DropzoneProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -114,7 +113,6 @@ const Dropzone: React.FC<DropzoneProps> = ({
           ref={fileInputRef}
           type="file"
           className="hidden"
-          accept={accept}
           multiple={multiple}
           onChange={handleFileSelect}
         />
