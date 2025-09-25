@@ -5,7 +5,7 @@ export const fileType: Record<string, string> = {
 
   pdf: "documento PDF",
   doc: "documento Word",
-  docx: "docmento Word",
+  docx: "documento Word",
   txt: "arquivo de Texto",
   md: "markdown",
 

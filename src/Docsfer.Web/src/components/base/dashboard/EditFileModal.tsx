@@ -5,20 +5,10 @@ import {
 } from "@/services/utils/getFilePreview";
 import { X } from "lucide-react";
 import { motion } from "motion/react";
-
-type Person = { name: string };
-type Group = { name: string };
-type FileRow = {
-  id: number;
-  name: string;
-  sharedWith: Person[];
-  uploadedAt: string;
-  groups: Group[];
-  size: string;
-};
+import type { File } from "@/types/search";
 
 type Props = {
-  file: FileRow;
+  file: File;
   onClose: () => void;
 };
 
@@ -67,14 +57,14 @@ export default function EditFileModal({ file, onClose }: Props) {
           <div className="space-y-1">
             <h4 className="font-semibold">{file.name}</h4>
             <p className="text-xs text-gray-400">
-              {file.size} • Enviado em {file.uploadedAt}
+              {file.size} • Enviado em {file.creationDate}
             </p>
             <p className="text-xs text-gray-400">
               Grupos: {file.groups.map((g) => g.name).join(", ") || "—"}
             </p>
             <p className="text-xs text-gray-400 text-wrap">
               Compartilhado com:{" "}
-              {file.sharedWith.map((p) => p.name).join(", ") || "—"}
+              {file.users?.map((u) => u.name).join(", ") || "—"}
             </p>
           </div>
           <button

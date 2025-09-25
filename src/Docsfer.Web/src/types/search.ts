@@ -9,4 +9,6 @@ export type File = {
   uploader: string;
   groups: Group[];
   users: User[];
+  size: string;
+  version: number;
 };
