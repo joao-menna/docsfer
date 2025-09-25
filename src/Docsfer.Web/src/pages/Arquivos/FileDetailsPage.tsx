@@ -1,5 +1,5 @@
 import { RotateCcw, X } from "lucide-react";
-import { useLoaderData, useParams } from "react-router";
+import { useLoaderData, useNavigate, useParams } from "react-router";
 import UserAccessRow from "@/components/common/FileDetailsUser";
 import Table from "@/components/base/dashboard/Table";
 import { useEffect, useMemo, useState } from "react";
@@ -15,6 +15,7 @@ type LoaderData = {
 export default function FileDetails() {
   const { files, currentFile } = useLoaderData<LoaderData>();
   const { fileId } = useParams();
+  const navigate = useNavigate();
 
   const header = ["versão", "modificado", "tamanho", "ações"];
   const versions = [
@@ -74,6 +75,19 @@ export default function FileDetails() {
       <div className="flex justify-between px-6 py-4">
         {/* file content */}
         <div className="flex flex-col gap-10 min-w-xl">
+          {/* breadcrumbs */}
+          <div className="flex font-gabarito text-gray-500 text-md gap-2">
+            <button
+              onClick={() => navigate("/files")}
+              type="button"
+              className="cursor-pointer hover:text-gray-400"
+            >
+              / files{" "}
+            </button>
+            <button type="button" disabled className="text-gray-700">
+              / {file.name}
+            </button>
+          </div>
           {/* TOP */}
           <div className="w-full flex items-start gap-4 flex-col">
             <div className="flex flex-col gap-5 w-full justify-start">
