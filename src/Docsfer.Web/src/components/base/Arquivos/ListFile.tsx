@@ -53,7 +53,7 @@ export default function ListFile({ file }: FileProps) {
           <button
             type="button"
             onClick={() => navigate(`/files/${file.id}`)}
-            className="opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 size-10 rounded-full hover:shadow-[0px_0px_4px_8px_rgba(14,165,233,0.25)]  flex-center"
+            className="opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 size-10 rounded-full hover:shadow-[0px_0px_8px_2px_rgba(14,165,233,0.25)]  flex-center"
           >
             <Ellipsis className="stroke-gray-200" />
           </button>

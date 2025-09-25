@@ -80,7 +80,7 @@ export default function FileDetails() {
               {/* top header */}
               <div className="flex flex-col font-josefin gap-2">
                 <h1 className="text-2xl text-sky-500">{file.name}</h1>
-                <h2 className="text-xl text-zinc-400">{file.size}</h2>
+                <h2 className="text-xl text-gray-400">{file.size}</h2>
               </div>
               {/* infos */}
               <div className="flex flex-col gap-5 pb-4 border-b-2 border-sky-800">
@@ -209,14 +209,14 @@ export default function FileDetails() {
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
             <motion.div
-              className="w-full max-w-xl rounded-2xl bg-zinc-900 text-zinc-200 shadow-xl"
+              className="w-full max-w-xl rounded-2xl bg-gray-900 text-gray-200 shadow-xl"
               onClick={(e) => e.stopPropagation()}
               initial={{ y: -32, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -16, opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <header className="flex items-start justify-between p-4 border-b border-zinc-800">
+              <header className="flex items-start justify-between p-4 border-b border-gray-800">
                 <h4 className="font-josefin text-lg">{file.name}</h4>
                 <X onClick={() => setFileVersion(null)} />
               </header>
@@ -225,7 +225,7 @@ export default function FileDetails() {
                   Versão:{" "}
                   <span
                     className={clsx(
-                      `text-zinc-500`,
+                      `text-gray-500`,
                       editingFile?.version?.includes("atual") && "text-sky-500"
                     )}
                   >
@@ -234,7 +234,7 @@ export default function FileDetails() {
                 </span>
                 <span>Criada em: {editingFile.modified}</span>
               </section>
-              <footer className="p-4 flex justify-between  border-t border-zinc-800 transition-all duration-300">
+              <footer className="p-4 flex justify-between  border-t border-gray-800 transition-all duration-300">
                 <button
                   type="button"
                   className="px-3 py-2 rounded-md text-red-500 border-2 border-red-500 hover:bg-red-500/50 transition-all duration-150 ease-out hover:text-white cursor-pointer"
@@ -244,7 +244,7 @@ export default function FileDetails() {
                 <div className="flex gap-2">
                   <button
                     type="button"
-                    className="px-3 py-2 rounded-md bg-zinc-800 hover:bg-zinc-700 duration-150 ease-out cursor-pointer"
+                    className="px-3 py-2 rounded-md bg-gray-800 hover:bg-gray-700 duration-150 ease-out cursor-pointer"
                   >
                     Baixar
                   </button>

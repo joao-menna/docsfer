@@ -54,7 +54,7 @@ export default function AllFiles() {
 
   return (
     <>
-      <div className="flex flex-col gap-8 px-6 py-4">
+      <div className="flex flex-col gap-8 px-6 py-4 relative">
         {/* Heading */}
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-2">
@@ -82,6 +82,10 @@ export default function AllFiles() {
               <RecentFile />
             </div>
           </div>
+        </div>
+        {/* sidebar */}
+        <div className="fixed right-0 top-12 h-[calc(100dvh-3rem)] w-2xl">
+          <div className="w-full h-full border-l border-gray-700"></div>
         </div>
       </div>
       <div className="flex flex-col w-full">
