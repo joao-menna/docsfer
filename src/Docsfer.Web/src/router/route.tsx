@@ -4,7 +4,7 @@ import { createBrowserRouter } from "react-router";
 import Login from "../pages/LoginPage";
 import Dashboard from "../pages/DashboardPage";
 import { RootLayout } from "../layout/RootLayout";
-import { filesLoader } from "../hooks/useFileLoader";
+import { filesLoader, fileDetailLoader } from "../hooks/useFileLoader";
 
 import { RouteError } from "../components/base/RouteError";
 import { Loader } from "../components/base/Loader";
@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "files/:id",
-        loader: filesLoader,
+        loader: fileDetailLoader,
         errorElement: <FileNotFoundError />,
         element: (
           <Suspense fallback={<Loader />}>

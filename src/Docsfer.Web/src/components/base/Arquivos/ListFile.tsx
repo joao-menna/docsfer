@@ -3,6 +3,7 @@ import { getFileTypeLabel } from "@hooks/useFileType";
 import type { File } from "@/types/search";
 import { useState } from "react";
 import clsx from "clsx";
+import { useNavigate } from "react-router";
 
 type FileProps = {
   file: File;
@@ -10,6 +11,7 @@ type FileProps = {
 
 export default function ListFile({ file }: FileProps) {
   const [isClicked, setIsClicked] = useState(false);
+  const navigate = useNavigate();
 
   const fileType = getFileTypeLabel(file.name);
   return (
@@ -48,9 +50,13 @@ export default function ListFile({ file }: FileProps) {
               </h3>
             </div>
           </div>
-          <div className="opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 size-10 rounded-full hover:shadow-[0px_0px_4px_8px_rgba(14,165,233,0.25)]  flex-center">
+          <button
+            type="button"
+            onClick={() => navigate(`/files/${file.id}`)}
+            className="opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 size-10 rounded-full hover:shadow-[0px_0px_4px_8px_rgba(14,165,233,0.25)]  flex-center"
+          >
             <Ellipsis className="stroke-gray-200" />
-          </div>
+          </button>
         </div>
         <div className="flex w-full items-center justify-between">
           <span className="py-2 px-4 rounded-4xl bg-[linear-gradient(135deg,#334145,#52656B)] border border-white/20">

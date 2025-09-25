@@ -9,11 +9,13 @@ import type { File } from "@/types/search";
 
 type LoaderData = {
   files: File[];
+  currentFile: File | null;
 };
 
 export default function FileDetails() {
-  const { files } = useLoaderData<LoaderData>();
+  const { files, currentFile } = useLoaderData<LoaderData>();
   const { fileId } = useParams();
+
   const header = ["versão", "modificado", "tamanho", "ações"];
   const versions = [
     {
@@ -43,8 +45,9 @@ export default function FileDetails() {
     },
   ];
 
-  const file = files.find((f) => String(f.id) === String(fileId)) ?? files[0];
-  // pra mockar a tela de erro só tirar o ?? files[0];
+  const file = currentFile ?? files[0];
+  // for PROD: throw an err if currentFile is null
+
   const [fileVersion, setFileVersion] = useState<string | null>(null);
 
   const editingFile = useMemo(
@@ -76,31 +79,32 @@ export default function FileDetails() {
             <div className="flex flex-col gap-5 w-full justify-start">
               {/* top header */}
               <div className="flex flex-col font-josefin gap-2">
-                <h1 className="text-2xl text-sky-500">Documento1.pdf</h1>
-                <h2 className="text-xl text-zinc-400">120 MB</h2>
+                <h1 className="text-2xl text-sky-500">{file.name}</h1>
+                <h2 className="text-xl text-zinc-400">{file.size}</h2>
               </div>
               {/* infos */}
               <div className="flex flex-col gap-5 pb-4 border-b-2 border-sky-800">
                 <fieldset className="flex flex-col gap-2 text-zinc-200 font-gabarito">
-                  <label htmlFor="Documento1">Nome do arquivo</label>
+                  <label htmlFor={file.name}>Nome do arquivo</label>
                   <input
-                    id="Documento1"
-                    placeholder="Documento1.pdf"
+                    id={file.name}
+                    placeholder={file.name}
+                    defaultValue={file.name}
                     className="px-4 py-2 rounded-lg border border-zinc-400"
                   />
                 </fieldset>
                 <div className="flex flex-col gap-2 text-zinc-400 font-gabarito">
                   <span className="flex justify-between">
                     <span>Criação:</span>
-                    <span className="text-sky-500">15/05/2005 16:00</span>
+                    <span className="text-sky-500">{file.creationDate}</span>
                   </span>
                   <span className="flex justify-between">
                     <span>Modificado:</span>
-                    <span className="text-sky-500">15/05/2005 17:00</span>
+                    <span className="text-sky-500">{file.modifyDate}</span>
                   </span>
                   <span className="flex justify-between">
                     <span>Compartilhado por:</span>
-                    <span className="text-sky-500">Ricardo</span>
+                    <span className="text-sky-500">{file.uploader}</span>
                   </span>
                 </div>
               </div>
@@ -139,7 +143,8 @@ export default function FileDetails() {
               </div>
             </div>
           </div>
-          {/* BOTTOM */}
+          {/* TODO: BOTTOM */}
+
           <div></div>
         </div>
         {/* file permissions */}

@@ -1,12 +1,14 @@
 import { motion } from "motion/react";
 import Table from "@components/base/dashboard/Table.tsx";
 import type { File } from "@/types/search";
+import { useNavigate } from "react-router";
 
 type ListViewProps = {
   data: File[];
 };
 
 export default function ListView({ data }: ListViewProps) {
+  const navigate = useNavigate();
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -47,7 +49,13 @@ export default function ListView({ data }: ListViewProps) {
               <Table.Cell>{item.size}</Table.Cell>
               <Table.Cell>{item.uploader}</Table.Cell>
               <Table.Cell>
-                <span className="hover:underline text-sky-500">Editar</span>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/files/${item.id}`)}
+                  className="hover:underline text-sky-500 cursor-pointer hover:text-sky-700!"
+                >
+                  Editar
+                </button>
               </Table.Cell>
             </motion.tr>
           ))}
