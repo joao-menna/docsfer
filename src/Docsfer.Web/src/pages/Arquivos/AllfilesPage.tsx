@@ -1,5 +1,5 @@
 import RecentFile from "@/components/base/Arquivos/RecentFile";
-import { ChevronDown, List } from "lucide-react";
+import { ChevronDown, ChevronUp, List, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useNavigate } from "react-router";
 import { useState } from "react";
@@ -9,6 +9,7 @@ import clsx from "clsx";
 import { Table } from "lucide-react";
 import ListView from "@components/base/Arquivos/ListView";
 import GridView from "@components/base/Arquivos/GridView.tsx";
+import { useFileSorting } from "@/hooks/useFileSorting";
 
 type LoaderData = {
   files: File[];
@@ -19,6 +20,8 @@ export default function AllFiles() {
   const [viewMode, setViewMode] = useState("list");
 
   const { files } = useLoaderData<LoaderData>();
+  const { sortedFiles, sortConfig, handleSort, clearSort } =
+    useFileSorting(files);
 
   const toggleView = () => {
     setViewMode((prev) => (prev === "list" ? "grid" : "list"));
@@ -26,6 +29,27 @@ export default function AllFiles() {
 
   const handleNotFound = () => {
     navigate("/newFile");
+  };
+
+  const getSortIcon = (field: "name" | "uploader") => {
+    if (sortConfig.field !== field) {
+      return <ChevronDown className="size-4" />;
+    }
+    return sortConfig.direction === "asc" ? (
+      <ChevronUp className="size-4" />
+    ) : (
+      <ChevronDown className="size-4" />
+    );
+  };
+
+  const getSortButtonStyles = (field: "name" | "uploader") => {
+    const isActive = sortConfig.field === field;
+    return clsx(
+      "h-10 px-4 flex-center gap-2 rounded-lg border border-gray-500 cursor-pointer transition-all duration-200",
+      isActive
+        ? "bg-gray-950 text-gray-200 border-sky-500"
+        : "text-gray-500 hover:bg-gray-800 hover:border-gray-400"
+    );
   };
 
   return (
@@ -70,14 +94,31 @@ export default function AllFiles() {
                 Tipo de arquivo
                 <ChevronDown />
               </div>
-              <div className="h-10 px-4 flex-center rounded-lg border border-gray-500">
+              <button
+                type="button"
+                onClick={() => handleSort("uploader")}
+                className={getSortButtonStyles("uploader")}
+              >
                 Encaminhado por
-                <ChevronDown />
-              </div>
-              <div className="h-10 px-4 flex-center rounded-lg border border-gray-500">
+                {getSortIcon("uploader")}
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSort("name")}
+                className={getSortButtonStyles("name")}
+              >
                 Nome
-                <ChevronDown />
-              </div>
+                {getSortIcon("name")}
+              </button>
+              {sortConfig.field && (
+                <button
+                  type="button"
+                  onClick={clearSort}
+                  className="size-10 flex-center rounded-lg border border-red-800 text-red-500 hover:bg-red-950 hover:border-red-500 transition-all duration-200 cursor-pointer"
+                >
+                  <X />
+                </button>
+              )}
             </div>
             <button
               onClick={toggleView}
@@ -110,9 +151,9 @@ export default function AllFiles() {
           <motion.div layout className="relative max-w-5xl">
             <AnimatePresence mode="wait">
               {viewMode === "list" ? (
-                <ListView key="list" data={files} />
+                <ListView key="list" data={sortedFiles} />
               ) : (
-                <GridView key="grid" data={files} />
+                <GridView key="grid" data={sortedFiles} />
               )}
             </AnimatePresence>
           </motion.div>
