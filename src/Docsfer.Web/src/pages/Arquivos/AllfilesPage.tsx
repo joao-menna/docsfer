@@ -88,7 +88,7 @@ export default function AllFiles() {
                   "px-4 py-2 h-10 text-gray-500 flex-center gap-2 transition-all duration-200 ease-out rounded-s-lg border border-gray-500",
                   viewMode === "grid"
                     ? "bg-gray-950 text-gray-200! hover:shadow-[0px_0px_8px_2px_rgba(14,165,233,0.25)]"
-                    : "hover:bg-gray-800"
+                    : "hover:bg-gray-800 hover:shadow-[0px_0px_8px_2px_rgba(0,0,0,1)]"
                 )}
               >
                 <Table />
