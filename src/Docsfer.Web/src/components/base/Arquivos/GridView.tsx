@@ -4,9 +4,15 @@ import type { File } from "@/types/search";
 
 type GridViewProps = {
   data: File[];
+  selectedFileId?: number | null;
+  onFileClick: (file: File) => void;
 };
 
-export default function GridView({ data }: GridViewProps) {
+export default function GridView({
+  data,
+  selectedFileId,
+  onFileClick,
+}: GridViewProps) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
@@ -21,8 +27,14 @@ export default function GridView({ data }: GridViewProps) {
           initial={{ x: -20 }}
           animate={{ x: 0 }}
           transition={{ delay: index * 0.05 }}
+          onClick={() => onFileClick(item)}
         >
-          <ListFile key={item.id} file={item} />
+          <ListFile
+            key={item.id}
+            file={item}
+            isSelected={selectedFileId === item.id}
+            onFileClick={onFileClick}
+          />
         </motion.div>
       ))}
     </motion.div>

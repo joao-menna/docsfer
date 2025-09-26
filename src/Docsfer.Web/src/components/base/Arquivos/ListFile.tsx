@@ -1,29 +1,39 @@
 import { Pencil, FileChartColumn } from "lucide-react";
 import { getFileTypeLabel } from "@hooks/useFileType";
 import type { File } from "@/types/search";
-import { useState } from "react";
 import clsx from "clsx";
 import { useNavigate } from "react-router";
 
 type FileProps = {
   file: File;
+  isSelected: boolean;
+  onFileClick: (file: File) => void;
 };
 
-export default function ListFile({ file }: FileProps) {
-  const [isClicked, setIsClicked] = useState(false);
+export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
   const navigate = useNavigate();
-
   const fileType = getFileTypeLabel(file.name);
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onFileClick(file);
+  }
+
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigate(`/files/${file.id}`)
+  }
+
   return (
     <button
       type="button"
       className={clsx(
         "flex flex-col cursor-pointer gap-6 px-6 py-4 group rounded-lg border border-gray-700 bg-[linear-gradient(135deg,#030712,#070B16)] font-gabarito text-gray-200 max-w-md   transition-all duration-300",
-        isClicked
+        isSelected
           ? "shadow-[0_4px_16px_0px_rgba(14,165,233,0.25)] translate-y-0 border-sky-500!"
           : "hover:shadow-[0_8px_8px_-4px_rgba(0,0,0,1)] hover:-translate-y-1"
       )}
-      onClick={() => setIsClicked(!isClicked)}
+      onClick={handleCardClick}
     >
       <div className="flex flex-col items-start gap-3 lg:min-w-sm">
         <div className="flex justify-between w-full">
@@ -31,13 +41,13 @@ export default function ListFile({ file }: FileProps) {
             <div
               className={clsx(
                 "flex-center size-14 rounded-lg transition-colors duration-150 ease-out",
-                isClicked ? "bg-sky-500" : "bg-sky-700"
+                isSelected ? "bg-sky-500" : "bg-sky-700"
               )}
             >
               <FileChartColumn
                 className={clsx(
                   "fill-gray-200 transition-colors duration-150 ease-out",
-                  isClicked ? "stroke-sky-500" : "stroke-sky-700"
+                  isSelected ? "stroke-sky-500" : "stroke-sky-700"
                 )}
               />
             </div>
@@ -52,7 +62,7 @@ export default function ListFile({ file }: FileProps) {
           </div>
           <button
             type="button"
-            onClick={() => navigate(`/files/${file.id}`)}
+            onClick={handleEditClick}
             className="opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 size-10 rounded-full hover:shadow-[0px_0px_8px_2px_rgba(14,165,233,0.25)]  flex-center"
           >
             <Pencil className="stroke-gray-400 " />
@@ -75,7 +85,7 @@ export default function ListFile({ file }: FileProps) {
         <span
           className={clsx(
             "py-1.5 px-4 rounded-4xl border transition-colors duration-150 ease-out",
-            isClicked
+            isSelected
               ? "bg-sky-500/50 border-sky-500"
               : "bg-sky-500/20 border-sky-500/20"
           )}

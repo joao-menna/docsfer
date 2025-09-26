@@ -10,6 +10,7 @@ import { Table } from "lucide-react";
 import ListView from "@components/base/Arquivos/ListView";
 import GridView from "@components/base/Arquivos/GridView.tsx";
 import { useFileSorting } from "@/hooks/useFileSorting";
+import FileSidebar from "@/components/base/Arquivos/FileSidebar";
 
 type LoaderData = {
   files: File[];
@@ -18,6 +19,8 @@ type LoaderData = {
 export default function AllFiles() {
   const navigate = useNavigate();
   const [viewMode, setViewMode] = useState("list");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const { files } = useLoaderData<LoaderData>();
   const { sortedFiles, sortConfig, handleSort, clearSort } =
@@ -29,6 +32,21 @@ export default function AllFiles() {
 
   const handleNotFound = () => {
     navigate("/newFile");
+  };
+
+  const handleFileClick = (file: File) => {
+    if (selectedFile?.id === file.id && isSidebarOpen) {
+      setSelectedFile(null);
+      setIsSidebarOpen(false);
+    } else {
+      setSelectedFile(file);
+      setIsSidebarOpen(true);
+    }
+  };
+
+  const handleCloseSidebar = () => {
+    setSelectedFile(null);
+    setIsSidebarOpen(false);
   };
 
   const getSortIcon = (field: "name" | "uploader") => {
@@ -82,10 +100,6 @@ export default function AllFiles() {
               <RecentFile />
             </div>
           </div>
-        </div>
-        {/* sidebar */}
-        <div className="fixed right-0 top-12 h-[calc(100dvh-3rem)] w-2xl">
-          <div className="w-full h-full border-l border-gray-700"></div>
         </div>
       </div>
       <div className="flex flex-col w-full">
@@ -155,9 +169,17 @@ export default function AllFiles() {
           <motion.div layout className="relative max-w-5xl">
             <AnimatePresence mode="wait">
               {viewMode === "list" ? (
-                <ListView key="list" data={sortedFiles} />
+                <ListView
+                  key="list"
+                  data={sortedFiles} /* onFileClick={handleFileClick} */
+                />
               ) : (
-                <GridView key="grid" data={sortedFiles} />
+                <GridView
+                  key="grid"
+                  data={sortedFiles}
+                  selectedFileId={selectedFile?.id}
+                  onFileClick={handleFileClick}
+                />
               )}
             </AnimatePresence>
           </motion.div>
@@ -184,6 +206,11 @@ export default function AllFiles() {
           </div>
         </div>
       )}
+      <FileSidebar
+        selectedFile={selectedFile}
+        isOpen={isSidebarOpen}
+        onClose={handleCloseSidebar}
+      />
     </>
   );
 }
