@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 type TableProps = { children: ReactNode };
 
-const Table = ({ children }: TableProps) => (
+export const Table = ({ children }: TableProps) => (
   <div className="relative overflow-x-auto sm:rounded-lg">
     <table className="w-full text-sm text-left font-gabarito text-zinc-300">
       {children}
@@ -54,5 +54,3 @@ Table.BodyRow = BodyRow;
 Table.HeaderCell = HeaderCell;
 Table.BodyHeaderCell = BodyHeaderCell;
 Table.Cell = Cell;
-
-export default Table;

@@ -1,7 +1,7 @@
 import { generateActivities } from "@/hooks/useMockData";
 import { useMemo, useState } from "react";
 import { NewCardTemplate } from "@/components/base/dashboard/NewCardTemplate";
-import Table from "@/components/base/dashboard/Table";
+import { Table } from "@/components/base/dashboard/Table";
 import EditFileModal from "@/components/base/dashboard/EditFileModal";
 import { AnimatePresence } from "motion/react";
 
