@@ -55,6 +55,10 @@ services:
     container_name: docsfer_smtpdev
     image: rnwood/smtp4dev:3.8.6
     restart: unless-stopped
+    ports:
+      - 5000:80
+      - 25:25
+      - 143:143
     networks:
       - docsfer_network
 
@@ -86,7 +90,8 @@ services:
       - ConnectionStrings__Default=Host=postgres; Database=docsfer; Username=postgres; Password=postgres;
       - Smtp__Enabled=true
       - Smtp__Hostname=smtp
-      - Smtp__Post=25
+      - Smtp__Port=25
+      - Smtp__EmailAddress=docsfer@localhost
     env_file:
       - .env
     networks:

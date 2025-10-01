@@ -1,3 +1,4 @@
+using Docsfer.Api.Extensions;
 using Docsfer.Api.Middlewares;
 using Docsfer.Api.Repositories;
 using Docsfer.Core.Identity;
@@ -111,6 +112,7 @@ builder.Services.Scan(scan => scan
     .WithScopedLifetime());
 
 builder.Services.AddControllers();
+builder.Services.AddEmailServices(builder.Configuration);
 
 builder.Services.AddDbContext<DocsferDbContext>(
     options => options.UseNpgsql(connectionString));

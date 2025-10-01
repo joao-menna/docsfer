@@ -1,10 +1,13 @@
 using Ardalis.GuardClauses;
 using Azure.Storage.Blobs;
+using Docsfer.Api.Extensions;
+using Docsfer.Api.Managers;
 using Docsfer.Api.Repositories;
 using Docsfer.Core.Blobs;
 using Docsfer.Core.Exceptions.Blobs;
 using Docsfer.Core.Extensions;
 using Docsfer.Core.Identity;
+using Docsfer.Core.Consts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +23,14 @@ public class BlobController : ControllerBase
     private readonly IRelationshipRepository _relationshipRepository;
     private readonly IBlobEntryRepository _blobEntryRepository;
     private readonly UserManager<User> _userManager;
+    private readonly IEmailManager _emailManager;
 
     public BlobController(
         IConfiguration configuration,
         IRelationshipRepository relationshipRepository,
         IBlobEntryRepository blobEntryRepository,
-        UserManager<User> userManager)
+        UserManager<User> userManager,
+        IEmailManager emailManager)
     {
         var connectionString = configuration["AzureBlobStorage:ConnectionString"];
         var containerName = configuration["AzureBlobStorage:ContainerName"];
@@ -37,6 +42,34 @@ public class BlobController : ControllerBase
         _relationshipRepository = relationshipRepository;
         _blobEntryRepository = blobEntryRepository;
         _userManager = userManager;
+        _emailManager = emailManager;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll([FromQuery] Guid relationshipId)
+    {
+        var relationship = (await _relationshipRepository.FindByIdAsync(relationshipId)).EnsureExists();
+
+        var blobs = await _blobEntryRepository.GetAllInRelationAsync(relationship);
+
+        return Ok(blobs);
+    }
+
+    [HttpGet("one")]
+    public async Task<IActionResult> GetOne(
+    [FromQuery] Guid relationshipId,
+    [FromQuery] long blobEntryId)
+    {
+        var relationship = (await _relationshipRepository.FindByIdAsync(relationshipId)).EnsureExists();
+
+        var blob = await _blobEntryRepository.FindByIdAsync(blobEntryId);
+
+        if (blob == null || blob.RelationshipId != relationship.Id)
+        {
+            return NotFound("Blob entry not found for this relationship.");
+        }
+
+        return Ok(blob);
     }
 
     [HttpGet]
@@ -100,6 +133,12 @@ public class BlobController : ControllerBase
         var blobClient = _blobContainerClient.GetBlobClient(path);
 
         await blobClient.UploadAsync(stream);
+
+        await _emailManager.SendEmailForParties(
+            relationship,
+            subject: DocsferConsts.AssuntoEmailNovoArquivo,
+            htmlMessage: string.Format(DocsferConsts.MensagemEmailNovoArquivo, file.FileName)
+        );
 
         return Ok(new
         {
