@@ -29,15 +29,15 @@ export default function SharingPage() {
               <fieldset className="flex gap-2 font-gabarito">
                 <div className="flex flex-col w-full">
                   <FileInput
-                    placeholder="SEM a extensão (.xlsx, .docx ❌)"
-                    label="Nome do Arquivo"
+                    placeholder="Skip the extension (.xlsx, .docx ❌)"
+                    label="File name"
                   />
                 </div>
                 <div className="flex flex-col w-full">
                   {/* TODO: Mudar para um select do radixui */}
-                  <label className="text-zinc-400">Permissões</label>
+                  <label className="text-zinc-400">Permissions</label>
                   <SelectButton
-                    placeholder="Selecionar Permissão"
+                    placeholder="Choose permissions"
                     value={selectedPermission}
                     onValueChange={setSelectedPermission}
                     options={getPermissionsForSelect()}
@@ -47,7 +47,7 @@ export default function SharingPage() {
               {/* toggle */}
               <div className="flex gap-2">
                 <span className="text-zinc-400 font-gabarito">
-                  Todos os usuários do grupo?
+                  Every user in the group?
                 </span>{" "}
                 <SwitchFileButton />
               </div>
@@ -56,14 +56,11 @@ export default function SharingPage() {
                 <div className="flex flex-col w-full">
                   <FileInput
                     placeholder="João, Gabriela, Ricardo..."
-                    label="Usuários"
+                    label="Users"
                   />
                 </div>
                 <div className="flex flex-col w-full">
-                  <FileInput
-                    placeholder="RH, Administrativo, TI"
-                    label="Grupos"
-                  />
+                  <FileInput placeholder="RH, Admin, TI" label="Goups" />
                 </div>
               </fieldset>
             </div>
@@ -75,7 +72,7 @@ export default function SharingPage() {
           </div>
           {/* textbox */}
           <div className="flex flex-col font-gabarito text-zinc-400">
-            <h2>Descrição</h2>
+            <h2>Description</h2>
             <textarea
               placeholder="An optional description..."
               className="rounded-lg border border-zinc-600 px-2 py-1"
@@ -84,9 +81,9 @@ export default function SharingPage() {
           </div>
 
           <div className="flex w-full justify-between font-gabarito">
-            <button className="rounded-lg bg-sky-500 py-2 px-4">Enviar</button>
+            <button className="rounded-lg bg-sky-500 py-2 px-4">Send</button>
             <button className="rounded-lg border border-red-500 px-4 py-2 text-red-500">
-              Cancelar
+              Cancel
             </button>
           </div>
         </form>

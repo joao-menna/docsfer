@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import { useAvatar } from "@/hooks/useUserPfp";
 
-function UserAccessRow({ name }: Readonly<{ name: string }>) {
+export default function UserAccessRow({ name }: Readonly<{ name: string }>) {
   const { src } = useAvatar({ seed: name });
 
   return (
@@ -21,4 +21,3 @@ function UserAccessRow({ name }: Readonly<{ name: string }>) {
     </div>
   );
 }
-export default UserAccessRow;

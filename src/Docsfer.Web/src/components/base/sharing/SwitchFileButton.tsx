@@ -1,5 +1,5 @@
 import * as Switch from "@radix-ui/react-switch";
-import clsx from "clsx";
+import clsx from "clsx/lite";
 
 const SwitchFileButton = () => (
   <div>

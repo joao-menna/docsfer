@@ -5,7 +5,7 @@ import {
   type DragEvent,
   type ChangeEvent,
 } from "react";
-import clsx from "clsx";
+import clsx from "clsx/lite";
 import { ImagePlus } from "lucide-react";
 
 export type DropzoneProps = {

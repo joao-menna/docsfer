@@ -4,7 +4,7 @@ import UserAccessRow from "@/components/common/FileDetailsUser";
 import Table from "@/components/base/dashboard/Table";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import clsx from "clsx";
+import clsx from "clsx/lite";
 
 type Group = {
   name: string;
@@ -100,12 +100,13 @@ export default function FileDetails() {
               {/* infos */}
               <div className="flex flex-col gap-5 pb-4 border-b-2 border-sky-800">
                 <fieldset className="flex flex-col gap-2 text-zinc-200 font-gabarito">
-                  <label htmlFor="Documento1">Nome do arquivo</label>
-                  <input
-                    id="Documento1"
-                    placeholder="Documento1.pdf"
-                    className="px-4 py-2 rounded-lg border border-zinc-400"
-                  />
+                  <label className="flex flex-col">
+                    File name{""}
+                    <input
+                      placeholder="Document.pdf"
+                      className="px-4 py-2 rounded-lg border border-zinc-400"
+                    />
+                  </label>
                 </fieldset>
                 <div className="flex flex-col gap-2 text-zinc-400 font-gabarito">
                   <span className="flex justify-between">

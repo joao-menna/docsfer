@@ -1,5 +1,4 @@
-// contexts/ToastContext.jsx
-import { useState, useRef, useEffect, type ReactNode } from "react";
+import { useState, useRef, useEffect, type PropsWithChildren } from "react";
 import * as Toast from "@radix-ui/react-toast";
 import { CheckCircle, XCircle, AlertCircle, Info } from "lucide-react";
 import { type AddToastArgs, type ToastSeverity } from "@/types/toast";
@@ -14,7 +13,7 @@ type ToastObj = {
   life: number;
 };
 
-export const ToastProvider = ({ children }: { children: ReactNode }) => {
+export const ToastProvider = ({ children }: PropsWithChildren) => {
   const [toasts, setToasts] = useState<ToastObj[]>([]);
   const timeouts = useRef<{ [id: string]: NodeJS.Timeout }>({});
 
@@ -105,10 +104,10 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
             className={`grid grid-cols-[auto_max-content] gap-x-4 items-center p-4 rounded-lg shadow-lg border ${getToastStyles(
               toast.severity
             )} 
-              data-[state=open]:animate-slideIn data-[state=closed]:animate-hide 
-              data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] 
-              data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-[transform_200ms_ease-out] 
-              data-[swipe=end]:animate-swipeOut`}
+                data-[state=open]:animate-slideIn data-[state=closed]:animate-hide 
+                data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] 
+                data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-[transform_200ms_ease-out] 
+                data-[swipe=end]:animate-swipeOut`}
             open={true}
             onOpenChange={(open) => !open && removeToast(toast.id)}
             duration={toast.life}

@@ -1,5 +1,5 @@
 import * as Select from "@radix-ui/react-select";
-import clsx from "clsx";
+import clsx from "clsx/lite";
 import { Check, ChevronDown } from "lucide-react";
 
 interface SelectOption {

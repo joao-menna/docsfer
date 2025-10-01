@@ -1,6 +1,6 @@
 import { Folder, Ellipsis } from "lucide-react";
 import { useFileColor } from "@hooks/useFileColor";
-import clsx from "clsx";
+import clsx from "clsx/lite";
 import { useNavigate } from "react-router";
 
 interface FileDetailProps {
@@ -70,11 +70,11 @@ export const FileTemplate = ({
           className="hover:cursor-pointer px-2.5 py-1.5 bg-sky-500 rounded-sm text-zinc-950 font-gabarito tracking-wider"
           onClick={handleDetails}
         >
-          Detalhes
+          Details
         </button>
         <div className="flex flex-col font-gabarito justify-end items-end">
           <span className="font-light text-sm tracking-widest dark:text-zinc-400">
-            Compartilhado por
+            Shared by
           </span>
           <span className="text-lg dark:text-zinc-200">{sharedBy}</span>
         </div>

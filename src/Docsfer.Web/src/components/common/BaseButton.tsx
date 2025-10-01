@@ -1,6 +1,6 @@
 import { type ButtonHTMLAttributes, type ReactNode } from "react";
 import { LayoutGrid } from "lucide-react";
-import clsx from "clsx";
+import clsx from "clsx/lite";
 
 type Variant = "full" | "border";
 type IconSide = "left" | "right";

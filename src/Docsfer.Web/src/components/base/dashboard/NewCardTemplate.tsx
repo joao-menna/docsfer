@@ -1,7 +1,7 @@
 import { useFileColor } from "@hooks/useFileColor";
 import { useAvatar } from "@/hooks/useUserPfp";
 import { formatFileSize, formatDateToBR } from "@/hooks/useMockData";
-import clsx from "clsx";
+import clsx from "clsx/lite";
 
 interface CardInfoProps {
   username: string;

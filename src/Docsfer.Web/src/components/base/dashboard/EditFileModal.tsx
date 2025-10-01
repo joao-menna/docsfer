@@ -8,19 +8,19 @@ import { motion } from "motion/react";
 
 type Person = { name: string };
 type Group = { name: string };
-type FileRow = {
+interface FileRow {
   id: number;
   name: string;
   sharedWith: Person[];
   uploadedAt: string;
   groups: Group[];
   size: string;
-};
+}
 
-type Props = {
+interface Props {
   file: FileRow;
   onClose: () => void;
-};
+}
 
 export default function EditFileModal({ file, onClose }: Props) {
   const [preview, setPreview] = useState<PreviewResult | null>(null);
