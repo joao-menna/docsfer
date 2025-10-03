@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router";
 
-import Login from "../pages/LoginPage";
+import Login from "../pages/Login/LoginPage";
 import Dashboard from "../pages/DashboardPage";
 import { RootLayout } from "../layout/RootLayout";
 import { filesLoader, fileDetailLoader } from "../hooks/useFileLoader";

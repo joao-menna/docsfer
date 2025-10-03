@@ -1,5 +1,5 @@
-import { LoginInput } from "../components/common/LoginInput";
-import { BaseButton } from "../components/common/BaseButton";
+import { LoginInput } from "../../components/common/LoginInput";
+import { BaseButton } from "../../components/common/BaseButton";
 import { LayoutGrid, CheckCircle, XCircle } from "lucide-react";
 import { useNavigate } from "react-router";
 import * as Toast from "@radix-ui/react-toast";

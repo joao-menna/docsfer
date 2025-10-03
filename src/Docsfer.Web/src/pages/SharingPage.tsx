@@ -85,7 +85,7 @@ export default function SharingPage() {
 
           <div className="flex w-full justify-between font-gabarito">
             <button className="rounded-lg bg-sky-500 py-2 px-4">Enviar</button>
-            <button className="rounded-lg border border-red-500 px-4 py-2 text-red-500">
+            <button className="rounded-lg border border-red-500 px-4 py-2 text-red-500 outline-red-800">
               Cancelar
             </button>
           </div>
