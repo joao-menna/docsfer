@@ -45,11 +45,17 @@ const LoginPage = () => {
     );
   };
 
+  const handleCreateAcc = () => {
+    navigate("/createAccount");
+  };
+
   return (
     <Toast.Provider swipeDirection="right">
       <div className="flex w-screen h-dvh bg-main-100 overflow-hidden">
         <section className="h-dvh hidden lg:flex lg:justify-between lg:flex-col pt-12  lg:w-[36dvw] bg-main-300">
-          <span className="relative z-2 text-xl text-black ml-12">docsfer</span>
+          <span className="relative z-2 text-xl text-black ml-12 invisible">
+            docsfer
+          </span>
           <div className="relative w-full h-full z-2">
             <img
               src="/main_icon.svg"
@@ -111,6 +117,16 @@ const LoginPage = () => {
                   >
                     Entrar com email
                   </BaseButton>
+                  <span className="font-quicksand font-semibold text-sm text-gray-500">
+                    Don't have an account?{" "}
+                    <button
+                      type="button"
+                      className="underline hover:text-gray-950! cursor-pointer"
+                      onClick={handleCreateAcc}
+                    >
+                      Create an account for free!
+                    </button>
+                  </span>
                 </div>
               </form>
             </div>

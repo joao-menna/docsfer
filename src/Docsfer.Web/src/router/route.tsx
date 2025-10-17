@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router";
 
 import Login from "../pages/Login/LoginPage";
+import CreateAccount from "@/pages/Login/CreateAccountPage";
 import Dashboard from "../pages/DashboardPage";
 import { RootLayout } from "../layout/RootLayout";
 import { filesLoader, fileDetailLoader } from "../hooks/useFileLoader";
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       if (await isAuthed()) throw new redirect("/dashboard");
       return null
     } */
+  },
+  {
+    path: "/createAccount",
+    element: <CreateAccount />,
   },
   // App Area
   {
