@@ -12,7 +12,15 @@ namespace Docsfer.Api.Controllers;
 public class RelationshipController(
     IRelationshipRepository relationshipRepository) : ControllerBase
 {
+    [HttpGet]
+    [Route("related")]
+    public async Task<IActionResult> GetUserRelatedRelationships()
+    {
+        throw new NotImplementedException();
+    }
+
     [HttpPost]
+    [Route("")]
     public async Task<IActionResult> Post(PostRelationshipInput input)
     {
         var relationship = new Relationship

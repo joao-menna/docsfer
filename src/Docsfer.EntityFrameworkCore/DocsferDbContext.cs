@@ -1,4 +1,5 @@
 using Docsfer.Core.Blobs;
+using Docsfer.Core.Chat;
 using Docsfer.Core.Groups;
 using Docsfer.Core.Identity;
 using Docsfer.Core.Relationships;
@@ -15,6 +16,7 @@ public class DocsferDbContext(DbContextOptions<DocsferDbContext> options) :
     public DbSet<GroupUser> GroupUsers { get; set; }
     public DbSet<Relationship> Relationships { get; set; }
     public DbSet<BlobEntry> BlobEntries { get; set; }
+    public DbSet<ChatMessage> ChatMessages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

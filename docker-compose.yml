@@ -3,7 +3,7 @@ name: docsfer_app
 services:
   proxy:
     container_name: docsfer_proxy
-    restart: on-failure
+    restart: unless-stopped
     image: nginx:latest
     volumes:
       - ./docker/proxy/nginx.conf:/etc/nginx/nginx.conf:ro
@@ -18,7 +18,7 @@ services:
     container_name: docsfer_azurite
     image: mcr.microsoft.com/azure-storage/azurite
     command: ["azurite", "--disableTelemetry"]
-    restart: on-failure
+    restart: unless-stopped
     volumes:
       - docsfer_azurite_data:/data
     ports:
@@ -31,7 +31,7 @@ services:
   postgres:
     container_name: docsfer_postgres
     image: postgres:17
-    restart: on-failure
+    restart: unless-stopped
     environment:
       - POSTGRES_DB=docsfer
       - POSTGRES_USER=postgres
@@ -54,7 +54,11 @@ services:
   smtp:
     container_name: docsfer_smtpdev
     image: rnwood/smtp4dev:3.8.6
-    restart: on-failure
+    restart: unless-stopped
+    ports:
+      - 5000:80
+      - 25:25
+      - 143:143
     networks:
       - docsfer_network
 
@@ -65,10 +69,10 @@ services:
     build:
       context: .
       dockerfile: ./src/Docsfer.Migrator/Dockerfile
-    networks:
-      - docsfer_network
     environment:
       - ConnectionStrings__Default=Host=postgres; Database=docsfer; Username=postgres; Password=postgres;
+    networks:
+      - docsfer_network
     depends_on:
       postgres:
         condition: service_healthy
@@ -86,7 +90,8 @@ services:
       - ConnectionStrings__Default=Host=postgres; Database=docsfer; Username=postgres; Password=postgres;
       - Smtp__Enabled=true
       - Smtp__Hostname=smtp
-      - Smtp__Post=25
+      - Smtp__Port=25
+      - Smtp__EmailAddress=docsfer@localhost
     env_file:
       - .env
     networks:
