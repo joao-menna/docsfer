@@ -1,6 +1,7 @@
 import Dropzone from "@/components/base/sharing/Dropzone";
 import FileInput from "@/components/base/sharing/FileInput";
 import { useNavigate } from "react-router";
+import { File } from "lucide-react";
 
 export default function SharingPage() {
   const navigate = useNavigate();
@@ -22,9 +23,23 @@ export default function SharingPage() {
             <div className="flex flex-col gap-2">
               {/* top inputs */}
               <fieldset className="flex gap-2 font-gabarito">
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col w-full font-gabarito">
+                  <label className="block text-md text-lg text-gray-400 overflow-hidden">
+                    Nome do arquivo
+                    <div className="relative mt-1">
+                      <input
+                        type="text"
+                        placeholder="SEM a extensão (.xlsx, .docx)"
+                        className="w-full rounded-lg border-2 border-gray-500 py-2 pl-9
+                 text-gray-100 placeholder:text-white/25 focus:outline-none transition-all duration-200 ease-out bg-gray-800 focus:border-sky-500 group"
+                      />
+                      <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
+                        <File className="h-5 w-5 opacity-70 stroke-gray-800 fill-gray-500 group-focus:fill-sky-500" />
+                      </span>
+                    </div>
+                  </label>
                   <FileInput
-                    placeholder="SEM a extensão (.xlsx, .docx ❌)"
+                    placeholder="SEM a extensão (.xlsx, .docx)"
                     label="Nome do Arquivo"
                   />
                 </div>
