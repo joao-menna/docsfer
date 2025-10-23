@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { fakerPT_BR as faker } from "@faker-js/faker";
 
 const actions = ["Shared", "uploaded", "downloaded", "deleted", "renamed"];
@@ -125,61 +124,4 @@ export const generateMockUsers = (count: number = 15) => {
       "Marketing",
     ]),
   }));
-};
-
-export const usePermissions = () => {
-  const permissions = useMemo<MockPermission[]>(() => {
-    const permissionData = [
-      {
-        name: "Visualizar",
-        level: 1,
-        desc: "Apenas visualização de arquivos",
-      },
-      {
-        name: "Download",
-        level: 2,
-        desc: "Baixar arquivos para o dispositivo",
-      },
-      {
-        name: "Comentar",
-        level: 3,
-        desc: "Adicionar comentários aos arquivos",
-      },
-      {
-        name: "Editar",
-        level: 4,
-        desc: "Modificar conteúdo dos arquivos",
-      },
-      {
-        name: "Compartilhar",
-        level: 5,
-        desc: "Compartilhar arquivos com outros usuários",
-      },
-      {
-        name: "Administrar",
-        level: 6,
-        desc: "Acesso total e gerenciamento",
-      },
-    ];
-
-    return permissionData.map((perm) => ({
-      value: perm.name.toLowerCase().replace(/\s+/g, "_"),
-      label: perm.name,
-      description: perm.desc,
-      level: perm.level,
-    }));
-  }, []);
-
-  const getPermissionsForSelect = () => {
-    return permissions.map((perm) => ({
-      value: perm.value,
-      label: ` ${perm.label}`,
-      description: perm.description,
-    }));
-  };
-
-  return {
-    permissions,
-    getPermissionsForSelect,
-  };
 };

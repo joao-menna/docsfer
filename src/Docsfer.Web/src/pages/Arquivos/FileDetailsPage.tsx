@@ -1,6 +1,6 @@
 import { RotateCcw, X } from "lucide-react";
 import { useLoaderData, useNavigate, useParams } from "react-router";
-import UserAccessRow from "@/components/buttons/FileDetailsUser";
+import UserAccessRow from "@/components/buttons/UserAccessRow";
 import Table from "@/components/base/dashboard/Table";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
@@ -72,7 +72,7 @@ export default function FileDetails() {
   }
   return (
     <>
-      <div className="flex justify-between px-6 py-4">
+      <div className="flex flex-col xl:flex-row xl:justify-between px-6 py-4">
         {/* file content */}
         <div className="flex flex-col gap-10 min-w-xl">
           {/* breadcrumbs */}
@@ -176,9 +176,6 @@ export default function FileDetails() {
                   className="flex justify-between text-zinc-500 items-center px-3 py-1 border-2 border-zinc-500 rounded-lg"
                 >
                   <span className="font-gabarito pl-2">{group.name}</span>
-                  <div className="transition-all duration-200 ease-out cursor-pointer hover:bg-zinc-950 rounded-full p-1 hover:text-red-700">
-                    <X />
-                  </div>
                 </div>
               ))}
             </div>

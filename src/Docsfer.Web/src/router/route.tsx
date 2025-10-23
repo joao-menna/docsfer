@@ -19,7 +19,7 @@ import FileNotFoundError from "@/components/base/FileNotFound";
 const Groups = lazy(() => import("../pages/GroupPage"));
 const Files = lazy(() => import("../pages/Arquivos/AllfilesPage"));
 const Details = lazy(() => import("../pages/Arquivos/FileDetailsPage"));
-const Sharing = lazy(() => import("../pages/SharingPage"));
+const Sharing = lazy(() => import("../pages/NewFile"));
 
 export const router = createBrowserRouter([
   {
