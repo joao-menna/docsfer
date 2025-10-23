@@ -1,22 +1,22 @@
-import { BaseButton } from "@/components/common/BaseButton";
-import { CreateAccInput } from "@/components/common/CreateAccInput";
-import { useToast } from "@/hooks/useToastContext";
+import { BaseButton } from "@/components/buttons/BaseButton";
+import { CreateAccInput } from "@/components/buttons/CreateAccInput";
+import { useToast } from "@/hooks/utils/useToastContext";
 import { useNavigate } from "react-router";
 import { api } from "@/services/httpClient";
 import { useState, type ChangeEvent, type FormEvent, useCallback } from "react";
 import { isAxiosError } from "axios";
 
 type CreateAccountForm = {
-  email: string;
+  Email: string;
   name: string;
-  password: string;
+  Password: string;
   confirmPassword: string;
 };
 
 const initialFormState: CreateAccountForm = {
-  email: "",
+  Email: "",
   name: "",
-  password: "",
+  Password: "",
   confirmPassword: "",
 };
 
@@ -24,20 +24,20 @@ export default function CreateAccount() {
   const navigate = useNavigate();
   const { addToast } = useToast();
 
-  const [form, setForm] = useState<CreateAccountForm>(initialFormState);
+  const [formData, setFormData] = useState<CreateAccountForm>(initialFormState);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = useCallback(
     (field: keyof CreateAccountForm) =>
       (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        setForm((prev) => ({ ...prev, [field]: value }));
+        setFormData((prev) => ({ ...prev, [field]: value }));
       },
     []
   );
 
   const resetForm = () => {
-    setForm(initialFormState);
+    setFormData(initialFormState);
   };
 
   const showErrorToast = (detail: string) => {
@@ -47,19 +47,20 @@ export default function CreateAccount() {
       detail,
     });
   };
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
     if (isSubmitting) {
       return;
     }
 
-    if (!form.email || !form.password || !form.confirmPassword) {
+    if (!formData.Email || !formData.Password || !formData.confirmPassword) {
       showErrorToast("Please fill in all required fields.");
       return;
     }
 
-    if (form.password !== form.confirmPassword) {
+    if (formData.Password !== formData.confirmPassword) {
       showErrorToast("Passwords do not match. Please try again.");
       return;
     }
@@ -67,9 +68,13 @@ export default function CreateAccount() {
     setIsSubmitting(true);
 
     try {
+      console.log("Sending data:", {
+        Email: formData.Email,
+        Password: formData.Password,
+      });
       await api.post("/auth/register", {
-        email: form.email,
-        password: form.password,
+        Email: formData.Email,
+        Password: formData.Password,
       });
 
       addToast({
@@ -100,9 +105,7 @@ export default function CreateAccount() {
         }
 
         if (error.message === "Network Error") {
-          showErrorToast(
-            "Could not connect to the server. Check your connection and try again."
-          );
+          showErrorToast(`Could not connect to the server. ${error.message}`);
           return;
         }
       }
@@ -142,8 +145,8 @@ export default function CreateAccount() {
             type="email"
             name="email"
             autoComplete="email"
-            value={form.email}
-            onChange={handleInputChange("email")}
+            value={formData.Email}
+            onChange={handleInputChange("Email")}
             required
           />
           <CreateAccInput
@@ -152,7 +155,7 @@ export default function CreateAccount() {
             type="text"
             name="name"
             autoComplete="name"
-            value={form.name}
+            value={formData.name}
             onChange={handleInputChange("name")}
           />
           <CreateAccInput
@@ -161,8 +164,8 @@ export default function CreateAccount() {
             type="password"
             name="password"
             autoComplete="new-password"
-            value={form.password}
-            onChange={handleInputChange("password")}
+            value={formData.Password}
+            onChange={handleInputChange("Password")}
             required
             minLength={8}
           />
@@ -172,7 +175,7 @@ export default function CreateAccount() {
             type="password"
             name="confirmPassword"
             autoComplete="new-password"
-            value={form.confirmPassword}
+            value={formData.confirmPassword}
             onChange={handleInputChange("confirmPassword")}
             required
             minLength={8}

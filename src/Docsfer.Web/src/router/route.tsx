@@ -1,17 +1,21 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router";
 
+// pages
 import Login from "../pages/Login/LoginPage";
 import CreateAccount from "@/pages/Login/CreateAccountPage";
 import Dashboard from "../pages/DashboardPage";
 import { RootLayout } from "../layout/RootLayout";
-import { filesLoader, fileDetailLoader } from "../hooks/useFileLoader";
-
-import { RouteError } from "../components/base/RouteError";
-import { Loader } from "../components/base/Loader";
-import FileNotFoundError from "@/components/base/FileNotFound";
 import NotFoundPage from "@/pages/NotFoundPage";
 
+// components and utils
+import { RouteError } from "../components/base/RouteError";
+import { Loader } from "../components/base/Loader";
+import { filesLoader, fileDetailLoader } from "../hooks/useFileLoader";
+import FileNotFoundError from "@/components/base/FileNotFound";
+// import { protectedLoader } from "@/services/auth/authLoader";
+
+// lazy-loaded pages
 const Groups = lazy(() => import("../pages/GroupPage"));
 const Files = lazy(() => import("../pages/Arquivos/AllfilesPage"));
 const Details = lazy(() => import("../pages/Arquivos/FileDetailsPage"));

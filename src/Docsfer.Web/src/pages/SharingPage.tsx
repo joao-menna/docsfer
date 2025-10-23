@@ -3,7 +3,7 @@ import SwitchFileButton from "@/components/base/sharing/SwitchFileButton";
 import FileInput from "@/components/base/sharing/FileInput";
 import { useState } from "react";
 import { usePermissions } from "@/hooks/useMockData";
-import { SelectButton } from "@/components/common/SelectButton";
+import { SelectButton } from "@/components/buttons/SelectButton";
 
 export default function SharingPage() {
   const [selectedPermission, setSelectedPermission] = useState("");

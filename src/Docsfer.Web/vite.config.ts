@@ -21,6 +21,12 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    proxy: {
+      "/api/v1": {
+        target: "http://20.172.176.246:80",
+        changeOrigin: true,
+      },
+    },
     open: true,
   },
   preview: {

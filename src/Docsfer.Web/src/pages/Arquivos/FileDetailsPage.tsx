@@ -1,6 +1,6 @@
 import { RotateCcw, X } from "lucide-react";
 import { useLoaderData, useNavigate, useParams } from "react-router";
-import UserAccessRow from "@/components/common/FileDetailsUser";
+import UserAccessRow from "@/components/buttons/FileDetailsUser";
 import Table from "@/components/base/dashboard/Table";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";

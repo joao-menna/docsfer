@@ -1,5 +1,5 @@
 import { RouterProvider } from "react-router";
-import { ToastProvider } from "@hooks/useToast";
+import { ToastProvider } from "@/hooks/utils/useToast";
 import { router } from "./router/route";
 
 function App() {

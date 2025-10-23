@@ -103,6 +103,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
+    
 });
 
 builder.Services.Scan(scan => scan
@@ -110,6 +111,18 @@ builder.Services.Scan(scan => scan
     .AddClasses(classes => classes.InNamespaces("Docsfer.Api.Repositories"))
     .AsImplementedInterfaces()
     .WithScopedLifetime());
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", builder =>
+    {
+        builder
+            .WithOrigins("inserir-meu-ip-aqui-burro", "http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEmailServices(builder.Configuration);
@@ -121,6 +134,7 @@ builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<DocsferDbContext>();
 
 var app = builder.Build();
+app.UseCors("AllowFrontend");
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 

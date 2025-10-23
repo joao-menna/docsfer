@@ -1,9 +1,11 @@
-import { LoginInput } from "../../components/common/LoginInput";
-import { BaseButton } from "../../components/common/BaseButton";
+import { LoginInput } from "../../components/buttons/LoginInput";
+import { BaseButton } from "../../components/buttons/BaseButton";
 import { LayoutGrid, CheckCircle, XCircle } from "lucide-react";
 import { useNavigate } from "react-router";
 import * as Toast from "@radix-ui/react-toast";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
+import { authService } from "@/services/auth/authService";
+import { AxiosError } from "axios";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -14,35 +16,65 @@ const LoginPage = () => {
     type: "success",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    rememberMe: false,
+  });
+
   const showToast = (title: string, description: string, type = "success") => {
     setToastData({ title, description, type });
     setOpen(true);
   };
 
-  const handleLogin = () => {
-    // ----- simulation of login BEGIN -----
-    const isSuccess = true;
-    if (isSuccess) {
-      showToast("Login realizado!", "Redirecionando para dashboard.");
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
 
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 1500);
-    } else {
+    if (!formData.email || !formData.password) {
       showToast(
-        "Erro no login",
-        "Email ou senha incorretos, tente novamente.",
+        "Mandatory Fields.",
+        "Please, type in your email and password.",
         "error"
       );
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      await authService.login({
+        email: formData.email,
+        password: formData.password,
+        rememberMe: formData.rememberMe,
+      });
+
+      showToast("Login successful.", "Redirecting to Dashboard..");
+
+      navigate("/dashboard");
+    } catch (err) {
+      // da pra separar a lógica
+      const axiosError = err as AxiosError<{ message?: string }>;
+
+      let errorMessage = "Ocorreu um erro. Tente Novamente.";
+
+      if (axiosError.response?.status === 401) {
+        errorMessage = "Email or Password invalid.";
+      } else if (axiosError.response?.status === 423) {
+        errorMessage = "Account is blocked, reach out for support..";
+      } else if (axiosError.response?.data?.message) {
+        errorMessage = axiosError.response.data.message;
+      }
+
+      showToast("Login error.", errorMessage, "error");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleEntraIdLogin = () => {
-    showToast(
-      "EntraID Login",
-      "Redirecionando para autenticação...",
-      "success"
-    );
+    // sla depois eu mudo
+    authService.loginWithOAuth("Microsoft");
   };
 
   const handleCreateAcc = () => {
@@ -81,7 +113,7 @@ const LoginPage = () => {
         <section className="h-dvh w-full lg:w-[64dvw]">
           <main className="flex relative items-center justify-start h-full">
             <div className="w-full sm:py-8 !px-16 md:ml-20 lg:ml-64 xl:ml-40  max-w-xl">
-              <form>
+              <form onSubmit={handleLogin}>
                 <div className="flex flex-col gap-4">
                   <BaseButton
                     variant="full"
@@ -104,18 +136,44 @@ const LoginPage = () => {
                     labelText="Email Corporativo"
                     placeholder="email@example.com"
                     type="Email"
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                    disabled={isLoading}
                   />
                   <LoginInput
                     labelText="Senha"
                     placeholder="Sua senha"
                     type="Password"
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                    disabled={isLoading}
                   />
+
+                  <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={formData.rememberMe}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          rememberMe: e.target.checked,
+                        })
+                      }
+                      disabled={isLoading}
+                      className="w-4 h-4 rounded border-gray-300"
+                    />
+                    Lembrar-me
+                  </label>
                   <BaseButton
                     variant="border"
-                    onClick={handleLogin}
-                    type="button"
+                    type="submit"
+                    disabled={isLoading}
                   >
-                    Entrar com email
+                    {isLoading ? "Entrando..." : "Entrar com email"}
                   </BaseButton>
                   <span className="font-quicksand font-semibold text-sm text-gray-500">
                     Don't have an account?{" "}
