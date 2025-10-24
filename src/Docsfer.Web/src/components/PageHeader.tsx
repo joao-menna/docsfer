@@ -4,12 +4,15 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { useLoaderData, useNavigate } from "react-router";
 import CommandPalette from "./CommandPalette";
 import type { File } from "@/types/search";
+import { useState } from "react";
+import NewFileModal from "./FileModal";
 
 type LoaderData = { files: File[] };
 
 export const PageHeader = () => {
   const pageName: string = usePageName();
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { files } = useLoaderData<LoaderData>();
 
@@ -17,10 +20,6 @@ export const PageHeader = () => {
     ...f,
     uploader: f.uploader ?? "Desconhecido",
   })) as File[];
-
-  const goToNewFile = () => {
-    navigate("/newFile");
-  };
 
   return (
     <Tooltip.Provider>
@@ -56,7 +55,7 @@ export const PageHeader = () => {
                     id="upload"
                     type="button"
                     className="header-button__style group"
-                    onClick={goToNewFile}
+                    onClick={() => setIsModalOpen(true)}
                   >
                     <div className="[&_svg]:h-5 [&_svg]:w-5">
                       <CloudUpload />
@@ -102,6 +101,10 @@ export const PageHeader = () => {
           </div>
         </nav>
       </header>
+      <NewFileModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </Tooltip.Provider>
   );
 };
