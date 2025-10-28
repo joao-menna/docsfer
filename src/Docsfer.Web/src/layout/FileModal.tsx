@@ -4,6 +4,8 @@ import { useState, type FormEvent } from "react";
 import { splitFile, extFromMime } from "@/hooks/utils/useFileExtension";
 import { validateFilename } from "@/hooks/utils/useFilenameValidator";
 import { motion } from "motion/react";
+import { useFileColor } from "@/hooks/useFileColor";
+import clsx from "clsx";
 
 interface NewFileModalProps {
   isOpen: boolean;
@@ -23,6 +25,7 @@ export default function NewFileModal({ isOpen, onClose }: NewFileModalProps) {
     setFileName(base);
     setFileExtension(ext || extFromMime(f.type) || "");
   };
+  const fileColor = useFileColor(fileExtension);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -105,7 +108,11 @@ export default function NewFileModal({ isOpen, onClose }: NewFileModalProps) {
                           <File className="pointer-events-none absolute top-0 mt-3.5 left-3 size-5 opacity-70 stroke-gray-800 fill-gray-500 peer-focus:fill-sky-500! peer-focus:opacity-100 transition-all duration-150 ease-in" />
                           {/* File extension */}
                           {fileExtension && (
-                            <span className="absolute right-4 top-0 mt-2.5 text-sky-500 pointer-events-none">
+                            <span
+                              className={clsx(
+                                `absolute right-4 top-0 mt-2.5 pointer-events-none ${fileColor} pointer-events-none`
+                              )}
+                            >
                               {fileExtension}
                             </span>
                           )}
