@@ -1,6 +1,7 @@
 import { useDropzone, type FileRejection, type Accept } from "react-dropzone";
 import clsx from "clsx";
 import { CheckLine, CircleSlash, ImageUp } from "lucide-react";
+import { motion } from "motion/react";
 
 type DZProps = {
   accept?: Accept;
@@ -59,7 +60,12 @@ export default function Dropzone({
         {isDragAccept && <CheckLine className="stroke-emerald-400 size-8" />}
         {isDragReject && <CircleSlash className="stroke-rose-500 size-8" />}
         {!isDragReject && !isDragAccept && (
-          <ImageUp className="stroke-sky-500 size-8" />
+          <motion.div
+            animate={{ y: [2, -2, 2] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "backOut" }}
+          >
+            <ImageUp className="stroke-sky-500 size-8" />
+          </motion.div>
         )}
 
         {/* text */}
