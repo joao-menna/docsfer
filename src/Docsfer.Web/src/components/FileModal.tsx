@@ -2,6 +2,7 @@ import { X, File, Send, SquareMousePointer } from "lucide-react";
 import Dropzone from "@/components/Dropzone";
 import { useState, type FormEvent } from "react";
 import { splitFile, extFromMime } from "@/hooks/utils/useFileExtension";
+import { validateFilename } from "@/hooks/utils/useFilenameValidator";
 
 interface NewFileModalProps {
   isOpen: boolean;
@@ -11,12 +12,11 @@ interface NewFileModalProps {
 export default function NewFileModal({ isOpen, onClose }: NewFileModalProps) {
   const [fileName, setFileName] = useState("");
   const [fileExtension, setFileExtension] = useState("");
-  const [fileObj, setfileObj] = useState<File | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleFiles = (files: File[]) => {
     if (!files?.length) return;
     const f = files[0];
-    setfileObj(f);
 
     const { base, ext } = splitFile(f.name);
     setFileName(base);
@@ -26,6 +26,14 @@ export default function NewFileModal({ isOpen, onClose }: NewFileModalProps) {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     // TODO: Implement file sharing logic
+    if (!validateFilename(fileName)) {
+      setErrorMessage(
+        `file names cannot contain any of the following characters: "\\ / : * ? \\" < > |"`
+      );
+      return;
+    } else {
+      console.log(validateFilename);
+    }
     console.log(`Sharing file ${fileName}`);
     onClose();
   };
@@ -143,6 +151,9 @@ export default function NewFileModal({ isOpen, onClose }: NewFileModalProps) {
                   <Dropzone onFiles={handleFiles} />
                 </div>
               </div>
+              {errorMessage.length > 0 && (
+                <div className="text-red-500 font-semibold">{errorMessage}</div>
+              )}
 
               {/* Botões Enviar e Cancelar */}
               <div className="flex w-full justify-between gap-4 pt-4 font-gabarito">
