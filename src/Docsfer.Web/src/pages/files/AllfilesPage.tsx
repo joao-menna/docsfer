@@ -70,10 +70,9 @@ export default function AllFiles() {
         {/* Heading */}
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-2">
-            <h1 className="font-josefin text-gray-200 text-3xl">Documentos</h1>
-            <span className="text-gray-400 font-josefin">
-              Documentos e arquivos enviados para você, ou por você.
-            </span>
+            <h2 className="font-josefin text-xl dark:text-zinc-400">
+              Documents shared by you, or with you.
+            </h2>
           </div>
         </div>
         {/* Content */}
