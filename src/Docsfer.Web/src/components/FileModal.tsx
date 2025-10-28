@@ -1,7 +1,7 @@
 import { X, File, Send, SquareMousePointer } from "lucide-react";
 import Dropzone from "@/components/Dropzone";
-import { useState } from "react";
-import { filesLoader } from "@/hooks/useFileLoader";
+import { useState, type FormEvent } from "react";
+import { splitFile, extFromMime } from "@/hooks/utils/useFileExtension";
 
 interface NewFileModalProps {
   isOpen: boolean;
@@ -11,23 +11,22 @@ interface NewFileModalProps {
 export default function NewFileModal({ isOpen, onClose }: NewFileModalProps) {
   const [fileName, setFileName] = useState("");
   const [fileExtension, setFileExtension] = useState("");
+  const [fileObj, setfileObj] = useState<File | null>(null);
 
   const handleFiles = (files: File[]) => {
-    if (filesLoader.length > 0) {
-      const file = files[0];
-      const nameParts = file.name.split(".");
-      const ext = nameParts.length > 1 ? nameParts.pop() : "";
-      const name = nameParts.join(".");
+    if (!files?.length) return;
+    const f = files[0];
+    setfileObj(f);
 
-      setFileName(name || file.name);
-      setFileExtension(ext ? `.${ext}` : "");
-    }
+    const { base, ext } = splitFile(f.name);
+    setFileName(base);
+    setFileExtension(ext || extFromMime(f.type) || "");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     // TODO: Implement file sharing logic
-    console.log("Sharing file...");
+    console.log(`Sharing file ${fileName}`);
     onClose();
   };
 
@@ -74,8 +73,10 @@ export default function NewFileModal({ isOpen, onClose }: NewFileModalProps) {
                           <input
                             type="text"
                             placeholder="CoolFileName"
+                            value={fileName}
                             className="peer w-full rounded-lg border-2 border-gray-700 py-2 pl-9
                  text-gray-100 placeholder:text-gray-500 focus:outline-none transition-all duration-150 ease-in bg-gray-700/50 focus:border-sky-500"
+                            onChange={(e) => setFileName(e.target.value)}
                           />
                           {/* Left Icon */}
                           <File className="pointer-events-none absolute top-0 mt-3.5 left-3 size-5 opacity-70 stroke-gray-800 fill-gray-500 peer-focus:fill-sky-500! peer-focus:opacity-100 transition-all duration-150 ease-in" />
@@ -83,6 +84,11 @@ export default function NewFileModal({ isOpen, onClose }: NewFileModalProps) {
                           {fileExtension && (
                             <span className="absolute right-4 top-0 mt-2.5 text-sky-500 pointer-events-none">
                               {fileExtension}
+                            </span>
+                          )}
+                          {!fileExtension && (
+                            <span className="absolute right-4 top-0 mt-2.5 text-gray-500 pointer-events-none">
+                              .extension
                             </span>
                           )}
                         </div>
