@@ -3,6 +3,7 @@ import Dropzone from "@/components/Dropzone";
 import { useState, type FormEvent } from "react";
 import { splitFile, extFromMime } from "@/hooks/utils/useFileExtension";
 import { validateFilename } from "@/hooks/utils/useFilenameValidator";
+import { motion } from "motion/react";
 
 interface NewFileModalProps {
   isOpen: boolean;
@@ -41,13 +42,27 @@ export default function NewFileModal({ isOpen, onClose }: NewFileModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div
+    <motion.div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
       onClick={onClose}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{
+        duration: 0.8,
+        ease: "backOut",
+      }}
     >
-      <div
+      <motion.div
         className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-gray-900 rounded-xl shadow-2xl"
         onClick={(e) => e.stopPropagation()}
+        initial={{ y: 24, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: -24, opacity: 0 }}
+        transition={{
+          duration: 0.6,
+          ease: "backOut",
+        }}
       >
         {/* Close button */}
         <button
@@ -174,7 +189,7 @@ export default function NewFileModal({ isOpen, onClose }: NewFileModalProps) {
             </form>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

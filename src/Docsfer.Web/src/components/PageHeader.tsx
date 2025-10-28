@@ -6,6 +6,7 @@ import CommandPalette from "./CommandPalette";
 import type { File } from "@/types/search";
 import { useState } from "react";
 import NewFileModal from "./FileModal";
+import { AnimatePresence } from "motion/react";
 
 type LoaderData = { files: File[] };
 
@@ -48,6 +49,7 @@ export const PageHeader = () => {
               files={normalized}
               onOpenFile={(id) => navigate(`/files/${id}`)}
             />
+
             <div className="overflow-hidden flex  items-center rounded-full border border-gray-400 dark:border-gray-700">
               <Tooltip.Root>
                 <Tooltip.Trigger asChild>
@@ -101,10 +103,14 @@ export const PageHeader = () => {
           </div>
         </nav>
       </header>
-      <NewFileModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <AnimatePresence>
+        {isModalOpen && (
+          <NewFileModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </Tooltip.Provider>
   );
 };

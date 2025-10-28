@@ -1,7 +1,6 @@
 import RecentFile from "@/components/base/Arquivos/RecentFile";
 import { ChevronDown, ChevronUp, List, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { useNavigate } from "react-router";
 import { useState } from "react";
 import { useLoaderData } from "react-router";
 import type { File } from "@/types/search.ts";
@@ -17,7 +16,6 @@ type LoaderData = {
 };
 
 export default function AllFiles() {
-  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState("list");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -28,10 +26,6 @@ export default function AllFiles() {
 
   const toggleView = () => {
     setViewMode((prev) => (prev === "list" ? "grid" : "list"));
-  };
-
-  const handleNotFound = () => {
-    navigate("/newFile");
   };
 
   const handleFileClick = (file: File) => {
@@ -196,9 +190,9 @@ export default function AllFiles() {
               Tente{" "}
               <button
                 type="button"
-                onClick={handleNotFound}
                 className="text-sky-300 hover:underline cursor-pointer"
               >
+                {/* TODO: ABRIR O MODAL DE ENVIAR NOVO ARQUIVO AQUI */}
                 enviar um novo arquivo
               </button>
               , ou peça para alguém compartilhar algum!
