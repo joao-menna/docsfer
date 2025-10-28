@@ -2,7 +2,7 @@ import { CloudUpload, Bell } from "lucide-react";
 import usePageName from "../hooks/usePageName";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useLoaderData, useNavigate } from "react-router";
-import CommandPalette from "./CommandPalette";
+import CommandPalette from "../components/UI/CommandPalette";
 import type { File } from "@/types/search";
 import { useState } from "react";
 import NewFileModal from "./FileModal";

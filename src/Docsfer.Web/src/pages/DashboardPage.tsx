@@ -1,8 +1,8 @@
 import { generateActivities } from "@/hooks/useMockData";
 import { useMemo, useState } from "react";
-import { NewCardTemplate } from "@/components/base/dashboard/DashboardCard";
-import Table from "@/components/base/dashboard/Table";
-import EditFileModal from "@/components/base/dashboard/EditFileModal";
+import { NewCardTemplate } from "@components/features/dashboard/DashboardCard";
+import Table from "@/components/UI/Table/Table";
+import EditFileModal from "@/components/features/dashboard/EditFileModal";
 import { AnimatePresence } from "motion/react";
 
 type Person = { name: string };
@@ -11,9 +11,12 @@ type FileRow = {
   id: number;
   name: string;
   sharedWith: Person[];
-  uploadedAt: string;
+  creationDate: string;
   groups: Group[];
   size: string;
+  uploader?: string;
+  modifyDate?: string;
+  version: string;
 };
 
 const DashboardPage = () => {
@@ -40,9 +43,12 @@ const DashboardPage = () => {
           { name: "John" },
           { name: "John" },
         ],
-        uploadedAt: "25/01/2025 16:00",
+        creationDate: "25/01/2025 16:00",
         groups: [{ name: "HR" }, { name: "Finance" }],
         size: "120 MB",
+        modifyDate: "26/01/2025 16:00",
+        uploader: "Jaozin2",
+        version: "v2.0",
       },
       {
         id: 2,
@@ -54,127 +60,12 @@ const DashboardPage = () => {
           { name: "John" },
           { name: "John" },
         ],
-        uploadedAt: "02/02/2025 10:15",
+        creationDate: "02/02/2025 10:15",
         groups: [{ name: "HR" }, { name: "Admin" }, { name: "Marketing" }],
         size: "85 MB",
-      },
-      {
-        id: 3,
-        name: "budget.xlsx",
-        sharedWith: [{ name: "John" }, { name: "John" }, { name: "John" }],
-        uploadedAt: "10/02/2025 09:30",
-        groups: [{ name: "Finance" }],
-        size: "42 MB",
-      },
-      {
-        id: 4,
-        name: "contract.pdf",
-        sharedWith: [
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-        ],
-        uploadedAt: "15/02/2025 13:45",
-        groups: [{ name: "Legal" }, { name: "HR" }, { name: "Admin" }],
-        size: "5 MB",
-      },
-      {
-        id: 5,
-        name: "report.pdf",
-        sharedWith: [
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-        ],
-        uploadedAt: "20/02/2025 11:00",
-        groups: [
-          { name: "Admin" },
-          { name: "HR" },
-          { name: "Finance" },
-          { name: "IT" },
-        ],
-        size: "200 MB",
-      },
-      {
-        id: 6,
-        name: "notes.txt",
-        sharedWith: [
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-        ],
-        uploadedAt: "01/03/2025 18:20",
-        groups: [{ name: "Research" }, { name: "HR" }],
-        size: "2 MB",
-      },
-      {
-        id: 7,
-        name: "design.png",
-        sharedWith: [
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-        ],
-        uploadedAt: "05/03/2025 15:40",
-        groups: [
-          { name: "Design" },
-          { name: "Marketing" },
-          { name: "Admin" },
-          { name: "HR" },
-          { name: "Finance" },
-        ],
-        size: "36 MB",
-      },
-      {
-        id: 8,
-        name: "video.mp4",
-        sharedWith: [
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "John" },
-          { name: "aaa" },
-          { name: "John" },
-        ],
-        uploadedAt: "08/03/2025 21:10",
-        groups: [
-          { name: "Media" },
-          { name: "HR" },
-          { name: "Admin" },
-          { name: "Finance" },
-          { name: "Legal" },
-          { name: "IT" },
-        ],
-        size: "950 MB",
+        modifyDate: "26/01/2025 16:00",
+        uploader: "Jaozin2",
+        version: "v2.0",
       },
     ],
     []
@@ -251,7 +142,7 @@ const DashboardPage = () => {
                             </div>
                           </Table.Cell>
 
-                          <Table.Cell>{file.uploadedAt}</Table.Cell>
+                          <Table.Cell>{file.creationDate}</Table.Cell>
 
                           <Table.Cell>
                             {file.groups.map((g, i) => (

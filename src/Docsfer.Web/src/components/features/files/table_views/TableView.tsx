@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import Table from "@components/base/dashboard/Table.tsx";
+import Table from "@/components/UI/Table/Table";
 import type { File } from "@/types/search";
 import { useNavigate } from "react-router";
 

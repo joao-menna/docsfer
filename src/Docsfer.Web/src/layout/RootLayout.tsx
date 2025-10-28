@@ -1,5 +1,5 @@
-import { PageHeader } from "../components/PageHeader";
-import { PageAside } from "../components/PageAside";
+import { PageHeader } from "./PageHeader";
+import { PageAside } from "./PageAside";
 import { Outlet } from "react-router";
 
 export const RootLayout = () => {

@@ -3,6 +3,7 @@ import { getFileTypeLabel } from "@hooks/useFileType";
 import type { File } from "@/types/search";
 import clsx from "clsx";
 import { useNavigate } from "react-router";
+import { type MouseEvent } from "react";
 
 type FileProps = {
   file: File;
@@ -14,15 +15,15 @@ export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
   const navigate = useNavigate();
   const fileType = getFileTypeLabel(file.name);
 
-  const handleCardClick = (e: React.MouseEvent) => {
+  const handleCardClick = (e: MouseEvent) => {
     e.stopPropagation();
     onFileClick(file);
-  }
+  };
 
-  const handleEditClick = (e: React.MouseEvent) => {
+  const handleEditClick = (e: MouseEvent) => {
     e.stopPropagation();
-    navigate(`/files/${file.id}`)
-  }
+    navigate(`/files/${file.id}`);
+  };
 
   return (
     <button

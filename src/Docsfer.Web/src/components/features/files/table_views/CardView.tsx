@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import ListFile from "@components/base/Arquivos/ListFile.tsx";
+import ListFile from "@/components/features/files/CardView_Card";
 import type { File } from "@/types/search";
 
 type GridViewProps = {

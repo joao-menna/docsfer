@@ -1,5 +1,5 @@
-import { BaseButton } from "@/components/buttons/BaseButton";
-import { CreateAccInput } from "@/components/buttons/CreateAccInput";
+import { BaseButton } from "@/components/UI/Button/BaseButton";
+import { CreateAccInput } from "@/components/UI/Input/CreateAccInput.tsx";
 import { useToast } from "@/hooks/utils/useToastContext";
 import { useNavigate } from "react-router";
 import { api } from "@/services/httpClient";

@@ -64,7 +64,7 @@ export default function EditFileModal({ file, onClose }: Props) {
             </p>
             <p className="text-xs text-gray-400 text-wrap">
               Compartilhado com:{" "}
-              {file.users?.map((u) => u.name).join(", ") || "—"}
+              {file.sharedWith?.map((u) => u.name).join(", ") || "—"}
             </p>
           </div>
           <button

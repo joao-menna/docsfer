@@ -1,14 +1,14 @@
-export type Group = { name: string; permission: "read" | "write" | "admin" };
+export type Group = { name: string };
 export type User = { name: string };
 
 export type File = {
   id: number;
   name: string;
   creationDate: string;
-  modifyDate: string;
-  uploader: string;
+  modifyDate?: string;
+  uploader?: string;
   groups: Group[];
-  users: User[];
+  sharedWith: User[];
   size: string;
-  version: number;
+  version: string;
 };

@@ -1,5 +1,5 @@
 import { X, File, Send, SquareMousePointer } from "lucide-react";
-import Dropzone from "@/components/Dropzone";
+import Dropzone from "@/components/UI/Dropzone";
 import { useState, type FormEvent } from "react";
 import { splitFile, extFromMime } from "@/hooks/utils/useFileExtension";
 import { validateFilename } from "@/hooks/utils/useFilenameValidator";

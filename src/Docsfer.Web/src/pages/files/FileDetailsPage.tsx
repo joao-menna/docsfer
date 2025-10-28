@@ -1,7 +1,7 @@
 import { RotateCcw, X } from "lucide-react";
 import { useLoaderData, useNavigate, useParams } from "react-router";
-import UserAccessRow from "@/components/buttons/UserAccessRow";
-import Table from "@/components/base/dashboard/Table";
+import UserAccessRow from "@/components/features/files/Permissions/UserPermissionsRow";
+import Table from "@/components/UI/Table/Table";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import clsx from "clsx";
@@ -186,7 +186,7 @@ export default function FileDetails() {
               Usuários com acesso
             </h1>
             <div className="flex flex-col gap-2">
-              {file.users?.map((user) => (
+              {file.sharedWith?.map((user) => (
                 <div
                   key={`${fileId}-user-${user.name}`}
                   className="flex gap-8 w-full items-center"

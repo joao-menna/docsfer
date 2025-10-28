@@ -1,4 +1,4 @@
-import RecentFile from "@/components/base/Arquivos/RecentFile";
+import RecentFile from "@/components/features/files/RecentFile";
 import { ChevronDown, ChevronUp, List, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
@@ -6,10 +6,10 @@ import { useLoaderData } from "react-router";
 import type { File } from "@/types/search.ts";
 import clsx from "clsx";
 import { Table } from "lucide-react";
-import ListView from "@components/base/Arquivos/ListView";
-import GridView from "@components/base/Arquivos/GridView.tsx";
+import ListView from "@/components/features/files/table_views/TableView";
+import GridView from "@/components/features/files/table_views/CardView";
 import { useFileSorting } from "@/hooks/useFileSorting";
-import FileSidebar from "@/components/base/Arquivos/FileSidebar";
+import FileSidebar from "@/components/features/files/File_Sidebar";
 
 type LoaderData = {
   files: File[];

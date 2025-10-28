@@ -1,5 +1,5 @@
-import { LoginInput } from "../../components/buttons/LoginInput";
-import { BaseButton } from "../../components/buttons/BaseButton";
+import { LoginInput } from "@/components/UI/Input/LoginInput";
+import { BaseButton } from "@/components/UI/Button/BaseButton";
 import { LayoutGrid } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useState, type FormEvent } from "react";
