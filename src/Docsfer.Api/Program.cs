@@ -49,8 +49,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.Cookie.SameSite = SameSiteMode.None;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
 });
 
 if (!string.IsNullOrWhiteSpace(githubClientId) && !string.IsNullOrWhiteSpace(githubClientSecret))
@@ -117,7 +117,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend", builder =>
     {
         builder
-            .WithOrigins("inserir-meu-ip-aqui-burro", "http://localhost:5173")
+            .WithOrigins("http://20.172.176.246", "http://localhost:5173", "http://20.172.176.246:5173")
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();

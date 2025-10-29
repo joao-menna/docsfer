@@ -5,6 +5,7 @@ export async function checkAuth(): Promise<boolean> {
     await authService.getMe();
     return true;
   } catch (err) {
+    console.log(err);
     return false;
   }
 }

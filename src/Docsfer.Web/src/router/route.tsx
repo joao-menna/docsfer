@@ -11,8 +11,9 @@ import NotFoundPage from "@/pages/NotFoundPage";
 // components and utils
 import { RouteError } from "../components/features/Loader/RouteError";
 import { Loader } from "../components/features/Loader/Loader";
-import { filesLoader, fileDetailLoader } from "../hooks/useFileLoader";
+import { filesLoader, fileDetailLoader } from "../hooks/loaders/useFileLoader";
 import FileNotFoundError from "@/components/features/files/errors/FileNotFound";
+import { publicRouteLoader } from "@/services/auth/usePublicAuth";
 // import { protectedLoader } from "@/services/auth/authLoader";
 
 // lazy-loaded pages
@@ -25,6 +26,7 @@ export const router = createBrowserRouter([
     path: "/",
     element: <Login />,
     errorElement: <RouteError />,
+    loader: publicRouteLoader,
     /* loader: async () => {
       if (await isAuthed()) throw new redirect("/dashboard");
       return null
@@ -33,6 +35,7 @@ export const router = createBrowserRouter([
   {
     path: "/createAccount",
     element: <CreateAccount />,
+    loader: publicRouteLoader,
   },
   // App Area
   {

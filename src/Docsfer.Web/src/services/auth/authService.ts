@@ -25,6 +25,8 @@ export const authService = {
     return response.data;
   },
   getMe: async (): Promise<UserInfo> => {
+    console.log("Request headers:", api.defaults.headers);
+    console.log("Auth cookie:", document.cookie);
     const response = await api.get<UserInfo>("/auth/me");
     return response.data;
   },
