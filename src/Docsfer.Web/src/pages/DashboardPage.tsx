@@ -1,4 +1,4 @@
-import { generateActivities } from "@/hooks/useMockData";
+import { generateActivities } from "@/utils/files/useMockData";
 import { useMemo, useState } from "react";
 import { NewCardTemplate } from "@components/features/dashboard/DashboardCard";
 import Table from "@/components/UI/Table/Table";
@@ -82,7 +82,7 @@ const DashboardPage = () => {
       <div className="relative z-10 min-h-[calc(100dvh-3rem)]">
         <div className="flex flex-col gap-2 px-6 py-4">
           <h2 className="font-josefin text-xl dark:text-zinc-400">
-            Welcome back, Jaozin!
+            Welcome back!
             {/* NEXT TODO: PEGAR PELO MENOS ESSE NOME REATIVAMENTE PELO AMOR DE DEUS */}
           </h2>
           <div className="flex flex-col gap-12">

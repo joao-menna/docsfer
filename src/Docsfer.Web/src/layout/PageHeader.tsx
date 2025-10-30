@@ -1,21 +1,21 @@
 import { CloudUpload, Bell } from "lucide-react";
 import usePageName from "../hooks/usePageName";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { useLoaderData, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import CommandPalette from "../components/UI/CommandPalette";
 import type { File } from "@/types/search";
 import { useState } from "react";
 import NewFileModal from "./FileModal";
-import { AnimatePresence } from "motion/react";
-
-type LoaderData = { files: File[] };
+import { AnimatePresence, motion } from "motion/react";
+import { useFiles } from "@/utils/files/useFiles";
 
 export const PageHeader = () => {
   const pageName: string = usePageName();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [pressStart, setPressStart] = useState(false);
 
-  const { files } = useLoaderData<LoaderData>();
+  const { files } = useFiles();
 
   const normalized = files.map((f: { uploader: string }) => ({
     ...f,
@@ -105,10 +105,31 @@ export const PageHeader = () => {
       </header>
       <AnimatePresence>
         {isModalOpen && (
-          <NewFileModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-          />
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+            onClick={() => {
+              setIsModalOpen(false);
+            }}
+            onPointerDown={(e) => {
+              setPressStart(e.target === e.currentTarget);
+            }}
+            onPointerUp={(e) => {
+              const endedOnBackdrop = e.target === e.currentTarget;
+              if (pressStart && endedOnBackdrop) {
+                setIsModalOpen(false);
+              }
+              setPressStart(false);
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: 0.8,
+              ease: "backOut",
+            }}
+          >
+            <NewFileModal onClose={() => setIsModalOpen(false)} />
+          </motion.div>
         )}
       </AnimatePresence>
     </Tooltip.Provider>

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { useState, type FormEvent } from "react";
 import { authService } from "@/services/auth/authService";
 import { AxiosError } from "axios";
-import { useToast } from "@/hooks/utils/useToastContext";
+import { useToast } from "@/utils/toast/useToastContext";
 import { type ToastSeverity } from "@/types/toast";
 
 const LoginPage = () => {

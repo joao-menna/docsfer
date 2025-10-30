@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { Table } from "lucide-react";
 import ListView from "@/components/features/files/table_views/TableView";
 import GridView from "@/components/features/files/table_views/CardView";
-import { useFileSorting } from "@/hooks/useFileSorting";
+import { useFileSorting } from "@/utils/files/useFileSorting";
 import FileSidebar from "@/components/features/files/File_Sidebar";
 
 type LoaderData = {

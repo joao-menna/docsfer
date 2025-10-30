@@ -1,6 +1,6 @@
-import { useFileColor } from "@hooks/useFileColor";
+import { useFileColor } from "@/utils/files/useFileColor";
 import { useAvatar } from "@/hooks/useUserPfp";
-import { formatFileSize, formatDateToBR } from "@/hooks/useMockData";
+import { formatFileSize, formatDateToBR } from "@/utils/files/useMockData";
 import clsx from "clsx";
 
 interface CardInfoProps {

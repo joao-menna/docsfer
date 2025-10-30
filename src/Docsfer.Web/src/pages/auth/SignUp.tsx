@@ -1,6 +1,6 @@
 import { BaseButton } from "@/components/UI/Button/BaseButton";
 import { CreateAccInput } from "@/components/UI/Input/CreateAccInput.tsx";
-import { useToast } from "@/hooks/utils/useToastContext";
+import { useToast } from "@/utils/toast/useToastContext";
 import { useNavigate } from "react-router";
 import { api } from "@/services/httpClient";
 import { useState, type ChangeEvent, type FormEvent, useCallback } from "react";

@@ -1,5 +1,5 @@
 import { Pencil, FileChartColumn } from "lucide-react";
-import { getFileTypeLabel } from "@hooks/useFileType";
+import { getFileTypeLabel } from "@/utils/files/fileCardDocType";
 import type { File } from "@/types/search";
 import clsx from "clsx";
 import { useNavigate } from "react-router";
@@ -91,7 +91,7 @@ export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
               : "bg-sky-500/20 border-sky-500/20"
           )}
         >
-          {`v${String(file.version.toFixed(1))}`}
+          {`v${String(file.version)}`}
         </span>
       </div>
     </button>

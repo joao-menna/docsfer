@@ -10,7 +10,7 @@ export async function publicRouteLoader() {
     }
 
     return null;
-  } catch (error) {
+  } catch {
     return null;
   }
 }
