@@ -8,34 +8,7 @@ import {
 } from "lucide-react";
 import { NavLink } from "react-router";
 import clsx from "clsx";
-
-function asideReducer(state, action) {
-  switch (action.type) {
-    case "ENTER":
-      if (!state.isPinned && !state.isKeepMinimized)
-        return { ...state, isExpanded: true };
-      return state;
-    case "LEAVE":
-      if (!state.isPinned) return { ...state, isExpanded: false };
-      return state;
-    case "KEEP_PINNED":
-      return {
-        ...state,
-        isKeepMinimized: false,
-        isPinned: !state.isPinned,
-        isExpanded: true,
-      };
-    case "KEEP_MINIMIZED":
-      return {
-        ...state,
-        isKeepMinimized: !state.isKeepMinimized,
-        isPinned: false,
-        isExpanded: false,
-      };
-    default:
-      return state;
-  }
-}
+import { asideReducer } from "@/utils/relationship/useAsideReducer";
 
 export const PageAside = () => {
   const [state, dispatch] = useReducer(asideReducer, {
