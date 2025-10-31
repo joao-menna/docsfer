@@ -1,6 +1,12 @@
 import { User } from "lucide-react";
 
-export function bottomBtn() {
+interface btnProps {
+  sender: string;
+  recipient: string;
+  fileName: string;
+}
+
+export function bottomBtn({ sender, recipient, fileName }: btnProps) {
   return (
     <button
       type="button"
@@ -16,13 +22,11 @@ export function bottomBtn() {
         {/* text */}
         <div className="flex flex-col items-start">
           <div className="flex gap-2 font-gabarito font-semibold text-gray-200 text-[1rem]">
-            <h3>Você</h3>
+            <h3>{sender}</h3>
             <h3>⇒</h3>
-            <h3> Rodrigo</h3>
+            <h3>{recipient}</h3>
           </div>
-          <span className="text-gray-400 text-[0.875rem]">
-            ArquivoDaora.txt
-          </span>
+          <span className="text-gray-400 text-[0.875rem]">{fileName}</span>
         </div>
       </div>
     </button>
