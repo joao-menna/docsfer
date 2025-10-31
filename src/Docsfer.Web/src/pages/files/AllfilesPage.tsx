@@ -4,15 +4,17 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { useLoaderData } from "react-router";
 import type { File } from "@/types/search.ts";
+import type { UserInfo } from "@/services/auth/authService";
 import clsx from "clsx";
 import { Table } from "lucide-react";
 import ListView from "@/components/features/files/table_views/TableView";
 import GridView from "@/components/features/files/table_views/CardView";
 import { useFileSorting } from "@/utils/files/useFileSorting";
-import FileSidebar from "@/components/features/files/File_Sidebar";
+import FileSidebar from "@/layout/File_Sidebar";
 
 type LoaderData = {
   files: File[];
+  user: UserInfo;
 };
 
 export default function AllFiles() {

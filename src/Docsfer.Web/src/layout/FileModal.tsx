@@ -272,7 +272,8 @@ export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
               </button>
               <button
                 type="button"
-                className="rounded-lg border px-4 py-2 w-full cursor-pointer border-red-500 text-red-500 outline-red-800 hover:bg-red-500/20 transition-all duration-100 ease-out font-bold tracking-widest"
+                disabled={isSubmitting}
+                className="rounded-lg border px-4 py-2 w-full cursor-pointer border-red-500 text-red-500 outline-red-800 hover:bg-red-500/20 transition-all duration-100 ease-out font-bold tracking-widest disabled:opacity-70 disabled:cursor-not-allowed"
                 onClick={onClose}
               >
                 Cancel

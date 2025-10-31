@@ -1,4 +1,4 @@
-import { Pencil, FileChartColumn } from "lucide-react";
+import { Pencil, File as FileIcon } from "lucide-react";
 import { getFileTypeLabel } from "@/utils/files/fileCardDocType";
 import type { File } from "@/types/search";
 import clsx from "clsx";
@@ -26,8 +26,7 @@ export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
   };
 
   return (
-    <button
-      type="button"
+    <div
       className={clsx(
         "flex flex-col cursor-pointer gap-6 px-6 py-4 group rounded-lg border border-gray-700 bg-[linear-gradient(135deg,#030712,#070B16)] font-gabarito text-gray-200 max-w-md   transition-all duration-300",
         isSelected
@@ -45,7 +44,7 @@ export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
                 isSelected ? "bg-sky-500" : "bg-sky-700"
               )}
             >
-              <FileChartColumn
+              <FileIcon
                 className={clsx(
                   "fill-gray-200 transition-colors duration-150 ease-out",
                   isSelected ? "stroke-sky-500" : "stroke-sky-700"
@@ -94,6 +93,6 @@ export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
           {`v${String(file.version)}`}
         </span>
       </div>
-    </button>
+    </div>
   );
 }

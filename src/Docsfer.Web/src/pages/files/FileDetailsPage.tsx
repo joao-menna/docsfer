@@ -6,10 +6,12 @@ import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import clsx from "clsx";
 import type { File } from "@/types/search";
+import type { UserInfo } from "@/services/auth/authService";
 
 type LoaderData = {
   files: File[];
   currentFile: File | null;
+  user: UserInfo;
 };
 
 export default function FileDetails() {

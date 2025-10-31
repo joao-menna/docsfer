@@ -1,13 +1,18 @@
 import { CloudUpload, Bell } from "lucide-react";
 import usePageName from "../hooks/usePageName";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { useNavigate } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import CommandPalette from "../components/UI/CommandPalette";
 import type { File } from "@/types/search";
+import type { UserInfo } from "@/services/auth/authService";
 import { useState } from "react";
 import NewFileModal from "./FileModal";
 import { AnimatePresence, motion } from "motion/react";
-import { useFiles } from "@/utils/files/useFiles";
+
+type LoaderData = {
+  files: File[];
+  user: UserInfo;
+};
 
 export const PageHeader = () => {
   const pageName: string = usePageName();
@@ -15,9 +20,9 @@ export const PageHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [pressStart, setPressStart] = useState(false);
 
-  const { files } = useFiles();
+  const { files, user } = useLoaderData<LoaderData>();
 
-  const normalized = files.map((f: { uploader: string }) => ({
+  const normalized = files.map((f: File) => ({
     ...f,
     uploader: f.uploader ?? "Desconhecido",
   })) as File[];
@@ -128,7 +133,10 @@ export const PageHeader = () => {
               ease: "backOut",
             }}
           >
-            <NewFileModal onClose={() => setIsModalOpen(false)} />
+            <NewFileModal
+              onClose={() => setIsModalOpen(false)}
+              currentUserId={user.userId}
+            />
           </motion.div>
         )}
       </AnimatePresence>

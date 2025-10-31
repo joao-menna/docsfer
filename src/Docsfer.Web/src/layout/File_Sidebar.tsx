@@ -25,7 +25,7 @@ FileSidebarProps) {
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: "100%", opacity: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
-        className="fixed right-0 top-12 h-[calc(100dvh-3rem)] w-xl"
+        className="fixed right-0 top-12 h-[calc(100dvh-3rem)] w-xl bg-gray-900 shadow-[4px_8px_4px_8px_rgba(11,24,66,0.5)]"
       >
         <div className="flex flex-col items-center justify-between font-gabarito w-full h-full border-l border-gray-700 px-8 pb-12">
           <div className="flex flex-col gap-5 w-full">

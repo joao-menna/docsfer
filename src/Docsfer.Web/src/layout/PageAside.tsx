@@ -1,11 +1,48 @@
-import { useState } from "react";
-import { House, ChevronsRight, Users, Folders } from "lucide-react";
+import { useReducer } from "react";
+import {
+  House,
+  ChevronsRight,
+  Users,
+  Folders,
+  LockKeyhole,
+} from "lucide-react";
 import { NavLink } from "react-router";
 import clsx from "clsx";
 
+function asideReducer(state, action) {
+  switch (action.type) {
+    case "ENTER":
+      if (!state.isPinned && !state.isKeepMinimized)
+        return { ...state, isExpanded: true };
+      return state;
+    case "LEAVE":
+      if (!state.isPinned) return { ...state, isExpanded: false };
+      return state;
+    case "KEEP_PINNED":
+      return {
+        ...state,
+        isKeepMinimized: false,
+        isPinned: !state.isPinned,
+        isExpanded: true,
+      };
+    case "KEEP_MINIMIZED":
+      return {
+        ...state,
+        isKeepMinimized: !state.isKeepMinimized,
+        isPinned: false,
+        isExpanded: false,
+      };
+    default:
+      return state;
+  }
+}
+
 export const PageAside = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isPinned, setIsPinned] = useState(false);
+  const [state, dispatch] = useReducer(asideReducer, {
+    isExpanded: false,
+    isPinned: false,
+    isKeepMinimized: false,
+  });
 
   const menuItems = [
     { to: "/dashboard", icon: House, label: "Dashboard", exact: true },
@@ -13,26 +50,9 @@ export const PageAside = () => {
     { to: "/files", icon: Folders, label: "Todos os arquivos" },
   ];
 
-  const handleMouseEnter = () => {
-    if (!isPinned) {
-      setIsExpanded(true);
-    }
-  };
+  const isOpen = state.isExpanded || state.isPinned;
 
-  const handleMouseLeave = () => {
-    if (!isPinned) {
-      setIsExpanded(false);
-    }
-  };
-
-  const isOpen = isExpanded || isPinned;
-
-  const togglePin = () => {
-    setIsPinned(!isPinned);
-    setIsExpanded(!isExpanded);
-  };
-
-  const sidebarWidth = isExpanded || isPinned ? "w-64" : "w-16";
+  const sidebarWidth = state.isExpanded || state.isPinned ? "w-64" : "w-16";
 
   // TODO: IMPLEMENT LIGHT MODE FOR THE LOVE OF GOD
   return (
@@ -42,8 +62,8 @@ export const PageAside = () => {
           "transition-all duration-200 ease-in-out flex flex-col relative border-r border-gray-700",
           sidebarWidth
         )}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={() => dispatch({ type: "ENTER" })}
+        onMouseLeave={() => dispatch({ type: "LEAVE" })}
       >
         <nav className={`flex-1 p-2`}>
           <ul className="flex flex-col gap-2">
@@ -78,13 +98,20 @@ export const PageAside = () => {
             ))}
           </ul>
         </nav>
-        <div className="flex items-center justify-center w-16 h-12 dark:text-gray-400">
-          {/* TODO: IMPLEMENT A WAY TO TOGGLE IF HOVER CHANGES THE WIDTH OR NOT WITH A TOOLTIP MENU */}
+        <div className="flex flex-col gap-0.5 items-center justify-center w-16  dark:text-gray-400">
           <button
             className={clsx("p-3 dark:hover:bg-gray-800 rounded-lg mb-4", {
-              "dark:text-gray-200 dark:bg-gray-800": isPinned,
+              "dark:text-gray-200 dark:bg-gray-800": state.isKeepMinimized,
             })}
-            onClick={togglePin}
+            onClick={() => dispatch({ type: "KEEP_MINIMIZED" })}
+          >
+            <LockKeyhole />
+          </button>
+          <button
+            className={clsx("p-3 dark:hover:bg-gray-800 rounded-lg mb-4", {
+              "dark:text-gray-200 dark:bg-gray-800": state.isPinned,
+            })}
+            onClick={() => dispatch({ type: "KEEP_PINNED" })}
           >
             <ChevronsRight />
           </button>
