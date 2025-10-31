@@ -10,7 +10,7 @@ export function bottomBtn({ sender, recipient, fileName }: btnProps) {
   return (
     <button
       type="button"
-      className="flex items-center justfiy-between w-full p-1 group hover:bg-gray-800/40 rounded-lg"
+      className="flex items-center justfiy-between w-full p-1 group hover:bg-gray-800/40 rounded-lg  transition-colors duratin-75 ease-out"
     >
       {/* SECTION: user description
         ------------------------------ */}

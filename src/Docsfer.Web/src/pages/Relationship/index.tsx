@@ -1,14 +1,15 @@
 import Sidebar from "@/layout/relationship/sidebar";
+import { Outlet } from "react-router";
 
-const GroupPage = () => {
+export default function RelationPage() {
   return (
     <div className="flex min-h-[calc(100dvh-3rem)] w-full">
       <Sidebar />
       {/* SECTION: Main Content
       --------------------------------------------- */}
-      <div className="w-full h-full bg-black"></div>
+      <div className="w-full flex flex-col justify-start items-start gap-6 px-5 py-6">
+        <Outlet />
+      </div>
     </div>
   );
-};
-
-export default GroupPage;
+}

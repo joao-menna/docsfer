@@ -7,7 +7,8 @@ const usePageName = () => {
   const routeNameMap: Record<string, string> = {
     "/dashboard": "Dashboard",
     "/files": "All Files",
-    "/groups": "Relationships",
+    "/relationships": "Relationships",
+    "/@me": "My friends",
   };
 
   // Function to get page name from pathname

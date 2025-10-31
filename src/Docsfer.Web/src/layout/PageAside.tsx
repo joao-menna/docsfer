@@ -19,7 +19,7 @@ export const PageAside = () => {
 
   const menuItems = [
     { to: "/dashboard", icon: House, label: "Dashboard", exact: true },
-    { to: "/groups", icon: Users, label: "Grupos" },
+    { to: "/@me", icon: Users, label: "Grupos" },
     { to: "/files", icon: Folders, label: "Todos os arquivos" },
   ];
 

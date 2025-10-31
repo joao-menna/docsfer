@@ -1,5 +1,5 @@
-import { SidebarBottom } from "@/components/features/relationship/SidebarBottom";
-import { SidebarTop } from "@/components/features/relationship/SidebarTop";
+import { SidebarBottom } from "@/components/features/relationship/Sidebar/SidebarBottom";
+import { SidebarTop } from "@/components/features/relationship/Sidebar/SidebarTop";
 
 export default function Sidebar() {
   return (

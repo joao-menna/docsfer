@@ -7,6 +7,7 @@ import CreateAccount from "@/pages/auth/SignUp";
 import Dashboard from "../pages/DashboardPage";
 import { RootLayout } from "../layout/RootLayout";
 import NotFoundPage from "@/pages/NotFoundPage";
+import Relationship from "../pages/Relationship/index";
 
 // components and utils
 import { RouteError } from "../components/features/Loader/RouteError";
@@ -17,9 +18,10 @@ import { publicRouteLoader } from "@/services/auth/usePublicAuth";
 // import { protectedLoader } from "@/services/auth/authLoader";
 
 // lazy-loaded pages
-const Groups = lazy(() => import("../pages/GroupPage"));
 const Files = lazy(() => import("../pages/files/AllfilesPage"));
 const Details = lazy(() => import("../pages/files/FileDetailsPage"));
+const Friends = lazy(() => import("@/pages/Relationship/friends"));
+const Group = lazy(() => import("@/pages/Relationship/friends"));
 
 export const router = createBrowserRouter([
   {
@@ -44,7 +46,14 @@ export const router = createBrowserRouter([
     loader: filesLoader,
     children: [
       { path: "dashboard", element: <Dashboard /> },
-      { path: "groups", element: <Groups /> },
+      {
+        path: "@me",
+        element: <Relationship />,
+        children: [
+          { index: true, element: <Friends /> },
+          { path: "groups", element: <Group /> },
+        ],
+      },
       {
         path: "files",
         loader: filesLoader,
