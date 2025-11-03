@@ -5,7 +5,7 @@ import HeaderBtn from "./header_btn";
 
 export default function friendsHeader() {
   return (
-    <>
+    <div className="flex gap-4 justify-start items-start text-gray-200">
       <div className="flex gap-4 p-2 items-center">
         <PersonStanding />
         <span className="font-gabarito font-semibold text-[1.25rem]">
@@ -24,6 +24,6 @@ export default function friendsHeader() {
           <Plus className="size-5" />
         </button>
       </div>
-    </>
+    </div>
   );
 }

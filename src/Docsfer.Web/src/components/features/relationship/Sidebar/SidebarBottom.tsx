@@ -3,28 +3,39 @@ import { bottomBtn as RouteBtn } from "./SidebarBottom_btn";
 
 export function SidebarBottom() {
   return (
-    <div className="flex flex-col justify-start font-gabarito text-[0.875rem] gap-4">
-      {/* SECTION: title
+    <div className="flex flex-col justify-between h-full">
+      <div className="flex flex-col justify-start font-gabarito text-[0.875rem] gap-4">
+        {/* SECTION: title
             --------------------------------------- */}
-      <div className="flex justify-between items-center text-gray-400">
-        <span>Last submissions</span>
-        <div className="p-1 rounded-lg hover:bg-gray-800/80 hover:text-gray-200">
-          <Plus className="size-5" />
+        <div className="flex justify-between items-center text-gray-400">
+          <span>Last submissions</span>
+          <div className="p-1 rounded-lg hover:bg-gray-800/80 hover:text-gray-200">
+            <Plus className="size-5" />
+          </div>
+        </div>
+        {/* SECTION: users
+            --------------------------------------- */}
+        <div className="flex flex-col gap-0.5">
+          <RouteBtn
+            sender="Você"
+            recipient="Rodrigo"
+            fileName="ArquivoDaora.txt"
+          />
+          <RouteBtn
+            sender="Ricardo"
+            recipient="Henrique"
+            fileName="ArquivoDaorasso.png"
+          />
         </div>
       </div>
-      {/* SECTION: users
-            --------------------------------------- */}
-      <div className="flex flex-col gap-0.5">
-        <RouteBtn
-          sender="Você"
-          recipient="Rodrigo"
-          fileName="ArquivoDaora.txt"
-        />
-        <RouteBtn
-          sender="Ricardo"
-          recipient="Henrique"
-          fileName="ArquivoDaorasso.png"
-        />
+      <div className="flex gap-4 items-center py-2">
+        <span className="inline-flex items-center justify-center text-center uppercase rounded-full size-8  border-2 border-sky-900 text-sky-900 dark:border-sky-500 dark:text-sky-500 font-semibold cursor-pointer font-quicksand">
+          J
+        </span>
+        <div className="">
+          <h3 className="text-gray-200 font-semibold">Username</h3>
+          <span className="text-[0.875rem] text-gray-400">abawdbin103</span>
+        </div>
       </div>
     </div>
   );

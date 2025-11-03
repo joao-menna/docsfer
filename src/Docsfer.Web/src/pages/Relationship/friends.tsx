@@ -1,9 +1,11 @@
 import FriendsHeader from "@/components/features/relationship/Content/Friends/header";
+import { friendsContent as Content } from "@/components/features/relationship/Content/Friends";
 
 export default function Friends() {
   return (
-    <div className="flex w-full gap-10 justify-start items-center text-gray-200">
+    <>
       <FriendsHeader />
-    </div>
+      <Content />
+    </>
   );
 }
