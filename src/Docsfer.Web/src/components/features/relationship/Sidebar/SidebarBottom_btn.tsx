@@ -1,4 +1,4 @@
-import { User } from "lucide-react";
+import { UserIcon } from "@/components/UI/Button/UserIcon";
 
 interface btnProps {
   sender: string;
@@ -16,9 +16,7 @@ export function bottomBtn({ sender, recipient, fileName }: btnProps) {
         ------------------------------ */}
       <div className="flex gap-2 items-center">
         {/* icon */}
-        <div className="p-2 text-gray-400 rounded-full bg-gray-800/40 group-hover:bg-gray-800/80">
-          <User />
-        </div>
+        <UserIcon />
         {/* text */}
         <div className="flex flex-col items-start">
           <div className="flex gap-2 font-gabarito font-semibold text-gray-200 text-[1rem]">

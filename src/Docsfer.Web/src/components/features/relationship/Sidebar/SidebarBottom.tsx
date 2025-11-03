@@ -1,5 +1,6 @@
 import { Plus } from "lucide-react";
 import { bottomBtn as RouteBtn } from "./SidebarBottom_btn";
+import { UserIcon } from "@/components/UI/Button/UserIcon";
 
 export function SidebarBottom() {
   return (
@@ -29,9 +30,7 @@ export function SidebarBottom() {
         </div>
       </div>
       <div className="flex gap-4 items-center py-2">
-        <span className="inline-flex items-center justify-center text-center uppercase rounded-full size-8  border-2 border-sky-900 text-sky-900 dark:border-sky-500 dark:text-sky-500 font-semibold cursor-pointer font-quicksand">
-          J
-        </span>
+        <UserIcon />
         <div className="">
           <h3 className="text-gray-200 font-semibold">Username</h3>
           <span className="text-[0.875rem] text-gray-400">abawdbin103</span>
