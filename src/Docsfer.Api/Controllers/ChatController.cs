@@ -35,7 +35,7 @@ public class ChatController : ControllerBase
 
         var blob = (await _blobEntryRepository.FindByIdAsync(blobId)).EnsureExists();
 
-        if (blob is { })
+        if (blob is null)
         {
             return BadRequest();
         }
