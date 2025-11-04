@@ -7,7 +7,7 @@ import { type MouseEvent } from "react";
 
 type FileProps = {
   file: File;
-  isSelected: boolean;
+  isSelected?: boolean;
   onFileClick: (file: File) => void;
 };
 
@@ -35,7 +35,7 @@ export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
       )}
       onClick={handleCardClick}
     >
-      <div className="flex flex-col items-start gap-3 lg:min-w-sm">
+      <div className="flex flex-col items-start gap-3">
         <div className="flex justify-between w-full">
           <div className="flex gap-5">
             <div

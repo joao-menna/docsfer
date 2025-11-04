@@ -18,7 +18,7 @@ export default function GridView({
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 20 }}
-      transition={{ duration: 0.3, type: "spring", bounce: 0.5 }}
+      transition={{ duration: 0.18, type: "spring", bounce: 0.3 }}
       className="grid grid-cols-1 md:grid-cols-2 gap-6"
     >
       {data.map((item, index) => (

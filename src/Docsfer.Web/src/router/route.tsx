@@ -29,10 +29,6 @@ export const router = createBrowserRouter([
     element: <Login />,
     errorElement: <RouteError />,
     loader: publicRouteLoader,
-    /* loader: async () => {
-      if (await isAuthed()) throw new redirect("/dashboard");
-      return null
-    } */
   },
   {
     path: "/createAccount",
@@ -50,7 +46,7 @@ export const router = createBrowserRouter([
         path: "@me",
         element: <Relationship />,
         children: [
-          { index: true, element: <Friends /> },
+          { index: true, element: <Friends />, loader: filesLoader },
           { path: "groups", element: <Group /> },
         ],
       },

@@ -1,7 +1,30 @@
 import { FriendsRow } from "./rows";
+import { useLoaderData, useNavigate } from "react-router";
 import CardComponent from "@components/features/files/CardView_Card";
+import type { File } from "@/types/search";
+import type { UserInfo } from "@/services/auth/authService";
+
+type LoaderData = {
+  files: File[];
+  user: UserInfo;
+};
 
 export function FriendsContent() {
+  const { files } = useLoaderData<LoaderData>();
+
+  const navigate = useNavigate();
+
+  const handleFileClick = (file: File) => {
+    navigate(`/files/${file.id}`);
+  };
+
+  const recentFiles = files
+    .sort(
+      (a, b) =>
+        new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime()
+    )
+    .slice(0, 4);
+
   return (
     <div className="w-full flex justify-between px-2">
       {/* left-part */}
@@ -15,17 +38,23 @@ export function FriendsContent() {
           <FriendsRow />
           <FriendsRow />
           <FriendsRow />
+
+          <FriendsRow />
+          <FriendsRow />
+          <FriendsRow />
         </div>
       </div>
       {/* right-part */}
       <div className="flex flex-col gap-10 xl:w-sm">
         <h2 className="font-gabarito text-xl text-gray-200">Sent Recently</h2>
         <div className="flex flex-col gap-8 w-full">
-          {/* <CardComponent
-            file={files[0]}
-            onFileClick={() => console.log("alo")}
-            isSelected={false}
-          /> */}
+          {recentFiles.map((file) => (
+            <CardComponent
+              key={file.id}
+              file={file}
+              onFileClick={handleFileClick}
+            />
+          ))}
         </div>
       </div>
     </div>
