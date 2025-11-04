@@ -26,7 +26,7 @@ export function FriendsContent() {
     .slice(0, 4);
 
   return (
-    <div className="flex w-full flex-row flex-wrap justify-between px-2">
+    <div className="flex w-full flex-row flex-wrap justify-between p-4">
       {/* left-part */}
       <section className="flex flex-col items-start w-fit min-w-md lg:min-w-2xl xl:min-w-4xl md:min-w-sm">
         <div className="flex gap-2 font-gabarito font-semibold p-2 text-gray-200">
