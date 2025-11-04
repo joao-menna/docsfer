@@ -18,9 +18,9 @@ export const PageAside = () => {
   });
 
   const menuItems = [
-    { to: "/dashboard", icon: House, label: "Dashboard", exact: true },
-    { to: "/@me", icon: Users, label: "Grupos" },
-    { to: "/files", icon: Folders, label: "Todos os arquivos" },
+    { to: "/dashboard", icon: House, label: "Home", exact: true },
+    { to: "/@me", icon: Users, label: "Relationships" },
+    { to: "/files", icon: Folders, label: "Shared Files" },
   ];
 
   const isOpen = state.isExpanded || state.isPinned;
