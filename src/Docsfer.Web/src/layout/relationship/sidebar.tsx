@@ -1,11 +1,15 @@
 import { SidebarBottom } from "@/components/features/relationship/Sidebar/SidebarBottom";
-import { SidebarTop } from "@/components/features/relationship/Sidebar/SidebarTop";
+import { Sidebarheader } from "@/components/features/relationship/Sidebar/SidebarHeader";
+import { SidebarTop } from "@/components/features/relationship/Sidebar/SidebarPages";
 
 export default function Sidebar() {
   return (
-    <div className="flex flex-col h-full justify-start lg:w-96 gap-2 px-3 border-r border-gray-700">
-      <SidebarTop />
-      <SidebarBottom />
+    <div className="flex flex-col">
+      <Sidebarheader />
+      <div className="flex flex-col h-[calc(100dvh_-_7rem)] justify-start lg:w-96 gap-2 px-3 border-r border-gray-800  overflow-y-auto">
+        <SidebarTop />
+        <SidebarBottom />
+      </div>
     </div>
   );
 }

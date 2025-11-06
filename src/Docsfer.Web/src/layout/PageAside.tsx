@@ -1,10 +1,10 @@
 import { useReducer } from "react";
 import {
   House,
-  ChevronsRight,
   Users,
   Folders,
-  LockKeyhole,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from "lucide-react";
 import { NavLink } from "react-router";
 import clsx from "clsx";
@@ -19,13 +19,13 @@ export const PageAside = () => {
 
   const menuItems = [
     { to: "/dashboard", icon: House, label: "Home", exact: true },
-    { to: "/@me", icon: Users, label: "Relationships" },
+    { to: "/@me/", icon: Users, label: "Relationships" },
     { to: "/files", icon: Folders, label: "Shared Files" },
   ];
 
   const isOpen = state.isExpanded || state.isPinned;
 
-  const sidebarWidth = state.isExpanded || state.isPinned ? "w-64" : "w-16";
+  const sidebarWidth = state.isExpanded || state.isPinned ? "w-64" : "w-14";
 
   // TODO: IMPLEMENT LIGHT MODE FOR THE LOVE OF GOD
   return (
@@ -47,7 +47,7 @@ export const PageAside = () => {
                   end={!!exact}
                   className={({ isActive }) =>
                     clsx(
-                      "flex items-center w-full py-3 px-3.5 gap-3 font-gabarito rounded-lg dark:hover:bg-gray-800 dark:text-gray-400 ",
+                      "flex items-center w-full py-1.5 px-2.5 gap-3 font-gabarito rounded-lg dark:hover:bg-gray-800 dark:text-gray-400 ",
                       {
                         "dark:bg-gray-800 dark:!text-gray-200": isActive,
                       }
@@ -71,22 +71,22 @@ export const PageAside = () => {
             ))}
           </ul>
         </nav>
-        <div className="flex flex-col gap-0.5 items-center justify-center w-16  dark:text-gray-400">
+        <div className="flex flex-col items-center justify-center w-14 dark:text-gray-400 pb-4 gap-1">
           <button
-            className={clsx("p-3 dark:hover:bg-gray-800 rounded-lg mb-4", {
+            className={clsx("p-2 dark:hover:bg-gray-800 rounded-lg", {
               "dark:text-gray-200 dark:bg-gray-800": state.isKeepMinimized,
             })}
             onClick={() => dispatch({ type: "KEEP_MINIMIZED" })}
           >
-            <LockKeyhole />
+            <PanelLeftClose />
           </button>
           <button
-            className={clsx("p-3 dark:hover:bg-gray-800 rounded-lg mb-4", {
+            className={clsx("p-2 dark:hover:bg-gray-800 rounded-lg", {
               "dark:text-gray-200 dark:bg-gray-800": state.isPinned,
             })}
             onClick={() => dispatch({ type: "KEEP_PINNED" })}
           >
-            <ChevronsRight />
+            <PanelLeftOpen />
           </button>
         </div>
       </aside>

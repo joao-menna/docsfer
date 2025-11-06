@@ -1,11 +1,11 @@
-import { PersonStanding, Plus } from "lucide-react";
+import { PersonStanding } from "lucide-react";
 import HeaderBtn from "./header_btn";
 
 // TODO: implement routing/filtering (probably routering) for this header
 
 export default function friendsHeader() {
   return (
-    <div className="flex w-full gap-4 flex-col xl:flex-row justify-start items-start xl:items-center px-6 pt-4 pb-2 text-gray-200 xl:border-b border-gray-600">
+    <div className="flex w-full gap-4 flex-col xl:flex-row justify-start items-start xl:items-center h-16 px-4  text-gray-200 xl:border-b border-gray-800">
       <div className="flex gap-4 p-2 items-center">
         <PersonStanding />
         <span className="font-gabarito font-semibold text-[1.25rem]">
@@ -22,13 +22,6 @@ export default function friendsHeader() {
         <div className="w-1/4 lg:w-auto">
           <HeaderBtn text="Recent Interactions" />
         </div>
-        <button
-          type="button"
-          className="flex gap-2 items-center rounded-lg px-4 py-2 bg-sky-500 hover:bg-sky-600 font-semibold text-gray-200 hover:text-gray-100 transition-colors duratin-75 ease-out"
-        >
-          <span>Add New</span>
-          <Plus className="size-5" />
-        </button>
       </div>
     </div>
   );

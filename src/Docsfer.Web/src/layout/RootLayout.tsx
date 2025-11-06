@@ -8,7 +8,7 @@ export const RootLayout = () => {
       <PageHeader />
       <main className="flex-1 overflow-auto relative h-[calc(100dvh-48px)] w-full">
         <PageAside />
-        <div className="ml-16">
+        <div className="ml-14">
           <Outlet />
         </div>
       </main>
