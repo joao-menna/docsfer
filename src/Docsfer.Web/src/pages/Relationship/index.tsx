@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 
 export default function RelationPage() {
   return (
-    <div className="flex min-h-[calc(100dvh-3rem)] w-full">
+    <div className="flex min-h-[calc(100dvh-3rem)] w-full overflow-hidden">
       <Sidebar />
       {/* SECTION: Main Content
       --------------------------------------------- */}

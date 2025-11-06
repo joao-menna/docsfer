@@ -26,9 +26,9 @@ export function FriendsContent() {
     .slice(0, 4);
 
   return (
-    <div className="flex w-full flex-row flex-wrap justify-between px-2">
+    <div className="flex w-full flex-row flex-wrap justify-between height-atme-content px-2 overflow-hidden">
       {/* left-part */}
-      <section className="flex flex-col items-start w-fit min-w-md lg:min-w-xl xl:min-w-3xl md:min-w-sm py-4">
+      <section className="flex flex-col items-start w-fit min-w-md h-full overflow-y-auto lg:min-w-xl xl:min-w-3xl md:min-w-sm py-4 scrollbar-gutter-stable">
         <div className="flex gap-2 font-gabarito font-semibold text-gray-200 px-2 pb-4">
           <h3 className="">Everyone</h3>
           <h3 className="">-</h3>
@@ -38,7 +38,16 @@ export function FriendsContent() {
           <FriendsRow />
           <FriendsRow />
           <FriendsRow />
-
+          <FriendsRow />
+          <FriendsRow />
+          <FriendsRow />
+          <FriendsRow />
+          <FriendsRow />
+          <FriendsRow />
+          <FriendsRow />
+          <FriendsRow />
+          <FriendsRow />
+          <FriendsRow />
           <FriendsRow />
           <FriendsRow />
           <FriendsRow />
