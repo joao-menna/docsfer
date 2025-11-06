@@ -43,6 +43,10 @@
   .friendRowHover {
     @apply after:content-[""] after:h-full after:w-2 after:rounded-r-2xl after:relative after:left-1.5 before:content-[""] before:h-full before:w-2 before:rounded-l-2xl before:relative before:right-1.5 hover:after:bg-[#1a2133] hover:before:bg-[#1a2133] after:transition-all after:duration-200 after:ease-out before:transition-all before:duration-200 before:ease-out;
   }
+
+  .height-atme-content {
+    @apply h-[calc(100dvh_-_7rem)];
+  }
 }
 
 @layer base {

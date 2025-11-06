@@ -45,7 +45,7 @@ export function FriendsContent() {
         </div>
       </section>
       {/* right-part */}
-      <section className="flex flex-col gap-10 xl:min-w-sm border-l px-7 border-gray-800 py-4">
+      <section className="flex flex-col gap-10 xl:min-w-sm border-l height-atme-content px-7 border-gray-800 py-4">
         <h2 className="font-gabarito text-xl text-gray-200 w-full">
           Sent Recently
         </h2>

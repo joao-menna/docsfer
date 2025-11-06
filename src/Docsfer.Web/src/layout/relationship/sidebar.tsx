@@ -6,7 +6,7 @@ export default function Sidebar() {
   return (
     <div className="flex flex-col">
       <Sidebarheader />
-      <div className="flex flex-col h-[calc(100dvh_-_7rem)] justify-start lg:w-96 gap-2 px-3 border-r border-gray-800  overflow-y-auto">
+      <div className="flex flex-col height-atme-content justify-start lg:w-96 gap-2 px-3 border-r border-gray-800  overflow-y-auto">
         <SidebarTop />
         <SidebarBottom />
       </div>
