@@ -20,7 +20,7 @@ export function RelationBtn({ text, to }: btnProps) {
       to={`/@me/${to}`}
       className={({ isActive }) =>
         clsx(
-          `flex w-full items-center justify-start gap-4 p-2 rounded-lg text-gray-400 hover:text-gray-200 hover:bg-gray-800/40 transition-colors duratin-75 ease-out font-gabarito font-semibold`,
+          `flex w-full items-center justify-start gap-4 p-2 rounded-lg text-gray-400 hover:text-gray-200 hover:bg-gray-800/40 transition-colors duration-75 ease-out font-gabarito font-semibold`,
           {
             "bg-gray-800 !text-gray-200": isActive,
           }

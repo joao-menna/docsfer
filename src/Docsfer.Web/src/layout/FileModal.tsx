@@ -12,7 +12,7 @@ import { validateFilename } from "@/utils/files/useFilenameValidator";
 import { motion } from "motion/react";
 import { useFileColor } from "@/utils/files/useFileColor";
 import clsx from "clsx";
-import { fileService } from "@/services/fileService";
+import { fileService } from "@/services/files/fileService";
 
 interface ModalProps {
   onClose: () => void;

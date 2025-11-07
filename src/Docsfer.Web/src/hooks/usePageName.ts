@@ -8,7 +8,7 @@ const usePageName = () => {
     "/dashboard": "Dashboard",
     "/files": "All Files",
     "/relationships": "Relationships",
-    "/@me": "My friends",
+    "/@me/": "My friends",
   };
 
   // Function to get page name from pathname

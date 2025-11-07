@@ -14,11 +14,11 @@ export function FriendsRow() {
         </div>
       </div>
       <div className="flex gap-4">
-        <div className="p-2 text-gray-400 rounded-full bg-gray-800/40 group-hover:bg-gray-800/80 border-gray-400">
-          <History />
+        <div className="size-10 flex items-center justify-center rounded-full transition-all duration-50 border ease-out  text-gray-400 bg-gray-800/40 group-hover:bg-gray-800/80 border-gray-800">
+          <History className="size-6" />
         </div>
-        <div className="p-2 text-gray-400 rounded-full bg-gray-800/40 group-hover:bg-gray-800/80 border-gray-400">
-          <FilePlus2 />
+        <div className="size-10 flex items-center justify-center rounded-full transition-all border duration-50 ease-out text-sky-400 bg-sky-800/40 group-hover:bg-sky-800/80 hover:border-2 border-sky-400/25 hover:border-sky-400">
+          <FilePlus2 className="size-6" />
         </div>
       </div>
     </div>

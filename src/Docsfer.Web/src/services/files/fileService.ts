@@ -1,4 +1,4 @@
-import { api } from "./httpClient";
+import { api } from "../httpClient";
 
 export interface BlobEntryDto {
   id: string;
