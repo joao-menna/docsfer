@@ -1,4 +1,5 @@
 import type { UserInfo } from "@/services/auth/authService";
+import type { File } from "@/types/search";
 
 export interface FileDataFromDB {
   id: string;
@@ -48,5 +49,10 @@ export type FilesLoaderData = {
 export type FileDetailLoaderData = {
   files: FormattedFileData[];
   currentFile: FormattedFileData | null;
+  user: UserInfo;
+};
+
+export type LoaderData = {
+  files: File[];
   user: UserInfo;
 };

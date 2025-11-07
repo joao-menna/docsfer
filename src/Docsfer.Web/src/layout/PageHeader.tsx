@@ -4,15 +4,10 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { useLoaderData, useNavigate } from "react-router";
 import CommandPalette from "../components/UI/CommandPalette";
 import type { File } from "@/types/search";
-import type { UserInfo } from "@/services/auth/authService";
+import type { LoaderData } from "@/types/files";
 import { useState } from "react";
 import NewFileModal from "./FileModal";
 import { AnimatePresence, motion } from "motion/react";
-
-type LoaderData = {
-  files: File[];
-  user: UserInfo;
-};
 
 export const PageHeader = () => {
   const pageName: string = usePageName();

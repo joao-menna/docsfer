@@ -1,8 +1,9 @@
 import { Plus } from "lucide-react";
 import { bottomBtn as RouteBtn } from "./SidebarBottom_btn";
 import { UserIcon } from "@/components/UI/Button/UserIcon";
+import type { UserInfo } from "@/services/auth/authService";
 
-export function SidebarBottom() {
+export function SidebarBottom({ userId }: UserInfo) {
   return (
     <div className="flex flex-col justify-between h-full">
       <div className="flex flex-col justify-start font-gabarito text-[0.875rem] gap-4">
@@ -33,7 +34,13 @@ export function SidebarBottom() {
         <UserIcon />
         <div className="">
           <h3 className="text-gray-200 font-semibold">Username</h3>
-          <span className="text-[0.875rem] text-gray-400">abawdbin103</span>
+          {/* TODO: copy UID to clipboard on click */}
+          <span
+            title={userId}
+            className="text-[0.875rem] text-gray-400 truncate max-w-96"
+          >
+            {userId}
+          </span>
         </div>
       </div>
     </div>

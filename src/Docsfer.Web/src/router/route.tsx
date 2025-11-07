@@ -45,6 +45,7 @@ export const router = createBrowserRouter([
       {
         path: "@me",
         element: <Relationship />,
+        loader: filesLoader,
         children: [
           { index: true, element: <Friends />, loader: filesLoader },
           { path: "groups", element: <Group /> },
