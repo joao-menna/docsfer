@@ -1,4 +1,4 @@
-import { Pencil, File as FileIcon } from "lucide-react";
+import { Pencil, File as FileIcon, Files } from "lucide-react";
 import { getFileTypeLabel } from "@/utils/files/fileCardDocType";
 import type { File } from "@/types/search";
 import clsx from "clsx";
@@ -63,33 +63,33 @@ export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
           <button
             type="button"
             onClick={handleEditClick}
-            className="opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 size-10 rounded-full hover:shadow-[0px_0px_8px_2px_rgba(14,165,233,0.25)]  flex-center"
+            className="opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 size-10 rounded-full hover:shadow-[0px_0px_8px_2px_rgba(14,165,233,0.25)] flex-center"
           >
             <Pencil className="stroke-gray-400 " />
           </button>
         </div>
         <div className="flex w-full items-center justify-between">
-          <span className="py-2 px-4 rounded-4xl bg-[linear-gradient(135deg,#334145,#52656B)] border border-white/20">
-            {file.size}
-          </span>
+          <span className="py-2 px-4 rounded-lg bg-gray-600">{file.size}</span>
           <span className="text-gray-500">{file.modifyDate}</span>
         </div>
       </div>
       <div className="flex justify-between w-full items-center">
         <div className="flex gap-2 items-center">
-          <span className="flex-center size-8 rounded-full bg-sky-500/20 text-sky-500">
+          <span className="flex-center size-8 rounded-full bg-sky-800 text-sky-400">
             R
           </span>
           <span>{file.uploader}</span>
         </div>
         <span
           className={clsx(
-            "py-1.5 px-4 rounded-4xl border transition-colors duration-150 ease-out",
-            isSelected
-              ? "bg-sky-500/50 border-sky-500"
-              : "bg-sky-500/20 border-sky-500/20"
+            "flex justify-center gap-2 items-center py-1.5 px-3 rounded-lg transition-colors duration-150 ease-out",
+            isSelected ? "bg-sky-600" : "bg-sky-900"
           )}
         >
+          <Files
+            className="
+          size-5"
+          />
           {`v${String(file.version)}`}
         </span>
       </div>
