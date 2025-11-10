@@ -1,16 +1,21 @@
 import { UserIcon } from "@/components/UI/Button/UserIcon";
 import { FilePlus2, History } from "lucide-react";
 
-export function FriendsRow() {
+interface FriendsRowProps {
+  userName: string;
+  email: string;
+}
+
+export function FriendsRow({ userName, email }: FriendsRowProps) {
   return (
     <div className="flex w-full h-16 justify-between items-center xl:max-w-4xl lg:max-w-2xl group hover:bg-[#1a2133] transition-all duration-200 ease-out friendRowHover hover:border-transparent box-border border-t border-gray-800">
       <div className="w-full flex gap-3 items-center">
         <UserIcon />
         <div>
           <h3 className="font-gabarito text-gray-200 font-semibold">
-            Robertinho
+            {userName}
           </h3>
-          <span className="font-gabarito text-gray-400">Administração</span>
+          <span className="font-gabarito text-gray-400">{email}</span>
         </div>
       </div>
       <div className="flex gap-4">

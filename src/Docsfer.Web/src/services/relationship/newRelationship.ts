@@ -1,4 +1,5 @@
 import { api } from "../httpClient";
+import type { RelatedRelationshipsResposne } from "@/types/relationship";
 
 export interface relationshipDto {
   id: string;
@@ -24,6 +25,17 @@ export const relationshipService = {
       return response.data;
     } catch (error) {
       console.error("Error creating relationship: ", error);
+      throw error;
+    }
+  },
+  getRelationship: async () => {
+    try {
+      const response = await api.get<RelatedRelationshipsResposne>(
+        "/relationship/related"
+      );
+      return response.data;
+    } catch (error) {
+      console.error("GET failed ---------", error);
       throw error;
     }
   },

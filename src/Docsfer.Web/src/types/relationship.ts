@@ -7,3 +7,14 @@ export interface stateInterface {
 export interface actionInterface {
   type: "ENTER" | "LEAVE" | "KEEP_PINNED" | "KEEP_MINIMIZED";
 }
+
+export interface UserRelationship {
+  id: string;
+  username: string;
+  email: string;
+}
+
+export interface RelatedRelationshipsResposne {
+  users: UserRelationship[];
+  groups?: string[];
+}

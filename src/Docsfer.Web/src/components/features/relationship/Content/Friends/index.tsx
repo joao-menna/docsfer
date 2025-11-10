@@ -4,11 +4,12 @@ import CardComponent from "@components/features/files/CardView_Card";
 import type { File } from "@/types/search";
 import type { UserInfo } from "@/services/auth/authService";
 import type { FriendsView } from "@/types/friendsView";
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import clsx from "clsx";
 import { relationshipService } from "@/services/relationship/newRelationship";
 import { useToast } from "@/utils/toast/useToastContext";
 import { type ToastSeverity } from "@/types/toast";
+import type { UserRelationship } from "@/types/relationship";
 
 type FriendsContentProps = {
   activeView: FriendsView;
@@ -19,15 +20,24 @@ type LoaderData = {
   user: UserInfo;
 };
 
+type AddFriendForm = {
+  partyOne: string;
+  partyTwo: string;
+};
+
 export function FriendsContent({ activeView }: FriendsContentProps) {
   const { files, user } = useLoaderData<LoaderData>();
   const navigate = useNavigate();
-  const [isActive, setIsActive] = useState(false);
-  const [formData, setFormData] = useState({
+  const { addToast } = useToast();
+
+  const [users, setUsers] = useState<UserRelationship[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState<AddFriendForm>({
     partyOne: user.userId,
     partyTwo: "",
   });
-  const { addToast } = useToast();
+
+  const isFormValid = formData.partyTwo.trim() !== "";
 
   const showToast = (title: string, detail: string, type: ToastSeverity) => {
     addToast({
@@ -40,7 +50,7 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
   const handleAddFriend = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (!formData.partyTwo || formData.partyTwo == "") {
+    if (!isFormValid) {
       showToast("Mandatory Field", "Please add your friends ID! :(", "error");
       return;
     }
@@ -63,9 +73,24 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
     }
   };
 
+  useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        setLoading(true);
+        const { users: fetchedUsers } =
+          await relationshipService.getRelationship();
+        setUsers(fetchedUsers);
+      } catch (error) {
+        console.error("Failed to fetch friends:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFriends();
+  }, []);
+
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setIsActive(value.trim() !== "");
+    setFormData({ ...formData, partyTwo: event.target.value });
   };
 
   const handleFileClick = (file: File) => {
@@ -79,88 +104,84 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
     )
     .slice(0, 4);
 
+  const renderAddFriendView = () => (
+    <div className="px-6 w-full flex flex-col gap-6">
+      <div className="font-gabarito">
+        <h1 className="text-2xl text-gray-200">Add a friend</h1>
+        <span className="text-gray-400">
+          You can add friends by inviting them by their docsfer ID.
+        </span>
+      </div>
+      <form
+        className="flex justify-between items-center h-16 w-full rounded-lg box-border bg-gray-800 focus-within:outline-2 focus-within:outline-sky-600 px-3 py-3"
+        onSubmit={handleAddFriend}
+      >
+        <input
+          className="box-border relative w-full font-gabarito text-gray-200 placeholder:text-gray-500 outline-none"
+          placeholder="You can add friends by inviting them by their docsfer ID."
+          onInput={handleInput}
+          value={formData.partyTwo}
+          onChange={(e) =>
+            setFormData({ ...formData, partyTwo: e.target.value })
+          }
+        />
+        <button
+          type="submit"
+          className={clsx(
+            `h-full px-4 transition-all duration-150 ease-out font-gabarito rounded-lg text-nowrap box-border`,
+            isFormValid ? "bg-sky-400 text-gray-900" : "bg-sky-900 text-sky-400"
+          )}
+          disabled={!isFormValid}
+        >
+          Add Friend
+        </button>
+      </form>
+    </div>
+  );
+
+  const renderAllFriends = () => (
+    <>
+      <div className="flex gap-2 font-gabarito font-semibold text-gray-200 px-2 pb-4">
+        <h3 className="">Everyone</h3>
+        <h3 className="">-</h3>
+        <h3 className="">{users.length}</h3>
+      </div>
+      <div className="flex flex-col px-2 w-full">
+        {loading ? (
+          <div className="flex items-center justify-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-400"></div>
+          </div>
+        ) : users.length === 0 ? (
+          <span className="text-gray-400 text-center py-8">
+            No friends yet!
+          </span>
+        ) : (
+          users.map((user) => (
+            <FriendsRow
+              key={user.id}
+              userName={user.username}
+              email={user.email}
+            />
+          ))
+        )}
+      </div>
+    </>
+  );
+
+  const renderRelationships = () => <div>Relationships</div>;
+  const renderRecentFriends = () => <div>RecentFriends</div>;
+
   const renderContent = () => {
     switch (activeView) {
       case "relationships":
-        return (
-          <>
-            <div>relationships</div>
-            <div>page</div>
-          </>
-        );
+        return renderRelationships();
       case "recent":
-        return (
-          <>
-            <div>recent</div>
-            <div>page</div>
-          </>
-        );
+        return renderRecentFriends();
       case "NewFriend":
-        return (
-          <div className="px-6 w-full flex flex-col gap-6">
-            <div className="font-gabarito">
-              <h1 className="text-2xl text-gray-200">Add a friend</h1>
-              <span className="text-gray-400">
-                You can add friends by inviting them by their docsfer ID.
-              </span>
-            </div>
-            <form
-              className="flex justify-between items-center h-16 w-full rounded-lg box-border bg-gray-800 focus-within:outline-2 focus-within:outline-sky-600 px-3 py-3"
-              onSubmit={handleAddFriend}
-            >
-              <input
-                className="box-border relative w-full font-gabarito text-gray-200 placeholder:text-gray-500 outline-none"
-                placeholder="You can add friends by inviting them by their docsfer ID."
-                onInput={handleInput}
-                value={formData.partyTwo}
-                onChange={(e) =>
-                  setFormData({ ...formData, partyTwo: e.target.value })
-                }
-              />
-              <button
-                type="submit"
-                className={clsx(
-                  `h-full px-4 transition-all duration-150 ease-out font-gabarito rounded-lg text-nowrap box-border`,
-                  isActive
-                    ? "bg-sky-400 text-gray-900"
-                    : "bg-sky-900 text-sky-400"
-                )}
-                disabled={!isActive}
-              >
-                Add Friend
-              </button>
-            </form>
-          </div>
-        );
+        return renderAddFriendView();
       case "all":
       default:
-        return (
-          <>
-            <div className="flex gap-2 font-gabarito font-semibold text-gray-200 px-2 pb-4">
-              <h3 className="">Everyone</h3>
-              <h3 className="">-</h3>
-              <h3 className="">29</h3>
-            </div>
-            <div className="flex flex-col px-2 w-full">
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-              <FriendsRow />
-            </div>
-          </>
-        );
+        return renderAllFriends();
     }
   };
 
