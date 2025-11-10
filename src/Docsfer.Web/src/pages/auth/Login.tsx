@@ -60,7 +60,7 @@ const LoginPage = () => {
       if (axiosError.response?.status === 401) {
         errorMessage = "Email or Password invalid.";
       } else if (axiosError.response?.status === 423) {
-        errorMessage = "Account is blocked, reach out for support..";
+        errorMessage = "Account is blocked, reach out for support...";
       } else if (axiosError.response?.data?.message) {
         errorMessage = axiosError.response.data.message;
       }
