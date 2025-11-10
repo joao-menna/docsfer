@@ -11,6 +11,7 @@
   --font-gabarito: "Gabarito", "sans-serif";
   --font-quicksand: "Quicksand", "sans-serif";
   --font-josefin: "Josefin Sans", "sans-serif";
+  --font-raleway: "Raleway", "sans-serif";
 
   --color-main-100: #e0eaff;
   --color-main-200: #e8eaee;
@@ -32,12 +33,24 @@
   }
 
   .header-button__style {
-    @apply inline-flex justify-center items-center relative cursor-pointer space-x-2 text-center ease-out duration-300 transition-all outline-none hover:bg-zinc-300 dark:hover:bg-zinc-800 w-9 h-7;
+    @apply inline-flex justify-center items-center relative cursor-pointer space-x-2 text-center ease-out duration-300 transition-all outline-none hover:bg-gray-300 dark:hover:bg-gray-800 w-9 h-7;
+  }
+
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .friendRowHover {
+    @apply after:content-[""] after:h-full after:w-2 after:rounded-r-2xl after:relative after:left-1.5 before:content-[""] before:h-full before:w-2 before:rounded-l-2xl before:relative before:right-1.5 hover:after:bg-[#1a2133] hover:before:bg-[#1a2133] after:transition-all after:duration-200 after:ease-out before:transition-all before:duration-200 before:ease-out;
+  }
+
+  .height-atme-content {
+    @apply h-[calc(100dvh_-_7rem)];
   }
 }
 
 @layer base {
   * {
-    @apply scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-zinc-700 scrollbar-hover:scrollbar-thumb-zinc-600;
+    @apply scrollbar-thin scrollbar-track-zinc-800 scrollbar-thumb-gray-700 scrollbar-hover:scrollbar-thumb-gray-600;
   }
 }
