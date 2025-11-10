@@ -159,7 +159,7 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
           users.map((user) => (
             <FriendsRow
               key={user.id}
-              userName={user.username}
+              userName={user.userName}
               email={user.email}
             />
           ))

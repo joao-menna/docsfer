@@ -10,7 +10,7 @@ export interface actionInterface {
 
 export interface UserRelationship {
   id: string;
-  username: string;
+  userName: string;
   email: string;
 }
 
