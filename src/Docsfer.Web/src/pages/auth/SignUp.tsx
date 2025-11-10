@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { api } from "@/services/httpClient";
 import { useState, type ChangeEvent, type FormEvent, useCallback } from "react";
 import { isAxiosError } from "axios";
+import type { ToastSeverity } from "@/types/toast";
 
 type CreateAccountForm = {
   Email: string;
@@ -48,6 +49,14 @@ export default function CreateAccount() {
     });
   };
 
+  const showToast = (title: string, detail: string, type: ToastSeverity) => {
+    addToast({
+      severity: type,
+      summary: title,
+      detail,
+    });
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -62,6 +71,28 @@ export default function CreateAccount() {
 
     if (formData.Password !== formData.confirmPassword) {
       showErrorToast("Passwords do not match. Please try again.");
+      return;
+    }
+
+    // check password length
+    if (formData.Password.length < 6) {
+      showToast(
+        "Invalid Password.",
+        "Password must be at least 6 characters long.",
+        "error"
+      );
+      return;
+    }
+
+    // check for capital and number
+    const hasCapital = /[A-Z]/.test(formData.Password);
+    const hasNumber = /[0-9]/.test(formData.Password);
+    if (!hasCapital || !hasNumber) {
+      showToast(
+        "Invalid Password",
+        "Password must contain one capital letter and one number.",
+        "error"
+      );
       return;
     }
 
