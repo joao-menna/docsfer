@@ -92,6 +92,8 @@ services:
       - Smtp__Hostname=smtp
       - Smtp__Port=25
       - Smtp__EmailAddress=docsfer@localhost
+      - AzureBlobStorage__ConnectionString=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;
+      - AzureBlobStorage__ContainerName=docsfer
     env_file:
       - .env
     networks:
