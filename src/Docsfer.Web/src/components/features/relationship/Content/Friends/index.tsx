@@ -45,6 +45,10 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
             <div>page</div>
           </>
         );
+        case "NewFriend":
+            return (
+                <div>Add Friends</div>
+            );
       case "all":
       default:
         return (

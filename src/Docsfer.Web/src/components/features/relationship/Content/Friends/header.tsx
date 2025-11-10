@@ -1,13 +1,12 @@
-import { PersonStanding, Plus } from "lucide-react";
+import { PersonStanding } from "lucide-react";
 import HeaderBtn from "./header_btn";
+import AddFriendBtn from "@components/features/relationship/Content/Friends/header_addFriends.tsx";
 import type { FriendsView } from "@/types/friendsView";
 
 type FriendsHeaderProps = {
   activeView: FriendsView;
   onViewChange: (view: FriendsView) => void;
 };
-
-// TODO: implement routing/filtering (probably routering) for this header
 
 export default function friendsHeader({
   activeView,
@@ -43,13 +42,10 @@ export default function friendsHeader({
             onClick={() => onViewChange("recent")}
           />
         </div>
-        <button
-          type="button"
-          className="flex justify-center items-center px-4 py-2 rounded-lg bg-sky-400 font-gabarito text-gray-800  gap-2 transition-all duration-100 ease-out hover:bg-sky-500"
-        >
-          Add friend
-          <Plus className="size-5" />
-        </button>
+        <AddFriendBtn
+          isActive={activeView === "NewFriend"}
+          onClick={() => onViewChange("NewFriend")}
+        />
       </div>
     </div>
   );
