@@ -13,6 +13,9 @@ import { motion } from "motion/react";
 import { useFileColor } from "@/utils/files/useFileColor";
 import clsx from "clsx";
 import { fileService } from "@/services/files/fileService";
+/* import { fileUploadService } from "@/services/files/fileBlobService"; */
+import { useUploadStatus } from "@/hooks/file/useUploadStatus";
+import { useFileFormdata } from "@/hooks/file/useFileFormdata";
 
 interface ModalProps {
   onClose: () => void;
@@ -20,43 +23,52 @@ interface ModalProps {
 }
 
 export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
-  const [fileName, setFileName] = useState("");
-  const [fileExtension, setFileExtension] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const [submitError, setSubmitError] = useState("");
-  const [submitSuccess, setSubmitSuccess] = useState("");
+  const {
+    errorMessage,
+    submitError,
+    submitSuccess,
+    setErrorMessage,
+    setSubmitError,
+    setSubmitSuccess,
+    clearAll,
+  } = useUploadStatus();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [senderId, setSenderId] = useState(currentUserId ?? "");
-  const [recipientId, setRecipientId] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const {
+    fileName,
+    fileExtension,
+    senderId,
+    recipientId,
+    setFileName,
+    setSenderId,
+    setRecipientId,
+    resetForm,
+    setFileInfo,
+  } = useFileFormdata(currentUserId);
 
+  // sets logged user's ID to the base sender
   useEffect(() => {
     if (currentUserId) {
       setSenderId(currentUserId);
     }
-  }, [currentUserId]);
+  }, [currentUserId, setSenderId]);
 
   const handleFiles = (files: File[]) => {
     if (!files?.length) return;
     const pickedFile = files[0];
 
     const { base, ext } = splitFile(pickedFile.name);
-    setFileName(base);
-    setFileExtension(ext || extFromMime(pickedFile.type) || "");
+
+    setFileInfo(base, ext || extFromMime(pickedFile.type) || "");
     setSelectedFile(pickedFile);
-    setErrorMessage("");
-    setSubmitError("");
-    setSubmitSuccess("");
+    clearAll();
   };
   const fileColor = useFileColor(fileExtension);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    setErrorMessage("");
-    setSubmitError("");
-    setSubmitSuccess("");
+    clearAll();
 
     if (!selectedFile) {
       setSubmitError("Select a file before sharing.");
@@ -101,9 +113,7 @@ export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
 
       setSubmitSuccess("File shared successfully.");
       setSelectedFile(null);
-      setFileName("");
-      setFileExtension("");
-      setRecipientId("");
+      resetForm();
     } catch (error) {
       console.error("Failed to share file", error);
       setSubmitError("Unable to share the file. Please try again.");

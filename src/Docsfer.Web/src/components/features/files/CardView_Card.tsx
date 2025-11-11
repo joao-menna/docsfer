@@ -10,7 +10,21 @@ type FileProps = {
   isSelected?: boolean;
   onFileClick: (file: File) => void;
 };
-
+/**
+ * File card component used in file lists / card views.
+ *
+ * Renders file metadata (name, type, size, modified date, uploader and version)
+ * and provides actions:
+ * - clicking the card (outside the pencil icon) calls `onFileClick(file)`.
+ * - clicking the pencil navigates to the file edit/view route.
+ *
+ * @param {Object} props
+ * @param {File} props.file - File object to display (id, name, size, version, uploader, modifyDate, etc.).
+ * @param {boolean} [props.isSelected=false] - Whether the card is visually selected.
+ * @param {(file: File) => void} props.onFileClick - Callback invoked when the card is clicked.
+ *
+ * @returns {JSX.Element} A styled file card element.
+ */
 export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
   const navigate = useNavigate();
   const fileType = getFileTypeLabel(file.name);

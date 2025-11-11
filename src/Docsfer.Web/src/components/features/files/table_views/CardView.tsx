@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import ListFile from "@/components/features/files/CardView_Card";
+import CardComponent from "@/components/features/files/CardView_Card";
 import type { File } from "@/types/search";
 
 type GridViewProps = {
@@ -29,7 +29,7 @@ export default function GridView({
           transition={{ delay: index * 0.05 }}
           onClick={() => onFileClick(item)}
         >
-          <ListFile
+          <CardComponent
             key={item.id}
             file={item}
             isSelected={selectedFileId === item.id}
