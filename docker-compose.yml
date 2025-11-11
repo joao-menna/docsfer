@@ -12,12 +12,20 @@ services:
     networks:
       - docsfer_network
 
-
-
   azurite:
     container_name: docsfer_azurite
     image: mcr.microsoft.com/azure-storage/azurite
-    command: ["azurite", "--disableTelemetry"]
+    command:
+      [
+        "azurite",
+        "--blobHost",
+        "0.0.0.0",
+        "--queueHost",
+        "0.0.0.0",
+        "--tableHost",
+        "0.0.0.0",
+        "--disableTelemetry",
+      ]
     restart: unless-stopped
     volumes:
       - docsfer_azurite_data:/data
@@ -25,8 +33,6 @@ services:
       - 10000:10000
     networks:
       - docsfer_network
-
-
 
   postgres:
     container_name: docsfer_postgres
@@ -49,8 +55,6 @@ services:
     networks:
       - docsfer_network
 
-
-
   smtp:
     container_name: docsfer_smtpdev
     image: rnwood/smtp4dev:3.8.6
@@ -61,8 +65,6 @@ services:
       - 143:143
     networks:
       - docsfer_network
-
-
 
   migrator:
     container_name: docsfer_migrator
@@ -76,8 +78,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-
-
 
   backend:
     container_name: docsfer_backend
@@ -102,13 +102,9 @@ services:
       migrator:
         condition: service_completed_successfully
 
-
-
 volumes:
   docsfer_postgres_data:
   docsfer_azurite_data:
-
-
 
 networks:
   docsfer_network:
