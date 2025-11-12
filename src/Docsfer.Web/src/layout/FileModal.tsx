@@ -6,7 +6,7 @@ import {
   Loader2,
 } from "lucide-react";
 import Dropzone from "@/components/UI/Dropzone";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { splitFile, extFromMime } from "@/utils/files/getFileExtension";
 import { validateFilename } from "@/utils/files/useFilenameValidator";
 import { motion } from "motion/react";
@@ -21,6 +21,11 @@ interface ModalProps {
   onClose: () => void;
   currentUserId?: string;
 }
+
+const suggestions = [
+  { id: "user123", name: "John Doe", type: "User" },
+  { id: "group456", name: "Engineering Team", type: "Group" },
+];
 
 export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
   const {
@@ -45,6 +50,17 @@ export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
     resetForm,
     setFileInfo,
   } = useFileFormdata(currentUserId);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+
+  // Filter suggestions based on input
+  const filteredSuggestions = useMemo(() => {
+    if (!recipientId) return suggestions; // Show all if empty
+    return suggestions.filter(
+      (s) =>
+        s.name.toLowerCase().includes(recipientId.toLowerCase()) ||
+        s.id.toLowerCase().includes(recipientId.toLowerCase())
+    );
+  }, [recipientId]);
 
   // sets logged user's ID to the base sender
   useEffect(() => {
@@ -197,7 +213,7 @@ export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
                 <fieldset className="flex gap-4 font-gabarito">
                   <div className="flex flex-col w-full">
                     <div className="flex flex-col w-full font-gabarito">
-                      <label className="block text-md text-lg text-gray-400 overflow-hidden">
+                      <label className="block text-md text-lg text-gray-400">
                         Sender
                         <div className="relative mt-1">
                           {/* Input */}
@@ -219,7 +235,7 @@ export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
                   </div>
                   <div className="flex flex-col w-full">
                     <div className="flex flex-col w-full font-gabarito">
-                      <label className="block text-md text-lg text-gray-400 overflow-hidden">
+                      <label className="block text-md text-lg text-gray-400">
                         Recipient
                         <div className="relative mt-1">
                           {/* Input */}
@@ -228,13 +244,46 @@ export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
                             placeholder="User or Group"
                             value={recipientId}
                             disabled={isSubmitting}
-                            onChange={(event) =>
-                              setRecipientId(event.target.value)
-                            }
+                            onChange={(event) => {
+                              setRecipientId(event.target.value);
+                              setShowSuggestions(true);
+                            }}
+                            onFocus={() => setShowSuggestions(true)}
+                            onBlur={() => {
+                              setTimeout(() => setShowSuggestions(false), 200);
+                            }}
                             className="peer w-full rounded-lg border-2 border-gray-700 py-2 pl-9 text-gray-100 placeholder:text-gray-500 focus:outline-none transition-all duration-150 ease-in bg-gray-700/50 focus:border-sky-500 disabled:opacity-60 disabled:cursor-not-allowed"
                           />
                           {/* Left Icon */}
-                          <SquareMousePointer className="pointer-events-none absolute top-0 mt-3.5 left-3 size-5 opacity-70 stroke-gray-500  peer-focus:stroke-sky-500! peer-focus:opacity-100 transition-all duration-150 ease-in" />
+                          <SquareMousePointer className="pointer-events-none absolute top-0 mt-3.5 left-3 size-5 opacity-70 stroke-gray-500 peer-focus:stroke-sky-500 peer-focus:opacity-100 transition-all duration-150 ease-in" />
+
+                          {/* Autocomplete Dropdown */}
+                          {showSuggestions &&
+                            filteredSuggestions.length > 0 && (
+                              <ul className="absolute z-10 mt-1 w-full rounded-lg border-2 border-gray-700 bg-gray-800 shadow-lg max-h-60 overflow-auto">
+                                {filteredSuggestions.map(
+                                  (suggestion, index) => (
+                                    <li
+                                      key={index}
+                                      onClick={() => {
+                                        setRecipientId(suggestion.id);
+                                        setShowSuggestions(false);
+                                      }}
+                                      className="px-4 py-2 cursor-pointer hover:bg-gray-700 text-gray-100 transition-colors duration-150 first:rounded-t-lg last:rounded-b-lg"
+                                    >
+                                      <div className="font-medium">
+                                        {suggestion.name}
+                                      </div>
+                                      {suggestion.type && (
+                                        <div className="text-sm text-gray-400">
+                                          {suggestion.type}
+                                        </div>
+                                      )}
+                                    </li>
+                                  )
+                                )}
+                              </ul>
+                            )}
                         </div>
                       </label>
                     </div>
