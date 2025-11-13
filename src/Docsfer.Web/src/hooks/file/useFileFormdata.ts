@@ -65,10 +65,10 @@ export function useFileFormdata(currentUserId?: string) {
   });
 
   useEffect(() => {
-    if (currentUserId) {
+    if (currentUserId && state.senderId !== currentUserId) {
       dispatch({ type: "SET_SENDER_ID", payload: currentUserId });
     }
-  }, [currentUserId]);
+  }, [currentUserId, state.senderId]);
 
   const setSenderId = (id: string) => {
     dispatch({ type: "SET_SENDER_ID", payload: id });

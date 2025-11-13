@@ -37,7 +37,7 @@ export function SidebarBottom({ userId }: UserInfo) {
           {/* TODO: copy UID to clipboard on click */}
           <span
             title={userId}
-            className="text-[0.875rem] text-gray-400 truncate max-w-96"
+            className="text-[0.875rem] text-gray-400 truncate max-w-96 select-all"
           >
             {userId}
           </span>

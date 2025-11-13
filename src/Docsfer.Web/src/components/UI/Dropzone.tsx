@@ -13,7 +13,7 @@ type DZProps = {
 };
 
 export default function Dropzone({
-  accept = { "*": [] },
+  accept = { "image/*": [] },
   maxSize = 64 * 1024 * 1024, // isso são 64 MB
   multiple = true,
   disabled = false,

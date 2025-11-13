@@ -12,20 +12,16 @@ import { validateFilename } from "@/utils/files/useFilenameValidator";
 import { motion } from "motion/react";
 import { useFileColor } from "@/utils/files/useFileColor";
 import clsx from "clsx";
-import { fileService } from "@/services/files/fileService";
-/* import { fileUploadService } from "@/services/files/fileBlobService"; */
+import { fileUploadService } from "@/services/files/fileBlobService";
 import { useUploadStatus } from "@/hooks/file/useUploadStatus";
 import { useFileFormdata } from "@/hooks/file/useFileFormdata";
+import type { UserRelationship } from "@/types/relationship";
+import { relationshipService } from "@/services/relationship/newRelationship";
 
 interface ModalProps {
   onClose: () => void;
   currentUserId?: string;
 }
-
-const suggestions = [
-  { id: "user123", name: "John Doe", type: "User" },
-  { id: "group456", name: "Engineering Team", type: "Group" },
-];
 
 export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
   const {
@@ -52,22 +48,34 @@ export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
   } = useFileFormdata(currentUserId);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
+  const [suggestions, setsuggestions] = useState<UserRelationship[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const userFetch = async () => {
+      try {
+        setIsLoading(true);
+        const { users: fetchedsuggestions } =
+          await relationshipService.getRelationship();
+        setsuggestions(fetchedsuggestions);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    userFetch();
+  }, []);
+
   // Filter suggestions based on input
   const filteredSuggestions = useMemo(() => {
     if (!recipientId) return suggestions; // Show all if empty
     return suggestions.filter(
       (s) =>
-        s.name.toLowerCase().includes(recipientId.toLowerCase()) ||
+        s.userName.toLowerCase().includes(recipientId.toLowerCase()) ||
         s.id.toLowerCase().includes(recipientId.toLowerCase())
     );
-  }, [recipientId]);
-
-  // sets logged user's ID to the base sender
-  useEffect(() => {
-    if (currentUserId) {
-      setSenderId(currentUserId);
-    }
-  }, [currentUserId, setSenderId]);
+  }, [recipientId, suggestions]);
 
   const handleFiles = (files: File[]) => {
     if (!files?.length) return;
@@ -121,7 +129,7 @@ export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
 
     try {
       setIsSubmitting(true);
-      await fileService.upload({
+      await fileUploadService.uploadBlob({
         file: fileToUpload,
         from: senderId,
         to: recipientId,
@@ -258,7 +266,9 @@ export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
                           <SquareMousePointer className="pointer-events-none absolute top-0 mt-3.5 left-3 size-5 opacity-70 stroke-gray-500 peer-focus:stroke-sky-500 peer-focus:opacity-100 transition-all duration-150 ease-in" />
 
                           {/* Autocomplete Dropdown */}
+
                           {showSuggestions &&
+                            !recipientId &&
                             filteredSuggestions.length > 0 && (
                               <ul className="absolute z-10 mt-1 w-full rounded-lg border-2 border-gray-700 bg-gray-800 shadow-lg max-h-60 overflow-auto">
                                 {filteredSuggestions.map(
@@ -272,13 +282,16 @@ export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
                                       className="px-4 py-2 cursor-pointer hover:bg-gray-700 text-gray-100 transition-colors duration-150 first:rounded-t-lg last:rounded-b-lg"
                                     >
                                       <div className="font-medium">
-                                        {suggestion.name}
+                                        {suggestion.userName}
                                       </div>
-                                      {suggestion.type && (
+                                      {/**
+                                       * @param type - filter  if it's a user or a group
+                                       */}
+                                      {/* {suggestion.type && (
                                         <div className="text-sm text-gray-400">
                                           {suggestion.type}
                                         </div>
-                                      )}
+                                      )} */}
                                     </li>
                                   )
                                 )}

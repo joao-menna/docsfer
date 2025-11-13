@@ -34,7 +34,12 @@ export const fileUploadService = {
 
       const response = await api.post<UploadBlobResponse>(
         "/blob/upload",
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       return response.data;
     } catch (error) {
