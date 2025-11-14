@@ -50,13 +50,13 @@ public class EmailManager : IEmailManager
 
         if (usersAndGroups.Users.Count > 0)
         {
-            var emails = usersAndGroups.Users.Where(u => u.Email is not null).Select(u => u.Email).ToArray();
+            var emails = usersAndGroups.Users.Where(u => u.User?.Email is not null).Select(u => u.User?.Email).ToArray();
             await SendAsync(subject, htmlMessage, emails!);
         }
 
         foreach (var group in usersAndGroups.Groups)
         {
-            var emails = group.Users.Where(u => u.Email is not null).Select(u => u.Email).ToArray();
+            var emails = group.Group?.Users.Where(u => u.Email is not null).Select(u => u.Email).ToArray();
             await SendAsync(subject, htmlMessage, emails!);
         }
     }
