@@ -14,7 +14,12 @@ export interface UserRelationship {
   email: string;
 }
 
-export interface RelatedRelationshipsResposne {
-  users: UserRelationship[];
+export interface RelationshipItem {
+  user: UserRelationship;
+  relationshipId: string;
+}
+
+export interface RelatedRelationshipsResponse {
+  users: RelationshipItem[];
   groups?: string[];
 }

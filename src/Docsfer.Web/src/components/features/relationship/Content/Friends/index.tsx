@@ -4,12 +4,13 @@ import CardComponent from "@components/features/files/CardView_Card";
 import type { File } from "@/types/search";
 import type { UserInfo } from "@/services/auth/authService";
 import type { FriendsView } from "@/types/friendsView";
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import clsx from "clsx";
 import { relationshipService } from "@/services/relationship/newRelationship";
 import { useToast } from "@/utils/toast/useToastContext";
 import { type ToastSeverity } from "@/types/toast";
-import type { UserRelationship } from "@/types/relationship";
+/* import type { UserRelationship } from "@/types/relationship"; */
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 type FriendsContentProps = {
   activeView: FriendsView;
@@ -29,12 +30,44 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
   const { files, user } = useLoaderData<LoaderData>();
   const navigate = useNavigate();
   const { addToast } = useToast();
+  const queryClient = useQueryClient();
 
-  const [users, setUsers] = useState<UserRelationship[]>([]);
-  const [loading, setLoading] = useState(true);
+  // TEMPORARILY COMMENTED const [users, setUsers] = useState<UserRelationship[]>([]);
+  // TEMPORARILY COMMENTED const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState<AddFriendForm>({
     partyOne: user.userId,
     partyTwo: "",
+  });
+
+  const {
+    data: users = [],
+    isLoading: loading,
+    error,
+  } = useQuery({
+    queryKey: ["friends"],
+    queryFn: async () => {
+      const response = await relationshipService.getRelationship();
+      return response.users.map((item) => item.user);
+    },
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+  });
+
+  const addFriendMutation = useMutation({
+    mutationFn: (data: AddFriendForm) => relationshipService.addFriend(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["friends"] });
+      showToast("Success", "Friend added successfully!", "success");
+      setFormData({ ...formData, partyTwo: "" });
+    },
+    onError: (error) => {
+      showToast(
+        "Error",
+        `Sorry, we couldn't find you friend. Try again later, please.`,
+        "error"
+      );
+      console.error(error);
+    },
   });
 
   const isFormValid = formData.partyTwo.trim() !== "";
@@ -54,8 +87,10 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
       showToast("Mandatory Field", "Please add your friends ID! :(", "error");
       return;
     }
+    addFriendMutation.mutate(formData);
 
-    try {
+    // TEMPORARILY COMMENTED
+    /* try {
       console.log(formData);
       await relationshipService.addFriend({
         partyOne: formData.partyOne,
@@ -70,16 +105,17 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
         "error"
       );
       console.error(error);
-    }
+    } */
   };
 
+  /* TEMPORARILY COMMENTED 
   useEffect(() => {
     const fetchFriends = async () => {
       try {
         setLoading(true);
-        const { users: fetchedUsers } =
-          await relationshipService.getRelationship();
-        setUsers(fetchedUsers);
+        const response = await relationshipService.getRelationship();
+        const formattedUser = response.users.map((item) => item.user);
+        setUsers(formattedUser);
       } catch (error) {
         console.error("Failed to fetch friends:", error);
       } finally {
@@ -87,7 +123,7 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
       }
     };
     fetchFriends();
-  }, []);
+  }, []); */
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, partyTwo: event.target.value });
@@ -129,11 +165,13 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
           type="submit"
           className={clsx(
             `h-full px-4 transition-all duration-150 ease-out font-gabarito rounded-lg text-nowrap box-border`,
-            isFormValid ? "bg-sky-400 text-gray-900" : "bg-sky-900 text-sky-400"
+            isFormValid && !addFriendMutation.isPending
+              ? "bg-sky-400 text-gray-900"
+              : "bg-sky-900 text-sky-400"
           )}
-          disabled={!isFormValid}
+          disabled={!isFormValid || addFriendMutation.isPending}
         >
-          Add Friend
+          {addFriendMutation.isPending ? "Adding..." : "Add friend"}
         </button>
       </form>
     </div>
@@ -151,14 +189,18 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
           <div className="flex items-center justify-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-400"></div>
           </div>
+        ) : error ? (
+          <span className="text-red-400 text-enter py-8">
+            Failed to load friends. Please reload the page.
+          </span>
         ) : users.length === 0 ? (
           <span className="text-gray-400 text-center py-8">
             No friends yet!
           </span>
         ) : (
-          users.map((user) => (
+          users.map((user, index) => (
             <FriendsRow
-              key={user.id}
+              key={`${user.id}-${index}`}
               userName={user.userName}
               email={user.email}
             />

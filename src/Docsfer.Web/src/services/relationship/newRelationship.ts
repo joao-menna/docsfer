@@ -1,5 +1,5 @@
 import { api } from "../httpClient";
-import type { RelatedRelationshipsResposne } from "@/types/relationship";
+import type { RelatedRelationshipsResponse } from "@/types/relationship";
 
 export interface relationshipDto {
   id: string;
@@ -30,7 +30,7 @@ export const relationshipService = {
   },
   getRelationship: async () => {
     try {
-      const response = await api.get<RelatedRelationshipsResposne>(
+      const response = await api.get<RelatedRelationshipsResponse>(
         "/relationship/related"
       );
       return response.data;
