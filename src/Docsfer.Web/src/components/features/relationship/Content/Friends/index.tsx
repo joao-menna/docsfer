@@ -32,22 +32,20 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
   const { addToast } = useToast();
   const queryClient = useQueryClient();
 
-  // TEMPORARILY COMMENTED const [users, setUsers] = useState<UserRelationship[]>([]);
-  // TEMPORARILY COMMENTED const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState<AddFriendForm>({
     partyOne: user.userId,
     partyTwo: "",
   });
 
   const {
-    data: users = [],
+    data: relationships = [],
     isLoading: loading,
     error,
   } = useQuery({
     queryKey: ["friends"],
     queryFn: async () => {
       const response = await relationshipService.getRelationship();
-      return response.users.map((item) => item.user);
+      return response.users;
     },
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
@@ -88,42 +86,7 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
       return;
     }
     addFriendMutation.mutate(formData);
-
-    // TEMPORARILY COMMENTED
-    /* try {
-      console.log(formData);
-      await relationshipService.addFriend({
-        partyOne: formData.partyOne,
-        partyTwo: formData.partyTwo,
-      });
-      showToast("Success", "Friend added successfully!", "success");
-      setFormData({ ...formData, partyTwo: "" });
-    } catch (error) {
-      showToast(
-        "Error",
-        `Sorry, we couldn't find your friend. Maybe try again later?`,
-        "error"
-      );
-      console.error(error);
-    } */
   };
-
-  /* TEMPORARILY COMMENTED 
-  useEffect(() => {
-    const fetchFriends = async () => {
-      try {
-        setLoading(true);
-        const response = await relationshipService.getRelationship();
-        const formattedUser = response.users.map((item) => item.user);
-        setUsers(formattedUser);
-      } catch (error) {
-        console.error("Failed to fetch friends:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchFriends();
-  }, []); */
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, partyTwo: event.target.value });
@@ -182,7 +145,7 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
       <div className="flex gap-2 font-gabarito font-semibold text-gray-200 px-2 pb-4">
         <h3 className="">Everyone</h3>
         <h3 className="">-</h3>
-        <h3 className="">{users.length}</h3>
+        <h3 className="">{relationships.length}</h3>
       </div>
       <div className="flex flex-col px-2 w-full">
         {loading ? (
@@ -193,16 +156,16 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
           <span className="text-red-400 text-enter py-8">
             Failed to load friends. Please reload the page.
           </span>
-        ) : users.length === 0 ? (
+        ) : relationships.length === 0 ? (
           <span className="text-gray-400 text-center py-8">
             No friends yet!
           </span>
         ) : (
-          users.map((user, index) => (
+          relationships.map((relationship, index) => (
             <FriendsRow
-              key={`${user.id}-${index}`}
-              userName={user.userName}
-              email={user.email}
+              key={`${relationship.user.id}-${index}`}
+              userName={relationship.user.userName}
+              email={relationship.user.email}
             />
           ))
         )}

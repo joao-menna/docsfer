@@ -17,6 +17,7 @@ import { useUploadStatus } from "@/hooks/file/useUploadStatus";
 import { useFileFormdata } from "@/hooks/file/useFileFormdata";
 import type { UserRelationship } from "@/types/relationship";
 import { relationshipService } from "@/services/relationship/newRelationship";
+/* import { useQuery } from "@tanstack/react-query"; */
 
 interface ModalProps {
   onClose: () => void;
@@ -50,6 +51,10 @@ export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
 
   const [suggestions, setsuggestions] = useState<UserRelationship[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  /* const { data: relationships = [], isLoading } = useQuery({
+    queryKey: ["friends"],
+    queryFn: fetchFriends,
+  }); */
 
   useEffect(() => {
     const userFetch = async () => {
