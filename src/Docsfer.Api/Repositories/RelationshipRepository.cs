@@ -24,52 +24,90 @@ public class RelationshipRepository(
     {
         var user = (await userManager.FindByIdAsync(from.ToString())).EnsureExists();
 
-        // Busca todos os relacionamentos onde o usuário aparece
         var directRelations = await context.Relationships
             .Where(b => b.PartyOneId == from || b.PartyTwoId == from)
             .ToListAsync();
 
-        var users = new List<User>();
-        var groups = new List<Group>();
+        var result = new UsersAndGroups();
 
         foreach (var rel in directRelations)
         {
-            if (rel.PartyOneType == PartyType.User && rel.PartyOneId != from)
+            // --- PARTY ONE ---
+            if (rel.PartyOneId != from)
             {
-                var relatedUser = await context.Users.FirstOrDefaultAsync(u => u.Id == rel.PartyOneId);
-                if (relatedUser != null)
-                    users.Add(relatedUser);
-            }
-            else if (rel.PartyOneType == PartyType.Group && rel.PartyOneId != from)
-            {
-                var relatedGroup = await context.Groups.FirstOrDefaultAsync(g => g.Id == rel.PartyOneId);
-                if (relatedGroup != null)
-                    groups.Add(relatedGroup);
+                if (rel.PartyOneType == PartyType.User)
+                {
+                    var relatedUser = await context.Users.FirstOrDefaultAsync(u => u.Id == rel.PartyOneId);
+                    if (relatedUser != null)
+                        result.Users.Add(new UserWithRelationship
+                        {
+                            User = relatedUser,
+                            RelationshipId = rel.Id
+                        });
+                }
+                else if (rel.PartyOneType == PartyType.Group)
+                {
+                    var relatedGroup = await context.Groups.FirstOrDefaultAsync(g => g.Id == rel.PartyOneId);
+                    if (relatedGroup != null)
+                        result.Groups.Add(new GroupWithRelationship
+                        {
+                            Group = relatedGroup,
+                            RelationshipId = rel.Id
+                        });
+                }
             }
 
-            if (rel.PartyTwoType == PartyType.User && rel.PartyTwoId != from)
+            // --- PARTY TWO ---
+            if (rel.PartyTwoId != from)
             {
-                var relatedUser = await context.Users.FirstOrDefaultAsync(u => u.Id == rel.PartyTwoId);
-                if (relatedUser != null)
-                    users.Add(relatedUser);
-            }
-            else if (rel.PartyTwoType == PartyType.Group && rel.PartyTwoId != from)
-            {
-                var relatedGroup = await context.Groups.FirstOrDefaultAsync(g => g.Id == rel.PartyTwoId);
-                if (relatedGroup != null)
-                    groups.Add(relatedGroup);
+                if (rel.PartyTwoType == PartyType.User)
+                {
+                    var relatedUser = await context.Users.FirstOrDefaultAsync(u => u.Id == rel.PartyTwoId);
+                    if (relatedUser != null)
+                        result.Users.Add(new UserWithRelationship
+                        {
+                            User = relatedUser,
+                            RelationshipId = rel.Id
+                        });
+                }
+                else if (rel.PartyTwoType == PartyType.Group)
+                {
+                    var relatedGroup = await context.Groups.FirstOrDefaultAsync(g => g.Id == rel.PartyTwoId);
+                    if (relatedGroup != null)
+                        result.Groups.Add(new GroupWithRelationship
+                        {
+                            Group = relatedGroup,
+                            RelationshipId = rel.Id
+                        });
+                }
             }
         }
 
-        if (user.Groups != null && user.Groups.Count != 0)
-            groups.AddRange(user.Groups);
-
-        return new UsersAndGroups
+        // Grupos do próprio usuário (sem relationship direto)
+        if (user.Groups != null && user.Groups.Count > 0)
         {
-            Users = [.. users.DistinctBy(u => u.Id)],
-            Groups = [.. groups.DistinctBy(g => g.Id)]
-        };
+            foreach (var grp in user.Groups)
+            {
+                result.Groups.Add(new GroupWithRelationship
+                {
+                    Group = grp,
+                    RelationshipId = Guid.Empty
+                });
+            }
+        }
+
+        // Remover duplicados por ID
+        result.Users = [.. result.Users
+            .GroupBy(u => u.User?.Id)
+            .Select(g => g.First())];
+
+        result.Groups = [.. result.Groups
+            .GroupBy(g => g.Group?.Id)
+            .Select(g => g.First())];
+
+        return result;
     }
+
 
     public async Task<Relationship?> FindByIdAsync(Guid id)
     {
@@ -86,14 +124,18 @@ public class RelationshipRepository(
     {
         var result = new UsersAndGroups();
 
-        // Party One
+        // PARTY ONE
         if (relationship.PartyOneType == PartyType.User)
         {
             var user = await context.Users
                 .FirstOrDefaultAsync(u => u.Id == relationship.PartyOneId);
 
             if (user != null)
-                result.Users.Add(user);
+                result.Users.Add(new UserWithRelationship
+                {
+                    User = user,
+                    RelationshipId = relationship.Id
+                });
         }
         else if (relationship.PartyOneType == PartyType.Group)
         {
@@ -101,17 +143,25 @@ public class RelationshipRepository(
                 .FirstOrDefaultAsync(g => g.Id == relationship.PartyOneId);
 
             if (group != null)
-                result.Groups.Add(group);
+                result.Groups.Add(new GroupWithRelationship
+                {
+                    Group = group,
+                    RelationshipId = relationship.Id
+                });
         }
 
-        // Party Two
+        // PARTY TWO
         if (relationship.PartyTwoType == PartyType.User)
         {
             var user = await context.Users
                 .FirstOrDefaultAsync(u => u.Id == relationship.PartyTwoId);
 
             if (user != null)
-                result.Users.Add(user);
+                result.Users.Add(new UserWithRelationship
+                {
+                    User = user,
+                    RelationshipId = relationship.Id
+                });
         }
         else if (relationship.PartyTwoType == PartyType.Group)
         {
@@ -119,11 +169,16 @@ public class RelationshipRepository(
                 .FirstOrDefaultAsync(g => g.Id == relationship.PartyTwoId);
 
             if (group != null)
-                result.Groups.Add(group);
+                result.Groups.Add(new GroupWithRelationship
+                {
+                    Group = group,
+                    RelationshipId = relationship.Id
+                });
         }
 
         return result;
     }
+
 
     public async Task InsertAsync(Relationship relationship)
     {

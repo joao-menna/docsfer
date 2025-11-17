@@ -22,8 +22,7 @@ public class RelationshipController(
     {
         var user = (await userManager.GetUserAsync(User)).EnsureExists();
 
-        var result = await relationshipRepository.GetAllUsersAndGroupsRelatedToUser(user);
-        return Ok(result);
+        return Ok(await relationshipRepository.GetAllUsersAndGroupsRelatedToUser(user));
     }
 
     [HttpPost]
