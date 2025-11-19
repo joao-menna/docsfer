@@ -6,17 +6,12 @@ import {
   Loader2,
 } from "lucide-react";
 import Dropzone from "@/components/UI/Dropzone";
-import { useEffect, useMemo, useState, type FormEvent } from "react";
-import { splitFile, extFromMime } from "@/utils/files/getFileExtension";
-import { validateFilename } from "@/utils/files/useFilenameValidator";
+import { useState } from "react";
 import { motion } from "motion/react";
 import { useFileColor } from "@/utils/files/useFileColor";
 import clsx from "clsx";
-import { fileUploadService } from "@/services/files/fileBlobService";
-import { useUploadStatus } from "@/hooks/file/useUploadStatus";
-import { useFileFormdata } from "@/hooks/file/useFileFormdata";
-import type { UserRelationship } from "@/types/relationship";
-import { relationshipService } from "@/services/relationship/newRelationship";
+import { useRecipientSuggestions } from "@/hooks/file/useSuggestions";
+import { useNewFileUpload } from "@/hooks/file/useFileUpload";
 /* import { useQuery } from "@tanstack/react-query"; */
 
 interface ModalProps {
@@ -26,130 +21,25 @@ interface ModalProps {
 
 export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
   const {
+    senderId,
+    recipientId,
+    fileName,
+    fileExtension,
+    isSubmitting,
     errorMessage,
     submitError,
     submitSuccess,
-    setErrorMessage,
-    setSubmitError,
-    setSubmitSuccess,
-    clearAll,
-  } = useUploadStatus();
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const {
-    fileName,
-    fileExtension,
-    senderId,
-    recipientId,
-    setFileName,
     setSenderId,
     setRecipientId,
-    resetForm,
-    setFileInfo,
-  } = useFileFormdata(currentUserId);
+    setFileName,
+    handleFiles,
+    handleSubmit,
+  } = useNewFileUpload({ currentUserId });
   const [showSuggestions, setShowSuggestions] = useState(false);
 
-  const [suggestions, setsuggestions] = useState<UserRelationship[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  /* const { data: relationships = [], isLoading } = useQuery({
-    queryKey: ["friends"],
-    queryFn: fetchFriends,
-  }); */
+  const { filteredSuggestions } = useRecipientSuggestions(recipientId);
 
-  useEffect(() => {
-    const userFetch = async () => {
-      try {
-        setIsLoading(true);
-        const { users: fetchedsuggestions } =
-          await relationshipService.getRelationship();
-        setsuggestions(fetchedsuggestions);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    userFetch();
-  }, []);
-
-  // Filter suggestions based on input
-  const filteredSuggestions = useMemo(() => {
-    if (!recipientId) return suggestions; // Show all if empty
-    return suggestions.filter(
-      (s) =>
-        s.userName.toLowerCase().includes(recipientId.toLowerCase()) ||
-        s.id.toLowerCase().includes(recipientId.toLowerCase())
-    );
-  }, [recipientId, suggestions]);
-
-  const handleFiles = (files: File[]) => {
-    if (!files?.length) return;
-    const pickedFile = files[0];
-
-    const { base, ext } = splitFile(pickedFile.name);
-
-    setFileInfo(base, ext || extFromMime(pickedFile.type) || "");
-    setSelectedFile(pickedFile);
-    clearAll();
-  };
   const fileColor = useFileColor(fileExtension);
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    clearAll();
-
-    if (!selectedFile) {
-      setSubmitError("Select a file before sharing.");
-      return;
-    }
-    if (!validateFilename(fileName)) {
-      setErrorMessage(
-        `file names cannot contain any of the following characters: "\\ / : * ? \\" < > |"`
-      );
-      return;
-    }
-
-    if (!senderId) {
-      setSubmitError("Sender identifier is required.");
-      return;
-    }
-
-    if (!recipientId) {
-      setSubmitError("Recipient identifier is required.");
-      return;
-    }
-
-    const normalizedName = fileExtension
-      ? `${fileName}${fileExtension}`
-      : fileName;
-
-    let fileToUpload: File = selectedFile;
-    if (normalizedName && normalizedName !== selectedFile.name) {
-      fileToUpload = new File([selectedFile], normalizedName, {
-        type: selectedFile.type,
-        lastModified: selectedFile.lastModified,
-      });
-    }
-
-    try {
-      setIsSubmitting(true);
-      await fileUploadService.uploadBlob({
-        file: fileToUpload,
-        from: senderId,
-        to: recipientId,
-      });
-
-      setSubmitSuccess("File shared successfully.");
-      setSelectedFile(null);
-      resetForm();
-    } catch (error) {
-      console.error("Failed to share file", error);
-      setSubmitError("Unable to share the file. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <motion.div
@@ -281,13 +171,13 @@ export default function NewFileModal({ onClose, currentUserId }: ModalProps) {
                                     <li
                                       key={index}
                                       onClick={() => {
-                                        setRecipientId(suggestion.id);
+                                        setRecipientId(suggestion.user.id);
                                         setShowSuggestions(false);
                                       }}
                                       className="px-4 py-2 cursor-pointer hover:bg-gray-700 text-gray-100 transition-colors duration-150 first:rounded-t-lg last:rounded-b-lg"
                                     >
                                       <div className="font-medium">
-                                        {suggestion.userName}
+                                        {suggestion.user.userName}
                                       </div>
                                       {/**
                                        * @param type - filter  if it's a user or a group

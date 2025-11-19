@@ -1,19 +1,9 @@
 import { api } from "../httpClient";
-import type { RelatedRelationshipsResponse } from "@/types/relationship";
-
-export interface relationshipDto {
-  id: string;
-  partyOneId: string;
-  partyTwoId: string;
-  partyOneType: number;
-  partyTwoType: number;
-  createdAt: string;
-}
-
-export interface CreateRelationshipRequest {
-  partyOne: string;
-  partyTwo: string;
-}
+import type {
+  RelatedRelationshipsResponse,
+  CreateRelationshipRequest,
+  relationshipDto,
+} from "@/types/relationship";
 
 export const relationshipService = {
   addFriend: async ({ partyOne, partyTwo }: CreateRelationshipRequest) => {

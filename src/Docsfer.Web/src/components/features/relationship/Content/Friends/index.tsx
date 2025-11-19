@@ -104,6 +104,7 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
     .slice(0, 4);
 
   const renderAddFriendView = () => (
+    // TODO: DONT LET THEM ADD A FRIEND TWICE, IT BREAKS THE DATABASE
     <div className="px-6 w-full flex flex-col gap-6">
       <div className="font-gabarito">
         <h1 className="text-2xl text-gray-200">Add a friend</h1>

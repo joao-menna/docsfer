@@ -23,3 +23,17 @@ export interface RelatedRelationshipsResponse {
   users: RelationshipItem[];
   groups?: string[];
 }
+
+export interface relationshipDto {
+  id: string;
+  partyOneId: string;
+  partyTwoId: string;
+  partyOneType: number;
+  partyTwoType: number;
+  createdAt: string;
+}
+
+export interface CreateRelationshipRequest {
+  partyOne: string;
+  partyTwo: string;
+}
