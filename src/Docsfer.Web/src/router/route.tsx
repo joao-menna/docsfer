@@ -21,7 +21,7 @@ import { publicRouteLoader } from "@/services/auth/usePublicAuth";
 const Files = lazy(() => import("../pages/files/AllfilesPage"));
 const Details = lazy(() => import("../pages/files/FileDetailsPage"));
 const Friends = lazy(() => import("@/pages/Relationship/friends"));
-const Group = lazy(() => import("@/pages/Relationship/friends"));
+const Group = lazy(() => import("@/pages/Relationship/groups"));
 
 export const router = createBrowserRouter([
   {

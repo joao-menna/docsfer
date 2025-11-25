@@ -20,8 +20,28 @@ public class GroupRepository(DocsferDbContext context) : IGroupRepository
 
         await context.GroupUsers.AddAsync(new GroupUser
         {
-            Group = group,
-            User = user,
+            GroupId = group.Id,
+            UserId = user.Id,
         });
+
+        await context.SaveChangesAsync();
+    }
+
+    public async Task<Group> InsertAsync(Group group, User owner)
+    {
+        await context.Groups.AddAsync(group);
+        await context.SaveChangesAsync();
+
+        await AssociateAsync(owner, group.Id);
+
+        return group;
+    }
+
+    public async Task<IEnumerable<Group>> FindByUserAsync(User user)
+    {
+        return await context.Groups
+            .Where(g => g.Users.Any(u => u.Id == user.Id))
+            .AsNoTracking()
+            .ToListAsync();
     }
 }

@@ -12,7 +12,7 @@ export default function FileDetails() {
 
   const { currentFile: file } = useLoaderData<FileDetailLoaderData>();
 
-  const header = ["versão", "modificado", "tamanho", "ações"];
+  const header = ["versão", "ações"];
   const versions = useMemo(
     () => [
       {
@@ -108,9 +108,6 @@ export default function FileDetails() {
                     <span className="text-sky-500">{file.createdAt}</span>
                   </span>
                   <span className="flex justify-between">
-                    <span>Modificado:</span>
-                  </span>
-                  <span className="flex justify-between">
                     <span>Compartilhado por:</span>
                     <span className="text-sky-500">{file.uploader}</span>
                   </span>
@@ -134,11 +131,9 @@ export default function FileDetails() {
                     {versions.map((v) => (
                       <Table.BodyRow key={v.version}>
                         <Table.BodyHeaderCell>{v.version}</Table.BodyHeaderCell>
-                        <Table.Cell>{v.modified}</Table.Cell>
-                        <Table.Cell>{v.size}</Table.Cell>
                         <Table.Cell>
                           <button
-                            className="cursor-pointer hover:underline text-sky-500"
+                            className="cursor-pointer underline text-sky-500"
                             onClick={() => setFileVersion(v.version)}
                           >
                             Editar
@@ -151,9 +146,6 @@ export default function FileDetails() {
               </div>
             </div>
           </div>
-          {/* TODO: BOTTOM */}
-
-          <div></div>
         </div>
         {/* file permissions */}
         <div className="flex flex-col gap-10 items-start min-w-xl lg:py-10">
@@ -183,18 +175,6 @@ export default function FileDetails() {
               <div className="flex gap-8 w-full items-center">
                 <UserAccessRow name={file.uploader} />
               </div>
-
-              {/* file.sharedWith?.map((user) => (
-                <div
-                  key={`${fileId}-user-${user.name}`}
-                  className="flex gap-8 w-full items-center"
-                >
-                  <UserAccessRow
-                    key={`${file.id}-${user.name}`}
-                    name={user.name}
-                  />
-                </div>
-              ))} */}
             </div>
           </div>
         </div>
