@@ -1,55 +1,48 @@
 import { RotateCcw, X } from "lucide-react";
-import { useLoaderData, useNavigate, useParams } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import UserAccessRow from "@/components/features/files/Permissions/UserPermissionsRow";
 import Table from "@/components/UI/Table/Table";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import clsx from "clsx";
-import type { File } from "@/types/search";
-import type { UserInfo } from "@/services/auth/authService";
-
-type LoaderData = {
-  files: File[];
-  currentFile: File | null;
-  user: UserInfo;
-};
+import type { FileDetailLoaderData } from "@/types/files";
 
 export default function FileDetails() {
-  const { files, currentFile } = useLoaderData<LoaderData>();
-  const { fileId } = useParams();
   const navigate = useNavigate();
 
-  const header = ["versão", "modificado", "tamanho", "ações"];
-  const versions = [
-    {
-      version: "v2.2 (atual)",
-      modified: "Ricardo em 24/05/2005 18:00",
-      size: "20 MB",
-    },
-    {
-      version: "v2.1",
-      modified: "João em 20/05/2005 14:30",
-      size: "19 MB",
-    },
-    {
-      version: "v2.0",
-      modified: "Maria em 18/05/2005 09:15",
-      size: "18 MB",
-    },
-    {
-      version: "v1.1",
-      modified: "Ana em 16/05/2005 11:45",
-      size: "17 MB",
-    },
-    {
-      version: "v1.0",
-      modified: "Carlos em 15/05/2005 16:00",
-      size: "16 MB",
-    },
-  ];
+  const { currentFile: file } = useLoaderData<FileDetailLoaderData>();
 
-  const file = currentFile ?? files[0];
-  // for PROD: throw an err if currentFile is null
+  const header = ["versão", "modificado", "tamanho", "ações"];
+  const versions = useMemo(
+    () => [
+      {
+        version: "v2.2 (atual)",
+        modified: "Ricardo em 24/05/2005 18:00",
+        size: "20 MB",
+      },
+      {
+        version: "v2.1",
+        modified: "João em 20/05/2005 14:30",
+        size: "19 MB",
+      },
+      {
+        version: "v2.0",
+        modified: "Maria em 18/05/2005 09:15",
+        size: "18 MB",
+      },
+      {
+        version: "v1.1",
+        modified: "Ana em 16/05/2005 11:45",
+        size: "17 MB",
+      },
+      {
+        version: "v1.0",
+        modified: "Carlos em 15/05/2005 16:00",
+        size: "16 MB",
+      },
+    ],
+    []
+  );
 
   const [fileVersion, setFileVersion] = useState<string | null>(null);
 
@@ -87,7 +80,7 @@ export default function FileDetails() {
               / files{" "}
             </button>
             <button type="button" disabled className="text-gray-700">
-              / {file.name}
+              / {file.fileName}
             </button>
           </div>
           {/* TOP */}
@@ -95,28 +88,27 @@ export default function FileDetails() {
             <div className="flex flex-col gap-5 w-full justify-start">
               {/* top header */}
               <div className="flex flex-col font-josefin gap-2">
-                <h1 className="text-2xl text-sky-500">{file.name}</h1>
+                <h1 className="text-2xl text-sky-500">{file.fileName}</h1>
                 <h2 className="text-xl text-gray-400">{file.size}</h2>
               </div>
               {/* infos */}
               <div className="flex flex-col gap-5 pb-4 border-b-2 border-sky-800">
                 <fieldset className="flex flex-col gap-2 text-zinc-200 font-gabarito">
-                  <label htmlFor={file.name}>Nome do arquivo</label>
+                  <label htmlFor={file.fileName}>Nome do arquivo</label>
                   <input
-                    id={file.name}
-                    placeholder={file.name}
-                    defaultValue={file.name}
+                    id={file.fileName}
+                    placeholder={file.fileName}
+                    defaultValue={file.fileName}
                     className="px-4 py-2 rounded-lg border border-zinc-400"
                   />
                 </fieldset>
                 <div className="flex flex-col gap-2 text-zinc-400 font-gabarito">
                   <span className="flex justify-between">
                     <span>Criação:</span>
-                    <span className="text-sky-500">{file.creationDate}</span>
+                    <span className="text-sky-500">{file.createdAt}</span>
                   </span>
                   <span className="flex justify-between">
                     <span>Modificado:</span>
-                    <span className="text-sky-500">{file.modifyDate}</span>
                   </span>
                   <span className="flex justify-between">
                     <span>Compartilhado por:</span>
@@ -174,7 +166,7 @@ export default function FileDetails() {
             <div className="flex flex-col gap-2">
               {file.groups?.map((group) => (
                 <div
-                  key={`${fileId}-group-${group.name}`}
+                  key={`${file.id}-group-${group.name}`}
                   className="flex justify-between text-zinc-500 items-center px-3 py-1 border-2 border-zinc-500 rounded-lg"
                 >
                   <span className="font-gabarito pl-2">{group.name}</span>
@@ -188,7 +180,11 @@ export default function FileDetails() {
               Usuários com acesso
             </h1>
             <div className="flex flex-col gap-2">
-              {file.sharedWith?.map((user) => (
+              <div className="flex gap-8 w-full items-center">
+                <UserAccessRow name={file.uploader} />
+              </div>
+
+              {/* file.sharedWith?.map((user) => (
                 <div
                   key={`${fileId}-user-${user.name}`}
                   className="flex gap-8 w-full items-center"
@@ -198,16 +194,8 @@ export default function FileDetails() {
                     name={user.name}
                   />
                 </div>
-              ))}
+              ))} */}
             </div>
-          </div>
-          <div className="flex justify-between w-full">
-            <button className="py-2 px-4 hover:bg-sky-600 transition-colors duration-300 bg-sky-500 text-zinc-900 font-gabarito rounded-lg">
-              Salvar
-            </button>
-            <button className="py-2 px-4 border border-red-500 rounded-lg text-red-500 font-gabarito">
-              Cancelar
-            </button>
           </div>
         </div>
       </div>
@@ -230,7 +218,7 @@ export default function FileDetails() {
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
               <header className="flex items-start justify-between p-4 border-b border-gray-800">
-                <h4 className="font-josefin text-lg">{file.name}</h4>
+                <h4 className="font-josefin text-lg">{file.fileName}</h4>
                 <X onClick={() => setFileVersion(null)} />
               </header>
               <section className="p-4 flex-center gap-4 flex-col">

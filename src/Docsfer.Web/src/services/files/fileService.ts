@@ -1,12 +1,16 @@
+import type { Group } from "@/types/search";
 import { api } from "../httpClient";
 
 export interface BlobEntryDto {
-  id: string;
+  id: number;
   fileName: string;
   blobName: string;
-  currentVersion: number;
   createdAt: string;
-  relationshipId: string;
+  currentVersion: number | string;
+  size?: string;
+  uploader: string;
+  sharedWith?: string;
+  groups?: Group[];
 }
 
 export interface UploadFileRequest {

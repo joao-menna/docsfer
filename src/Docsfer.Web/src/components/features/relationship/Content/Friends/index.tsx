@@ -99,7 +99,7 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
   const recentFiles = files
     .sort(
       (a, b) =>
-        new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime()
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     )
     .slice(0, 4);
 
@@ -174,8 +174,16 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
     </>
   );
 
-  const renderRelationships = () => <div>Relationships</div>;
-  const renderRecentFriends = () => <div>RecentFriends</div>;
+  const renderRelationships = () => (
+    <div className="text-red-800 font-gabarito text-2xl tracking-wide">
+      Implementation is due
+    </div>
+  );
+  const renderRecentFriends = () => (
+    <div className="text-red-800 font-gabarito text-2xl tracking-wide">
+      Implementation is due
+    </div>
+  );
 
   const renderContent = () => {
     switch (activeView) {

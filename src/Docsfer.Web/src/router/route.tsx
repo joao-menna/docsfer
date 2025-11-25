@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
     errorElement: <RouteError />,
     loader: filesLoader,
     children: [
-      { path: "dashboard", element: <Dashboard /> },
+      { path: "dashboard", element: <Dashboard />, loader: filesLoader },
       {
         path: "@me",
         element: <Relationship />,

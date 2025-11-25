@@ -1,7 +1,7 @@
 import type { File } from "@/types/search";
 
 export type SortDirection = "asc" | "desc";
-export type SortField = "name" | "uploader";
+export type SortField = "fileName" | "uploader";
 
 export class FileSortingUtil {
   static sortFiles(
@@ -13,8 +13,8 @@ export class FileSortingUtil {
     sortedFiles.sort((a, b) => {
       let compareResult = 0;
       switch (field) {
-        case "name":
-          compareResult = this.compareStrings(a.name, b.name);
+        case "fileName":
+          compareResult = this.compareStrings(a.fileName, b.fileName);
           break;
         case "uploader":
           compareResult = this.compareStrings(a.uploader, b.uploader);
@@ -28,8 +28,10 @@ export class FileSortingUtil {
     return sortedFiles;
   }
 
-  private static compareStrings(a: string, b: string): number {
-    return a.toLowerCase().localeCompare(b.toLowerCase());
+  private static compareStrings(a?: string, b?: string): number {
+    const aValue = a?.toLowerCase() ?? "";
+    const bValue = b?.toLowerCase() ?? "";
+    return aValue.localeCompare(bValue);
   }
 
   static createSortingFunction(
@@ -40,8 +42,8 @@ export class FileSortingUtil {
       let compareResult = 0;
 
       switch (field) {
-        case "name":
-          compareResult = this.compareStrings(a.name, b.name);
+        case "fileName":
+          compareResult = this.compareStrings(a.fileName, b.fileName);
           break;
         case "uploader":
           compareResult = this.compareStrings(a.uploader, b.uploader);

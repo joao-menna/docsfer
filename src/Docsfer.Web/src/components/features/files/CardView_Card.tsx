@@ -10,6 +10,7 @@ type FileProps = {
   isSelected?: boolean;
   onFileClick: (file: File) => void;
 };
+
 /**
  * File card component used in file lists / card views.
  *
@@ -27,7 +28,8 @@ type FileProps = {
  */
 export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
   const navigate = useNavigate();
-  const fileType = getFileTypeLabel(file.name);
+
+  const fileType = file?.fileName ? getFileTypeLabel(file.fileName) : "Unknown";
 
   const handleCardClick = (e: MouseEvent) => {
     e.stopPropagation();
@@ -38,6 +40,10 @@ export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
     e.stopPropagation();
     navigate(`/files/${file.id}`);
   };
+
+  if (!file || !file.fileName) {
+    return null;
+  }
 
   return (
     <div
@@ -66,8 +72,8 @@ export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
               />
             </div>
             <div className="flex flex-col justify-end items-start gap-2">
-              <h2 className="text-lg max-w-full truncate" title={file.name}>
-                {file.name}
+              <h2 className="text-lg max-w-full truncate" title={file.fileName}>
+                {file.fileName}
               </h2>
               <h3 className="uppercase text-gray-500 max-w-full truncate">
                 {fileType}
@@ -82,17 +88,13 @@ export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
             <Pencil className="stroke-gray-400 " />
           </button>
         </div>
-        <div className="flex w-full items-center justify-between">
-          <span className="py-2 px-4 rounded-lg bg-gray-600">{file.size}</span>
-          <span className="text-gray-500">{file.modifyDate}</span>
-        </div>
       </div>
       <div className="flex justify-between w-full items-center">
         <div className="flex gap-2 items-center">
           <span className="flex-center size-8 rounded-full bg-sky-800 text-sky-400">
-            R
+            {file.uploader ? file.uploader[0].toUpperCase() : "?"}
           </span>
-          <span>{file.uploader}</span>
+          <span>{file.uploader || "Unknown"}</span>
         </div>
         <span
           className={clsx(
@@ -100,11 +102,8 @@ export default function ListFile({ file, isSelected, onFileClick }: FileProps) {
             isSelected ? "bg-sky-600" : "bg-sky-900"
           )}
         >
-          <Files
-            className="
-          size-5"
-          />
-          {`v${String(file.version)}`}
+          <Files className="size-5" />
+          {`v${String(file.currentVersion || "?")}`}
         </span>
       </div>
     </div>

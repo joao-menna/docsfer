@@ -50,7 +50,7 @@ public class BlobController : ControllerBase
     {
         var relationship = (await _relationshipRepository.FindByIdAsync(relationshipId)).EnsureExists();
 
-        // var blobs = await _blobEntryRepository.GetAllInRelationAsync(relationship);
+        var blobs = await _blobEntryRepository.GetAllInRelationAsync(relationship);
 
         return Ok(relationship.Blobs);
     }

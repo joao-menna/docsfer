@@ -1,7 +1,28 @@
 export type Group = { name: string };
-export type User = { name: string };
 
-export type File = {
+export interface User {
+  id: string;
+  userName?: string | null;
+  email?: string | null;
+  phoneNumber?: string;
+}
+
+/* export type User = { name: string }; */
+
+export interface File {
+  id: number;
+  fileName: string;
+  blobName: string;
+  createdAt: string;
+  currentVersion: string;
+  size?: string;
+  uploader: string;
+  relationshipId?: string;
+  sharedWith?: string;
+  groups?: Group[];
+}
+
+/* export type File = {
   id: number;
   name: string;
   creationDate: string;
@@ -12,3 +33,4 @@ export type File = {
   size: string;
   version: string;
 };
+ */

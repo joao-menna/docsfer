@@ -26,8 +26,7 @@ export default function ListView({ data }: ListViewProps) {
               ></div>
             </Table.HeaderCell>
             <Table.HeaderCell>Nome</Table.HeaderCell>
-            <Table.HeaderCell>Última Atualização</Table.HeaderCell>
-            <Table.HeaderCell>Tamanho</Table.HeaderCell>
+            <Table.HeaderCell>Data de Envio</Table.HeaderCell>
             <Table.HeaderCell>Enviado por</Table.HeaderCell>
             <Table.HeaderCell>Ações</Table.HeaderCell>
           </Table.Row>
@@ -44,9 +43,8 @@ export default function ListView({ data }: ListViewProps) {
               <Table.BodyHeaderCell>
                 <div className="size-4 border border-gray-500 bg-gray-950 rounded-sm hover:bg-gray-900 cursor-pointer"></div>
               </Table.BodyHeaderCell>
-              <Table.Cell>{item.name}</Table.Cell>
-              <Table.Cell>{item.modifyDate}</Table.Cell>
-              <Table.Cell>{item.size}</Table.Cell>
+              <Table.Cell>{item.fileName}</Table.Cell>
+              <Table.Cell>{item.createdAt}</Table.Cell>
               <Table.Cell>{item.uploader}</Table.Cell>
               <Table.Cell>
                 <button

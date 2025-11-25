@@ -45,7 +45,7 @@ export default function AllFiles() {
     setIsSidebarOpen(false);
   };
 
-  const getSortIcon = (field: "name" | "uploader") => {
+  const getSortIcon = (field: "fileName" | "uploader") => {
     if (sortConfig.field !== field) {
       return <ChevronDown className="size-4" />;
     }
@@ -56,7 +56,7 @@ export default function AllFiles() {
     );
   };
 
-  const getSortButtonStyles = (field: "name" | "uploader") => {
+  const getSortButtonStyles = (field: "fileName" | "uploader") => {
     const isActive = sortConfig.field === field;
     return clsx(
       "h-10 px-4 flex-center gap-2 rounded-lg border border-gray-500 cursor-pointer transition-all duration-200",
@@ -103,10 +103,10 @@ export default function AllFiles() {
           {/* Filters */}
           <div className="flex justify-between md:max-w-2xl lg:max-w-5xl w-full">
             <div className="flex gap-2 text-gray-500 font-gabarito">
-              <div className="h-10 px-4 flex-center rounded-lg border border-gray-500">
+              {/* <div className="h-10 px-4 flex-center rounded-lg border border-gray-500">
                 Tipo de arquivo
                 <ChevronDown />
-              </div>
+              </div> */}
               <button
                 type="button"
                 onClick={() => handleSort("uploader")}
@@ -117,11 +117,11 @@ export default function AllFiles() {
               </button>
               <button
                 type="button"
-                onClick={() => handleSort("name")}
-                className={getSortButtonStyles("name")}
+                onClick={() => handleSort("fileName")}
+                className={getSortButtonStyles("fileName")}
               >
                 Nome
-                {getSortIcon("name")}
+                {getSortIcon("fileName")}
               </button>
               {sortConfig.field && (
                 <button
