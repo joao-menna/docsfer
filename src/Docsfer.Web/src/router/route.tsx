@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router";
-import { groupService } from "@/services/relationship/groups";
 
 // pages
 import Login from "../pages/auth/Login";
@@ -16,7 +15,7 @@ import { Loader } from "../components/features/Loader/Loader";
 import { filesLoader, fileDetailLoader } from "../hooks/loaders/useFileLoader";
 import FileNotFoundError from "@/components/features/files/errors/FileNotFound";
 import { publicRouteLoader } from "@/services/auth/usePublicAuth";
-// import { protectedLoader } from "@/services/auth/authLoader";
+import { loadGroups } from "@/hooks/loaders/useGroupLoader";
 
 // lazy-loaded pages
 const Files = lazy(() => import("../pages/files/AllfilesPage"));
@@ -52,7 +51,7 @@ export const router = createBrowserRouter([
           {
             path: "groups",
             element: <Group />,
-            loader: groupService.getAllGroups,
+            loader: loadGroups,
           },
         ],
       },

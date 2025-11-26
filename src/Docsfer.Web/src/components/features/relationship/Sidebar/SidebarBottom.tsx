@@ -34,7 +34,7 @@ export function SidebarBottom({ userId, files }: SidebarBottomProps) {
               <RouteBtn
                 key={file.id}
                 sender={file.relatedUserName ?? "desconhecido"}
-                fileName={file.fileName}
+                fileName={file.fileName ?? "arquivo"}
               />
             ))
           ) : (

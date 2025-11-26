@@ -18,6 +18,11 @@ FileSidebarProps) {
   const navigate = useNavigate();
   if (!isOpen || !selectedFile) return null;
 
+  const displayName = selectedFile.name ?? selectedFile.fileName ?? "Arquivo";
+  const modified = selectedFile.modifyDate ?? selectedFile.createdAt ?? "—";
+  const created = selectedFile.creationDate ?? selectedFile.createdAt ?? "—";
+  const version = selectedFile.version ?? selectedFile.currentVersion ?? "—";
+
   return (
     <AnimatePresence>
       <motion.div
@@ -44,10 +49,10 @@ FileSidebarProps) {
                 </div>
                 <div className="py-3 w-full flex flex-col border-t border-gray-700">
                   <h2 className="text-xl text-gray-300 text-center">
-                    {selectedFile.name}
+                    {displayName}
                   </h2>
                   <h3 className="text-gray-500 text-center">
-                    {`Modificado em ${selectedFile.modifyDate}`}
+                    {`Modificado em ${modified}`}
                   </h3>
                 </div>
               </div>
@@ -65,7 +70,7 @@ FileSidebarProps) {
             <div className="flex flex-col w-full items-start gap-2">
               <div className="flex justify-between w-full">
                 <span className="text-gray-500">Versão atual</span>
-                <span className="text-gray-200">${selectedFile.version}</span>
+                <span className="text-gray-200">${version}</span>
               </div>
               <div className="flex justify-between w-full">
                 <span className="text-gray-500">Versões totais</span>
@@ -85,11 +90,13 @@ FileSidebarProps) {
           <div className="flex flex-col gap-2 w-full">
             <div className="flex justify-between w-full">
               <span className="text-gray-500">Criado em</span>
-              <span className="text-gray-200">{selectedFile.creationDate}</span>
+              <span className="text-gray-200">{created}</span>
             </div>
             <div className="flex justify-between w-full">
               <span className="text-gray-500">Criado por</span>
-              <span className="text-gray-200">{selectedFile.uploader}</span>
+              <span className="text-gray-200">
+                {selectedFile.uploader ?? "—"}
+              </span>
             </div>
           </div>
         </div>

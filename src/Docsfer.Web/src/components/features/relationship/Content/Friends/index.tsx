@@ -97,10 +97,11 @@ export function FriendsContent({ activeView }: FriendsContentProps) {
   };
 
   const recentFiles = files
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    )
+    .sort((a, b) => {
+      const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return timeB - timeA;
+    })
     .slice(0, 4);
 
   const renderAddFriendView = () => (

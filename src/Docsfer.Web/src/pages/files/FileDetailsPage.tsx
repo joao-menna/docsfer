@@ -70,10 +70,14 @@ export default function FileDetails() {
   const downloadFile = async () => {
     try {
       console.log(file);
+      if (!file.relationshipId || !file.fileName) {
+        console.error("Arquivo sem relationshipId ou fileName.");
+        return;
+      }
       const path = await fileUploadService.getPath(
         file.relationshipId,
         file.fileName,
-        file.currentVersion
+        file.currentVersion ?? 0
       );
       if (path) {
         await fileUploadService.download(path);
@@ -99,7 +103,7 @@ export default function FileDetails() {
               / files{" "}
             </button>
             <button type="button" disabled className="text-gray-700">
-              / {file.fileName}
+              / {file.fileName ?? "arquivo"}
             </button>
           </div>
           {/* TOP */}
@@ -107,28 +111,34 @@ export default function FileDetails() {
             <div className="flex flex-col gap-5 w-full justify-start">
               {/* top header */}
               <div className="flex flex-col font-josefin gap-2">
-                <h1 className="text-2xl text-sky-500">{file.fileName}</h1>
+                <h1 className="text-2xl text-sky-500">
+                  {file.fileName ?? "Arquivo"}
+                </h1>
                 <h2 className="text-xl text-gray-400">{file.size}</h2>
               </div>
               {/* infos */}
               <div className="flex flex-col gap-5 pb-4 border-b-2 border-sky-800">
                 <fieldset className="flex flex-col gap-2 text-zinc-200 font-gabarito">
-                  <label htmlFor={file.fileName}>Nome do arquivo</label>
+                  <label htmlFor={file.fileName ?? "file-name"}>
+                    Nome do arquivo
+                  </label>
                   <input
-                    id={file.fileName}
-                    placeholder={file.fileName}
-                    defaultValue={file.fileName}
+                    id={file.fileName ?? "file-name"}
+                    placeholder={file.fileName ?? "Arquivo"}
+                    defaultValue={file.fileName ?? ""}
                     className="px-4 py-2 rounded-lg border border-zinc-400"
                   />
                 </fieldset>
                 <div className="flex flex-col gap-2 text-zinc-400 font-gabarito">
                   <span className="flex justify-between">
                     <span>Criação:</span>
-                    <span className="text-sky-500">{file.createdAt}</span>
+                    <span className="text-sky-500">{file.createdAt ?? "—"}</span>
                   </span>
                   <span className="flex justify-between">
                     <span>Compartilhado por:</span>
-                    <span className="text-sky-500">{file.uploader}</span>
+                    <span className="text-sky-500">
+                      {file.uploader ?? "—"}
+                    </span>
                   </span>
                 </div>
               </div>
@@ -186,18 +196,18 @@ export default function FileDetails() {
             </div>
           </div>
           {/* USUÁRIOS */}
-          <div className="flex flex-col w-full gap-6">
-            <h1 className="font-josefin text-xl text-sky-500">
-              Usuários com acesso
-            </h1>
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-8 w-full items-center">
-                <UserAccessRow name={file.uploader} />
+              <div className="flex flex-col w-full gap-6">
+                <h1 className="font-josefin text-xl text-sky-500">
+                  Usuários com acesso
+                </h1>
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-8 w-full items-center">
+                    <UserAccessRow name={file.uploader ?? "—"} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
       <AnimatePresence>
         {editingFile && (
           <motion.div

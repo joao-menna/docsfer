@@ -5,10 +5,17 @@ import {
 } from "@/services/utils/getFilePreview";
 import { X } from "lucide-react";
 import { motion } from "motion/react";
-import type { File } from "@/types/search";
+type FileDetails = {
+  id: number;
+  name: string;
+  size: string;
+  creationDate: string;
+  groups: { name: string }[];
+  sharedWith?: { name: string }[];
+};
 
 type Props = {
-  file: File;
+  file: FileDetails;
   onClose: () => void;
 };
 

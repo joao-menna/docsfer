@@ -1,20 +1,18 @@
-import type { FileDataFromDB, FormattedFileData } from "@/types/files";
+import type { BlobEntryDto } from "@/services/files/fileService";
+import type { File } from "@/types/search";
 import { formatTimestamp } from "./useFormatTime";
 
-export const formatFile = (file: FileDataFromDB): FormattedFileData => ({
-  id: file.id,
-  name: file.name,
-  creationDate: formatTimestamp(file.creation_date),
-  modifyDate: formatTimestamp(file.modify_date),
-  uploader: file.uploader ?? "Desconhecido",
-  size: file.size,
-  version: file.version.toFixed(1),
-  groups: file.groups,
-  users: file.users.map((user) => ({
-    ...user,
-    groups: user.group,
-  })),
+export const formatFile = (entry: BlobEntryDto): File => ({
+  id: entry.id,
+  fileName: entry.fileName,
+  blobName: entry.blobName,
+  createdAt: formatTimestamp(entry.createdAt),
+  currentVersion: entry.currentVersion,
+  size: entry.size,
+  uploader: entry.uploader,
+  sharedWith: entry.sharedWith,
+  groups: entry.groups,
 });
 
-export const formatFiles = (files: FileDataFromDB[]): FormattedFileData[] =>
-  files.map(formatFile);
+export const formatFiles = (entries: BlobEntryDto[]): File[] =>
+  entries.map(formatFile);

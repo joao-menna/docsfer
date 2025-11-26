@@ -36,12 +36,14 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
       includeMatches: true,
       threshold: 0.35,
       keys: [
-        { name: "data.name", weight: 0.7 },
+        { name: "data.fileName", weight: 0.7 },
+        { name: "data.name", weight: 0.6 },
         { name: "data.uploader", weight: 0.4 },
+        { name: "data.createdAt", weight: 0.2 },
         { name: "data.creationDate", weight: 0.2 },
         { name: "data.modifyDate", weight: 0.2 },
-        // users / groups:
-        { name: "data.name", weight: 0.6 },
+        { name: "data.userName", weight: 0.6 },
+        { name: "data.email", weight: 0.4 },
       ],
     });
   }, [searchableItems]);
@@ -171,10 +173,13 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
                 .filter((r) => r.item.kind === "file")
                 .map((r, idx) => {
                   const f = (r.item as Item & { kind: "file" }).data;
+                  const fileLabel = f.fileName ?? f.name ?? "Arquivo";
+                  const modified = f.modifyDate ?? f.createdAt ?? f.creationDate ?? "—";
+                  const uploader = f.uploader ?? "—";
                   return (
                     <Command.Item
                       key={`f-${f.id}-${idx}`}
-                      value={`file:${f.name}`}
+                      value={`file:${fileLabel}`}
                       onSelect={() => {
                         onOpenFile?.(f.id);
                         close();
@@ -184,10 +189,10 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
                       <FileText className="h-4 w-4 text-gray-500" />
                       <div className="min-w-0 flex-1">
                         <div className="truncate">
-                          {highlight(f.name, r.matches)}
+                          {highlight(fileLabel, r.matches)}
                         </div>
                         <div className="mt-0.5 text-xs text-gray-500">
-                          {f.modifyDate} • by {f.uploader}
+                          {modified} • by {uploader}
                         </div>
                       </div>
                     </Command.Item>
@@ -203,15 +208,17 @@ export default function CommandPalette({ files, onOpenFile }: Props) {
                 .filter((r) => r.item.kind === "user")
                 .map((r, idx) => {
                   const u = (r.item as Item & { kind: "user" }).data;
+                  const displayName =
+                    u.userName ?? u.name ?? u.email ?? "Usuário";
                   return (
                     <Command.Item
-                      key={`u-${u.name}-${idx}`}
-                      value={`user:${u.name}`}
+                      key={`u-${displayName}-${idx}`}
+                      value={`user:${displayName}`}
                       className="group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-200 aria-selected:bg-gray-800"
                     >
                       <Users className="h-4 w-4 text-gray-500" />
                       <div className="truncate">
-                        {highlight(u.name, r.matches)}
+                        {highlight(displayName, r.matches)}
                       </div>
                     </Command.Item>
                   );

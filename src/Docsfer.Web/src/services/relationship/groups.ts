@@ -38,4 +38,13 @@ export const groupService = {
       throw error;
     }
   },
+  getUsers: async (groupId: string) => {
+    try {
+      const { data } = await api.get(`/group/${groupId}/users`);
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
 };
