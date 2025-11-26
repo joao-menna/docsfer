@@ -19,7 +19,11 @@ export type LoaderData = {
   user: UserInfo;
 };
 
-export const formatFileFromBlob = (entry: BlobEntryDto, uploader: string) => ({
+export const formatFileFromBlob = (
+  entry: BlobEntryDto,
+  uploader: string,
+  relationshipId: string
+) => ({
   id: entry.id,
   fileName: entry.fileName,
   createdAt: formatTimestamp(entry.createdAt),
@@ -27,6 +31,7 @@ export const formatFileFromBlob = (entry: BlobEntryDto, uploader: string) => ({
   uploader,
   sharedWith: uploader ?? "",
   size: "—",
-  currentVersion: entry.currentVersion?.toString() ?? "1",
+  currentVersion: entry.currentVersion ?? 1,
   groups: entry.groups,
+  relationshipId: relationshipId,
 });

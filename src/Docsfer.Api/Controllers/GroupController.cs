@@ -5,6 +5,7 @@ using Docsfer.Core.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Docsfer.Api.Controllers;
 
@@ -45,11 +46,16 @@ public class GroupController(
     [Route("associate")]
     public async Task<IActionResult> AssociateUser(Guid userId, Guid groupId)
     {
-        var user = (await userManager.FindByIdAsync(userId.ToString())).EnsureExists();
-
-        await groupRepository.AssociateAsync(user, groupId);
-
-        return Ok();
+        try
+        {
+            var user = (await userManager.FindByIdAsync(userId.ToString())).EnsureExists();
+            await groupRepository.AssociateAsync(user, groupId);
+            return Ok();
+        }
+        catch (DbUpdateException)
+        {
+            return Ok();
+        }
     }
 }
 

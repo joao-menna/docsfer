@@ -77,4 +77,28 @@ export const fileUploadService = {
 
     return { valid: true };
   },
+
+  getPath: async (
+    relationshipId: string,
+    blobEntryFileName: string,
+    version: number = 0
+  ) => {
+    try {
+      const path = await api.get(
+        `/blob/path?relationshipId=${relationshipId}&blobEntryFileName=${blobEntryFileName}&version=${version}`
+      );
+      return path.data.path;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+  download: (path: string) => {
+    try {
+      api.get(`/blob/download?path=${path}`);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
 };

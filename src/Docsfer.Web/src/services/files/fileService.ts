@@ -6,7 +6,7 @@ export interface BlobEntryDto {
   fileName: string;
   blobName: string;
   createdAt: string;
-  currentVersion: number | string;
+  currentVersion: number;
   size?: string;
   uploader: string;
   sharedWith?: string;

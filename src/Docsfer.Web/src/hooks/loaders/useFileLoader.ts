@@ -39,7 +39,7 @@ export const useFilesLoader = () => {
             return {
               relationshipId,
               files: blobEntries.map((entry) =>
-                formatFileFromBlob(entry, userName)
+                formatFileFromBlob(entry, userName, relationshipId)
               ),
             };
           },
@@ -75,7 +75,7 @@ export const filesLoader = async (): Promise<FilesLoaderData> => {
     relationships.map(async ({ relationshipId, user: relatedUser }) => {
       const blobEntries = await fileService.list(relationshipId);
       return blobEntries.map((entry) =>
-        formatFileFromBlob(entry, relatedUser.userName)
+        formatFileFromBlob(entry, relatedUser.userName, relationshipId)
       );
     })
   );

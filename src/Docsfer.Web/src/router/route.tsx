@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router";
+import { groupService } from "@/services/relationship/groups";
 
 // pages
 import Login from "../pages/auth/Login";
@@ -48,7 +49,11 @@ export const router = createBrowserRouter([
         loader: filesLoader,
         children: [
           { index: true, element: <Friends />, loader: filesLoader },
-          { path: "groups", element: <Group /> },
+          {
+            path: "groups",
+            element: <Group />,
+            loader: groupService.getAllGroups,
+          },
         ],
       },
       {

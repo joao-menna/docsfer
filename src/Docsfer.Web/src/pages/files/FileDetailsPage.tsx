@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import clsx from "clsx";
 import type { FileDetailLoaderData } from "@/types/files";
+import { fileUploadService } from "@/services/files/fileBlobService";
 
 export default function FileDetails() {
   const navigate = useNavigate();
@@ -17,27 +18,27 @@ export default function FileDetails() {
     () => [
       {
         version: "v2.2 (atual)",
-        modified: "Ricardo em 24/05/2005 18:00",
+        modified: "24/05/2005 18:00",
         size: "20 MB",
       },
       {
         version: "v2.1",
-        modified: "João em 20/05/2005 14:30",
+        modified: "20/05/2005 14:30",
         size: "19 MB",
       },
       {
         version: "v2.0",
-        modified: "Maria em 18/05/2005 09:15",
+        modified: "18/05/2005 09:15",
         size: "18 MB",
       },
       {
         version: "v1.1",
-        modified: "Ana em 16/05/2005 11:45",
+        modified: "16/05/2005 11:45",
         size: "17 MB",
       },
       {
         version: "v1.0",
-        modified: "Carlos em 15/05/2005 16:00",
+        modified: "15/05/2005 16:00",
         size: "16 MB",
       },
     ],
@@ -65,6 +66,24 @@ export default function FileDetails() {
       </div>
     );
   }
+
+  const downloadFile = async () => {
+    try {
+      console.log(file);
+      const path = await fileUploadService.getPath(
+        file.relationshipId,
+        file.fileName,
+        file.currentVersion
+      );
+      if (path) {
+        await fileUploadService.download(path);
+      } else {
+        console.error(`=================== No path found ===================`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <>
       <div className="flex flex-col xl:flex-row xl:justify-between px-6 py-4">
@@ -221,11 +240,14 @@ export default function FileDetails() {
                   className="px-3 py-2 rounded-md text-red-500 border-2 border-red-500 hover:bg-red-500/50 transition-all duration-150 ease-out hover:text-white cursor-pointer"
                 >
                   Apagar
+                  {/* O ideal seria mostrar o espaço utilizado, e com base nisso apagar o arquivo, mas como não tem nem como apagar o arquivo não há nada que possa ser fazido */}
                 </button>
+
                 <div className="flex gap-2">
                   <button
                     type="button"
                     className="px-3 py-2 rounded-md bg-gray-800 hover:bg-gray-700 duration-150 ease-out cursor-pointer"
+                    onClick={() => downloadFile()}
                   >
                     Baixar
                   </button>

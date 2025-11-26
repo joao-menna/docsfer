@@ -14,10 +14,10 @@ export interface File {
   fileName: string;
   blobName: string;
   createdAt: string;
-  currentVersion: string;
+  currentVersion: number;
   size?: string;
   uploader: string;
-  relationshipId?: string;
+  relationshipId: string;
   sharedWith?: string;
   groups?: Group[];
 }
