@@ -13,6 +13,8 @@ Architecture:
 External Modules:
 - SMTP: SendGrid
 
+[Preview em Vídeo](https://youtu.be/vKeBonz-KEE)
+
 Requisitos funcionais (os checkboxes ativos foram implementados):
 - [X] RF001: O sistema deve permitir a autenticação do usuário por Microsoft Entra ID.
 - [X] RF002: O sistema deve permitir a troca de arquivos entre usuários singulares. e.g.: José e Carlos.
