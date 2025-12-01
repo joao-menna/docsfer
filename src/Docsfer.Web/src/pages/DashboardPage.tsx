@@ -89,17 +89,18 @@ const DashboardPage = () => {
             {/* ↓ Seção 1: Atividade recente ↓ */}
             <section className="flex flex-col pt-4 w-full gap-2 overflow-x-auto">
               <h3 className="inline-flex w-fit relative font-gabarito dark:text-sky-500 tracking-wider px-3 py-2 rounded-sm dark:bg-sky-500/20">
-                Atividade Recente
+                Recent Activities
               </h3>
-              <div className="flex gap-12 w-fit ">
-                {recentActivities.map((activity, index) => (
+              <div className="flex gap-12 w-fit font-gabarito text-xl text-gray-600">
+                No Recent Activities, sorry!
+                {/* {recentActivities.map((activity, index) => (
                   <NewCardTemplate
                     key={index}
                     {...activity}
                     receiver={activity.receiver ?? ""}
                     email={activity.mail ?? ""}
                   />
-                ))}
+                ))} */}
               </div>
             </section>
             {/* ↓ Seção 2: Arquivos Enviados ↓ */}
@@ -119,7 +120,8 @@ const DashboardPage = () => {
                     </Table.Row>
                   </Table.Head>
                   <Table.Body>
-                    {files.map((file) => {
+                    Nothing to see here
+                    {/* {files.map((file) => {
                       const sharedNames = file.sharedWith
                         .map((p) => p.name)
                         .join(", ");
@@ -163,7 +165,7 @@ const DashboardPage = () => {
                           </Table.Cell>
                         </Table.BodyRow>
                       );
-                    })}
+                    })} */}
                   </Table.Body>
                 </Table>
               </div>

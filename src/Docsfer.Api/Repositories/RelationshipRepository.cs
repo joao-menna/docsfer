@@ -32,7 +32,6 @@ public class RelationshipRepository(
 
         foreach (var rel in directRelations)
         {
-            // --- PARTY ONE ---
             if (rel.PartyOneId != from)
             {
                 if (rel.PartyOneType == PartyType.User)
@@ -57,7 +56,6 @@ public class RelationshipRepository(
                 }
             }
 
-            // --- PARTY TWO ---
             if (rel.PartyTwoId != from)
             {
                 if (rel.PartyTwoType == PartyType.User)
@@ -83,10 +81,10 @@ public class RelationshipRepository(
             }
         }
 
-        // Grupos do próprio usuário (sem relationship direto)
-        if (user.Groups != null && user.Groups.Count > 0)
+        var userGroups = await groupRepository.FindByUserIdAsync(user.Id);
+        if (userGroups != null)
         {
-            foreach (var grp in user.Groups)
+            foreach (var grp in userGroups)
             {
                 result.Groups.Add(new GroupWithRelationship
                 {
@@ -96,7 +94,6 @@ public class RelationshipRepository(
             }
         }
 
-        // Remover duplicados por ID
         result.Users = [.. result.Users
             .GroupBy(u => u.User?.Id)
             .Select(g => g.First())];
@@ -124,7 +121,6 @@ public class RelationshipRepository(
     {
         var result = new UsersAndGroups();
 
-        // PARTY ONE
         if (relationship.PartyOneType == PartyType.User)
         {
             var user = await context.Users
@@ -150,7 +146,6 @@ public class RelationshipRepository(
                 });
         }
 
-        // PARTY TWO
         if (relationship.PartyTwoType == PartyType.User)
         {
             var user = await context.Users
@@ -200,9 +195,11 @@ public class RelationshipRepository(
 
         if (relationship.PartyOneType == PartyType.Group)
         {
-            var group = (await groupRepository.FindByIdAsync(relationship.PartyOneId)).EnsureExists();
+            var isMember = await context.GroupUsers.AnyAsync(gu =>
+                gu.GroupId == relationship.PartyOneId &&
+                gu.UserId == userId);
 
-            if (group.Users.Any(u => u.Id == userId))
+            if (isMember)
             {
                 return true;
             }
@@ -210,9 +207,11 @@ public class RelationshipRepository(
 
         if (relationship.PartyTwoType == PartyType.Group)
         {
-            var group = (await groupRepository.FindByIdAsync(relationship.PartyTwoId)).EnsureExists();
+            var isMember = await context.GroupUsers.AnyAsync(gu =>
+                gu.GroupId == relationship.PartyTwoId &&
+                gu.UserId == userId);
 
-            if (group.Users.Any(u => u.Id == userId))
+            if (isMember)
             {
                 return true;
             }

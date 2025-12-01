@@ -27,6 +27,22 @@ public class GroupController(
         return Ok(groups.Select(g => new GroupSummary(g.Id, g.Name)));
     }
 
+    [HttpGet]
+    [Route("{groupId:guid}/users")]
+    public async Task<IActionResult> GetUsersInGroup(Guid groupId)
+    {
+        var user = (await userManager.GetUserAsync(User)).EnsureExists();
+
+        var isMember = await groupRepository.IsUserInGroupAsync(user.Id, groupId);
+        if (!isMember)
+        {
+            return Forbid();
+        }
+
+        var users = await groupRepository.GetUsersInGroupAsync(groupId);
+        return Ok(users.Select(u => new UserSummary(u.Id, u.UserName ?? string.Empty, u.Email ?? string.Empty)));
+    }
+
     [HttpPost]
     [Route("")]
     public async Task<IActionResult> Create([FromBody] CreateGroupInput input)
@@ -61,3 +77,4 @@ public class GroupController(
 
 public record CreateGroupInput(string Name);
 public record GroupSummary(Guid Id, string Name);
+public record UserSummary(Guid Id, string Username, string Email);

@@ -17,27 +17,7 @@ export default function FileDetails() {
   const versions = useMemo(
     () => [
       {
-        version: "v2.2 (atual)",
-        modified: "24/05/2005 18:00",
-        size: "20 MB",
-      },
-      {
-        version: "v2.1",
-        modified: "20/05/2005 14:30",
-        size: "19 MB",
-      },
-      {
-        version: "v2.0",
-        modified: "18/05/2005 09:15",
-        size: "18 MB",
-      },
-      {
-        version: "v1.1",
-        modified: "16/05/2005 11:45",
-        size: "17 MB",
-      },
-      {
-        version: "v1.0",
+        version: "v1.0 (Atual)",
         modified: "15/05/2005 16:00",
         size: "16 MB",
       },
@@ -132,13 +112,13 @@ export default function FileDetails() {
                 <div className="flex flex-col gap-2 text-zinc-400 font-gabarito">
                   <span className="flex justify-between">
                     <span>Criação:</span>
-                    <span className="text-sky-500">{file.createdAt ?? "—"}</span>
+                    <span className="text-sky-500">
+                      {file.createdAt ?? "—"}
+                    </span>
                   </span>
                   <span className="flex justify-between">
                     <span>Compartilhado por:</span>
-                    <span className="text-sky-500">
-                      {file.uploader ?? "—"}
-                    </span>
+                    <span className="text-sky-500">{file.uploader ?? "—"}</span>
                   </span>
                 </div>
               </div>
@@ -196,18 +176,18 @@ export default function FileDetails() {
             </div>
           </div>
           {/* USUÁRIOS */}
-              <div className="flex flex-col w-full gap-6">
-                <h1 className="font-josefin text-xl text-sky-500">
-                  Usuários com acesso
-                </h1>
-                <div className="flex flex-col gap-2">
-                  <div className="flex gap-8 w-full items-center">
-                    <UserAccessRow name={file.uploader ?? "—"} />
-                  </div>
-                </div>
+          <div className="flex flex-col w-full gap-6">
+            <h1 className="font-josefin text-xl text-sky-500">
+              Usuários com acesso
+            </h1>
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-8 w-full items-center">
+                <UserAccessRow name={file.uploader ?? "—"} />
               </div>
             </div>
           </div>
+        </div>
+      </div>
       <AnimatePresence>
         {editingFile && (
           <motion.div
@@ -242,7 +222,7 @@ export default function FileDetails() {
                     {editingFile.version}
                   </span>
                 </span>
-                <span>Criada em: {editingFile.modified}</span>
+                <span></span>
               </section>
               <footer className="p-4 flex justify-between  border-t border-gray-800 transition-all duration-300">
                 <button

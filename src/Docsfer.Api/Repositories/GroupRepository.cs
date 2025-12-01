@@ -37,11 +37,34 @@ public class GroupRepository(DocsferDbContext context) : IGroupRepository
         return group;
     }
 
-    public async Task<IEnumerable<Group>> FindByUserAsync(User user)
+    public async Task<IEnumerable<User>> GetUsersInGroupAsync(Guid groupId)
     {
-        return await context.Groups
-            .Where(g => g.Users.Any(u => u.Id == user.Id))
+        return await context.GroupUsers
+            .Where(gu => gu.GroupId == groupId)
+            .Join(context.Users, gu => gu.UserId, u => u.Id, (_, user) => user)
             .AsNoTracking()
             .ToListAsync();
+    }
+
+    public async Task<bool> IsUserInGroupAsync(Guid userId, Guid groupId)
+    {
+        return await context.GroupUsers.AnyAsync(gu =>
+            gu.GroupId == groupId &&
+            gu.UserId == userId);
+    }
+
+    public async Task<IEnumerable<Group>> FindByUserIdAsync(Guid userId)
+    {
+        return await context.GroupUsers
+            .Where(gu => gu.UserId == userId)
+            .Join(context.Groups, gu => gu.GroupId, g => g.Id, (_, group) => group)
+            .Distinct()
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Group>> FindByUserAsync(User user)
+    {
+        return await FindByUserIdAsync(user.Id);
     }
 }
