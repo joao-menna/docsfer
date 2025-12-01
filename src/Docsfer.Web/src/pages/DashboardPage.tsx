@@ -1,6 +1,4 @@
-import { generateActivities } from "@/utils/files/useMockData";
 import { useMemo, useState } from "react";
-import { NewCardTemplate } from "@components/features/dashboard/DashboardCard";
 import Table from "@/components/UI/Table/Table";
 import EditFileModal from "@/components/features/dashboard/EditFileModal";
 import { AnimatePresence } from "motion/react";
@@ -20,7 +18,6 @@ type FileRow = {
 };
 
 const DashboardPage = () => {
-  const recentActivities = useMemo(() => generateActivities(7), []);
   const headers = [
     "Arquivo",
     "Compartilhado com",
