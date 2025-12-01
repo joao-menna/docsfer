@@ -1,6 +1,19 @@
 # docsfer
 
-File data transfer based on cloud.
+**PAC - Projeto de Aprendizagem Colaborativa Extensionista do Curso de Engenharia de Software da Católica de Santa Catarina.**
+
+Autores:
+- Henrique Maia Cardosa
+- João Miguel de Castro Menna
+- João Pedro Izidoro
+- Nicolas Robert de Oliveira Borges
+- Ricardo Gabriel Fialho Santos
+
+Professores orientadores:
+- Claudinei Dias
+- Luiz Carlos Camargo
+
+Transferência de arquivos na nuvem feita de forma fácil.
 
 Architecture:
 - Monolith: Application.
@@ -56,3 +69,69 @@ Requisitos não funcionais (os checkboxes ativos foram cumpridos):
 ## Diagrama de Classes
 
 ![Class Diagram](docs/images/class_diagram.png)
+
+## Desenvolvimento
+
+Para preparar o ambiente de desenvolvimento é necessário os seguintes pré-requisitos:
+
+- Docker e Docker Compose *ou* Podman e Podman Compose
+
+Assim que atender aos requisitos:
+
+- Execute o sistema com `docker compose up -d` ou `podman compose up -d`
+
+Isso vai subir o ambiente completo, sendo tal:
+
+- Proxy e Servidor Web (nginx)
+- Azure Blob Storage Local (azurite)
+- Banco de Dados (postgres)
+- Migrador de Banco de Dados (migrator)
+- Back-end (backend)
+
+## Prints das principais telas
+
+### Login
+
+O Login funciona como esperado, após a criação de uma conta, é possível logar. No caso da empresa, será apenas utilizado o botão "Entrar com EntraID"
+
+![Print 1](docs/images/prints/print1.jpg)
+
+### Dashboard
+
+No Dashboard é possível ter um panorama geral de como anda o ambiente.
+
+![Print 2](docs/images/prints/print2.jpg)
+
+### Compartilhar Arquivos
+
+Essa modal é o coração da aplicação, é o lugar onde será compartilhado os arquivos com outros usuários e grupos.
+
+![Print 3](docs/images/prints/print3.jpg)
+
+### CmdK
+
+CmdK é um método de pesquisa rápida entre arquivos, usuários, grupos, etc.
+
+![Print 4](docs/images/prints/print4.jpg)
+
+### Relacionamentos
+
+Na tela de relacionamentos é possível criar uma amizade com usuário ou vínculo com grupo.
+
+![Print 5](docs/images/prints/print5.jpg)
+
+### Adicionar amigo
+
+![Print 6](docs/images/prints/print6.jpg)
+
+### Todos os arquivos
+
+Nessa tela é possível averiguar todos os arquivos compartilhados.
+
+![Print 7](docs/images/prints/print7.jpg)
+
+### Meus Grupos
+
+Nessa tela é possível verificar em que grupos você está, e colocar usuários extras neles.
+
+![Print 8](docs/images/prints/print8.jpg)
