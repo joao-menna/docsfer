@@ -1,41 +1,62 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router";
 
-import Login from "../pages/LoginPage";
+// pages
+import Login from "../pages/auth/Login";
+import CreateAccount from "@/pages/auth/SignUp";
 import Dashboard from "../pages/DashboardPage";
 import { RootLayout } from "../layout/RootLayout";
-import { filesLoader } from "../hooks/useFileLoader";
-import { requireAuth } from "../hooks/useRequireAuth";
+import NotFoundPage from "@/pages/NotFoundPage";
+import Relationship from "../pages/Relationship/index";
 
-import { RouteError } from "../components/base/RouteError";
+// components and utils
+import { RouteError } from "../components/features/Loader/RouteError";
+import { Loader } from "../components/features/Loader/Loader";
+import { filesLoader, fileDetailLoader } from "../hooks/loaders/useFileLoader";
+import FileNotFoundError from "@/components/features/files/errors/FileNotFound";
+import { publicRouteLoader } from "@/services/auth/usePublicAuth";
+import { loadGroups } from "@/hooks/loaders/useGroupLoader";
 
-import { Loader } from "../components/base/Loader";
-
-const Groups = lazy(() => import("../pages/GroupPage"));
-const Files = lazy(() => import("../pages/Arquivos/AllfilesPage"));
-const Details = lazy(() => import("../pages/Arquivos/FileDetailsPage"));
-const Sharing = lazy(() => import("../pages/SharingPage"));
+// lazy-loaded pages
+const Files = lazy(() => import("../pages/files/AllfilesPage"));
+const Details = lazy(() => import("../pages/files/FileDetailsPage"));
+const Friends = lazy(() => import("@/pages/Relationship/friends"));
+const Group = lazy(() => import("@/pages/Relationship/groups"));
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
     errorElement: <RouteError />,
-    /* loader: async () => {
-      if (await isAuthed()) throw new redirect("/dashboard");
-      return null
-    } */
+    loader: publicRouteLoader,
+  },
+  {
+    path: "/createAccount",
+    element: <CreateAccount />,
+    loader: publicRouteLoader,
   },
   // App Area
   {
     element: <RootLayout />,
     errorElement: <RouteError />,
-    loader: requireAuth,
+    loader: filesLoader,
     children: [
-      { path: "dashboard", element: <Dashboard /> },
-      { path: "groups", element: <Groups /> },
+      { path: "dashboard", element: <Dashboard />, loader: filesLoader },
       {
-        path: "Files",
+        path: "@me",
+        element: <Relationship />,
+        loader: filesLoader,
+        children: [
+          { index: true, element: <Friends />, loader: filesLoader },
+          {
+            path: "groups",
+            element: <Group />,
+            loader: loadGroups,
+          },
+        ],
+      },
+      {
+        path: "files",
         loader: filesLoader,
         element: (
           <Suspense fallback={<Loader />}>
@@ -44,18 +65,20 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "Details",
-        loader: filesLoader,
+        path: "files/:id",
+        loader: fileDetailLoader,
+        errorElement: <FileNotFoundError />,
         element: (
           <Suspense fallback={<Loader />}>
             <Details />
           </Suspense>
         ),
       },
-      {
-        path: "newFile",
-        element: <Sharing />,
-      },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
+    errorElement: <RouteError />,
   },
 ]);

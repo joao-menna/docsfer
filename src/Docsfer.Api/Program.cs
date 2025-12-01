@@ -1,4 +1,6 @@
+using Docsfer.Api.Extensions;
 using Docsfer.Api.Middlewares;
+using Docsfer.Api.Repositories;
 using Docsfer.Core.Identity;
 using Docsfer.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -36,19 +38,19 @@ builder.Services.AddOpenApi("v1");
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        options.ExpireTimeSpan = TimeSpan.FromDays(1);
         options.SlidingExpiration = true;
-    })
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
-    {
-        options.Authority = jwtAuthority;
-        options.Audience = jwtAudience;
     });
+// .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+// {
+//     options.Authority = jwtAuthority;
+//     options.Audience = jwtAudience;
+// });
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.Cookie.SameSite = SameSiteMode.None;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
 });
 
 if (!string.IsNullOrWhiteSpace(githubClientId) && !string.IsNullOrWhiteSpace(githubClientSecret))
@@ -101,9 +103,29 @@ builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
+    
+});
+
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<IRelationshipRepository>()
+    .AddClasses(classes => classes.InNamespaces("Docsfer.Api.Repositories"))
+    .AsImplementedInterfaces()
+    .WithScopedLifetime());
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", builder =>
+    {
+        builder
+            .WithOrigins("http://20.172.176.246", "http://localhost:5173", "http://20.172.176.246:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
 });
 
 builder.Services.AddControllers();
+builder.Services.AddEmailServices(builder.Configuration);
 
 builder.Services.AddDbContext<DocsferDbContext>(
     options => options.UseNpgsql(connectionString));
@@ -112,14 +134,15 @@ builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<DocsferDbContext>();
 
 var app = builder.Build();
+app.UseCors("AllowFrontend");
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-app.MapOpenApi("/api/docs/{documentName}.json");
-// }
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi("/api/docs/{documentName}.json");
+}
 
 app.MapControllers();
 
