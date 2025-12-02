@@ -93,9 +93,21 @@ export const fileUploadService = {
       throw error;
     }
   },
-  download: (path: string) => {
+  download: async (path: string, fileName: string) => {
     try {
-      api.get(`/blob/download?path=${path}`);
+      const resp = await api.get(`/blob/download?path=${path}`, {
+        responseType: "blob"
+      });
+
+      const blob = new Blob([resp.data]);
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      link.click();
+
+      URL.revokeObjectURL(url)
     } catch (error) {
       console.error(error);
       throw error;

@@ -23,23 +23,9 @@ export default function friendsHeader({
       <div className="flex flex-wrap gap-4 lg:flex-nowrap lg:items-center">
         <div className="w-1/4 lg:w-auto">
           <HeaderBtn
-            text="Relationships"
-            isActive={activeView === "relationships"}
-            onClick={() => onViewChange("relationships")}
-          />
-        </div>
-        <div className="w-1/4 lg:w-auto">
-          <HeaderBtn
             text="All Friends"
             isActive={activeView === "all"}
             onClick={() => onViewChange("all")}
-          />
-        </div>
-        <div className="w-1/4 lg:w-auto">
-          <HeaderBtn
-            text="Recent Interactions"
-            isActive={activeView === "recent"}
-            onClick={() => onViewChange("recent")}
           />
         </div>
         <AddFriendBtn

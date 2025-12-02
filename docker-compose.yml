@@ -5,7 +5,7 @@ services:
     container_name: docsfer_proxy
     restart: unless-stopped
     build:
-      context: ./
+      context: .
       dockerfile: ./src/Docsfer.Web/Dockerfile
     ports:
       - 80:80

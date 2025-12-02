@@ -28,18 +28,18 @@ External Modules:
 
 [Preview em Vídeo](https://youtu.be/vKeBonz-KEE)
 
-Requisitos funcionais (os checkboxes ativos foram implementados):
+Requisitos funcionais (os checkboxes ativos foram implementados, os inativos serão no futuro):
 - [X] RF001: O sistema deve permitir a autenticação do usuário por Microsoft Entra ID.
 - [X] RF002: O sistema deve permitir a troca de arquivos entre usuários singulares. e.g.: José e Carlos.
-- [X] RF003: O sistema deve permitir a troca de arquivos entre usuários singulares e grupos de usuários. e.g.: José e RH.
-- [X] RF004: O sistema deve permitir a troca de arquivos entre grupos de usuários. e.g.: RH e Financeiro.
+- [ ] RF003: O sistema deve permitir a troca de arquivos entre usuários singulares e grupos de usuários. e.g.: José e RH.
+- [ ] RF004: O sistema deve permitir a troca de arquivos entre grupos de usuários. e.g.: RH e Financeiro.
 - [X] RF005: O sistema deve permitir o versionamento de arquivos. e.g.: Arquivo X v1.0, o usuário sobe uma versão do mesmo arquivo, Arquivo X v2.0
 - [ ] RF006: O sistema deve permitir a troca de mensagens dentro do mesmo arquivo.
 - [ ] RF007: O sistema deve enviar mensagens do próprio sistema, como "nova versão criada", dentro do mesmo arquivo.
 - [X] RF008: O sistema deve enviar um e-mail anunciando a chegada de um novo arquivo compartilhado ao usuário.
 - [X] RF009: O sistema deve enviar um e-mail anunciando a chegada de um novo arquivo compartilhado ao participante do grupo.
 
-Requisitos não funcionais (os checkboxes ativos foram cumpridos):
+Requisitos não funcionais (os checkboxes ativos foram cumpridos, os inativos serão no futuro):
 - [X] RNF001: O sistema deve responder em até 2 segundos.
 - [ ] RNF002: O sistema deve possuir a interface responsiva.
 - [X] RNF003: O sistema deve suportar os navegadores mais avançados do mercado (Firefox, Chrome e Edge).
@@ -130,8 +130,8 @@ Nessa tela é possível averiguar todos os arquivos compartilhados.
 
 ![Print 7](docs/images/prints/print7.jpg)
 
-### Meus Grupos
+<!-- ### Meus Grupos
 
 Nessa tela é possível verificar em que grupos você está, e colocar usuários extras neles.
 
-![Print 8](docs/images/prints/print8.jpg)
+![Print 8](docs/images/prints/print8.jpg) -->

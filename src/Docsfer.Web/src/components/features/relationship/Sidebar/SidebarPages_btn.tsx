@@ -1,9 +1,6 @@
 import clsx from "clsx";
 import {
   PersonStanding,
-  FileInput,
-  ComponentIcon,
-  GalleryHorizontalEnd,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
@@ -30,9 +27,9 @@ export function RelationBtn({ text, to }: btnProps) {
     >
       <div>
         {text == "Friends" && <PersonStanding />}
-        {text == "Files" && <FileInput />}
-        {text == "Groups" && <ComponentIcon />}
-        {text == "All Files" && <GalleryHorizontalEnd />}
+        {/* {text == "Files" && <FileInput />} */}
+        {/* {text == "Groups" && <ComponentIcon />} */}
+        {/* {text == "All Files" && <GalleryHorizontalEnd />} */}
       </div>
       <span>{text}</span>
     </NavLink>

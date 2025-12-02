@@ -1,4 +1,3 @@
-import RecentFile from "@/components/features/files/RecentFile";
 import { ChevronDown, ChevronUp, List, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
@@ -75,25 +74,6 @@ export default function AllFiles() {
             <h2 className="font-josefin text-xl dark:text-zinc-400">
               Documents shared by you, or with you.
             </h2>
-          </div>
-        </div>
-        {/* Content */}
-        <div className="flex flex-col gap-5 items-start">
-          {/* Arquivos Recentes */}
-          <div className="flex flex-col font-gabarito text-gray-200 gap-5 items-start">
-            <h2 className="font-josefin text-lg">Arquivos Recentes</h2>
-            <button
-              type="button"
-              className="flex-center px-4 py-2 gap-2 rounded-lg bg-gray-950 border-2 border-gray-700 cursor-pointer"
-            >
-              <span>Mais velhos primeiro</span>
-              <ChevronDown />
-            </button>
-            <div className="flex gap-6 justify-start w-full">
-              <RecentFile />
-              <RecentFile />
-              <RecentFile />
-            </div>
           </div>
         </div>
       </div>

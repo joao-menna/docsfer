@@ -1,4 +1,4 @@
-import { RotateCcw, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useLoaderData, useNavigate } from "react-router";
 import UserAccessRow from "@/components/features/files/Permissions/UserPermissionsRow";
 import Table from "@/components/UI/Table/Table";
@@ -60,7 +60,7 @@ export default function FileDetails() {
         file.currentVersion ?? 0
       );
       if (path) {
-        await fileUploadService.download(path);
+        await fileUploadService.download(path, file.fileName);
       } else {
         console.error(`=================== No path found ===================`);
       }
@@ -225,23 +225,22 @@ export default function FileDetails() {
                 <span></span>
               </section>
               <footer className="p-4 flex justify-between  border-t border-gray-800 transition-all duration-300">
-                <button
+                {/* <button
                   type="button"
                   className="px-3 py-2 rounded-md text-red-500 border-2 border-red-500 hover:bg-red-500/50 transition-all duration-150 ease-out hover:text-white cursor-pointer"
                 >
                   Apagar
-                  {/* O ideal seria mostrar o espaço utilizado, e com base nisso apagar o arquivo, mas como não tem nem como apagar o arquivo não há nada que possa ser fazido */}
-                </button>
+                </button> */}
 
                 <div className="flex gap-2">
                   <button
                     type="button"
                     className="px-3 py-2 rounded-md bg-gray-800 hover:bg-gray-700 duration-150 ease-out cursor-pointer"
-                    onClick={() => downloadFile()}
+                    onClick={downloadFile}
                   >
                     Baixar
                   </button>
-                  <button
+                  {/* <button
                     title="Retorna para a versão selecionada."
                     type="button"
                     disabled={editingFile?.version?.includes("atual")}
@@ -249,7 +248,7 @@ export default function FileDetails() {
                   >
                     rollback
                     <RotateCcw />
-                  </button>
+                  </button> */}
                 </div>
               </footer>
             </motion.div>

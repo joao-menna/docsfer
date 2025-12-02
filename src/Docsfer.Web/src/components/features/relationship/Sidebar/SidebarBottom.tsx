@@ -52,7 +52,7 @@ export function SidebarBottom({ userId, files }: SidebarBottomProps) {
       <div className="flex gap-4 items-center py-2">
         <UserIcon />
         <div className="">
-          <h3 className="text-gray-200 font-semibold">Username</h3>
+          <h3 className="text-gray-200 font-semibold">Copy your UID here!</h3>
           {/* TODO: copy UID to clipboard on click */}
           <span
             title={userId}

@@ -4,6 +4,8 @@ WORKDIR /source
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+ENV VITE_API_BASE_URL="/api/v1"
+ENV VITE_AZURITE_URL="http://localhost:10000"
 
 RUN corepack enable
 
