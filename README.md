@@ -79,6 +79,7 @@ Para preparar o ambiente de desenvolvimento é necessário os seguintes pré-req
 Assim que atender aos requisitos:
 
 - Execute o sistema com `docker compose up -d` ou `podman compose up -d`
+- Entre na URL [http://localhost](http://localhost)
 
 Isso vai subir o ambiente completo, sendo tal:
 
